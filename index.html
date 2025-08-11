@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Showcase demo</title>
+    
+    <link rel="stylesheet" href="zed.css">
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header style="position: absolute; top: 1rem; right: 1rem; z-index: 10;">
+        <button class="btn btn-outline btn-sm" data-theme-toggle>
+            Toggle Theme
+        </button>
+    </header>
+
+    <main style="display: flex; flex-direction: column; gap: 3rem; width: 100%; max-width: 800px; padding: 4rem 2rem;">
+        
+        <!-- ================================================================== -->
+        <!-- SHOWCASE 1: SINGLE TYPE ACCORDION (Class-based)                   -->
+        <!-- ================================================================== -->
+        <section>
+            <h2 style="margin-bottom: 1rem; color: var(--foreground);">Single Type Accordion</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--muted-foreground); font-size: 0.875rem;">
+                Uses <code>.accordion-single</code> class. Only one item can be open at a time.
+            </p>
+            
+            <div class="accordion accordion-single">
+                
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">How does single-type behavior work?</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>When you open an item in a single-type accordion, all other items automatically close. This creates a clean, focused interface where users see one piece of content at a time.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item accordion-item-open">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">This item starts open (using class)</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>This item uses the <code>.accordion-item-open</code> class to be initially opened. The JavaScript handles this during initialization.</p>
+                            <button class="btn btn-primary btn-sm">Interactive content works great!</button>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item" disabled>
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">This item is disabled</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>You should not be able to see this content.</p>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- ================================================================== -->
+        <!-- SHOWCASE 2: MULTIPLE TYPE ACCORDION                               -->
+        <!-- ================================================================== -->
+        <section>
+            <h2 style="margin-bottom: 1rem; color: var(--foreground);">Multiple Type Accordion</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--muted-foreground); font-size: 0.875rem;">
+                Uses <code>.accordion-multiple</code> class. Multiple items can be open simultaneously.
+            </p>
+            
+            <div class="accordion accordion-multiple">
+                
+                <details class="accordion-item" open>
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">Can multiple items be open?</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Yes! In multiple-type accordions, you can have as many items open as you want. This is perfect for FAQ sections or when users need to compare different pieces of information.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">What about nested components?</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Absolutely! You can nest any HTML content inside accordion items:</p>
+                            <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                                <button class="btn btn-primary btn-xs">Primary</button>
+                                <button class="btn btn-secondary btn-xs">Secondary</button>
+                                <span class="badge badge-outline">Badge</span>
+                                <span class="badge badge-secondary">Info</span>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">Complex content example</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Here's a more complex example with lists and code:</p>
+                            <ul style="margin: 1rem 0; padding-left: 1.25rem;">
+                                <li>Keyboard navigation with arrow keys</li>
+                                <li>Home/End keys to jump to first/last</li>
+                                <li>Full ARIA accessibility support</li>
+                                <li>Programmatic API methods</li>
+                            </ul>
+                            <pre style="background: var(--muted); padding: 0.75rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.875rem;"><code>// Access the API
+element.accordion.openAll();
+element.accordion.closeAll();</code></pre>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- ================================================================== -->
+        <!-- SHOWCASE 3: DEFAULT BEHAVIOR (No specific class)                  -->
+        <!-- ================================================================== -->
+        <section>
+            <h2 style="margin-bottom: 1rem; color: var(--foreground);">Default Behavior</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--muted-foreground); font-size: 0.875rem;">
+                No specific type class. Falls back to <code>multiple</code> behavior.
+            </p>
+            
+            <div class="accordion">
+                
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">What's the default behavior?</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>When no specific type class is provided, the accordion defaults to multiple behavior. This leverages the native HTML <code>&lt;details&gt;</code> element behavior.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item accordion-item-closed">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">This item starts closed (explicit class)</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>This item uses the <code>.accordion-item-closed</code> class to explicitly start in a closed state, even if the HTML has the <code>open</code> attribute.</p>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- ================================================================== -->
+        <!-- SHOWCASE 4: STYLING VARIANTS                                       -->
+        <!-- ================================================================== -->
+        <section>
+            <h2 style="margin-bottom: 1rem; color: var(--foreground);">Styling Variants</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--muted-foreground); font-size: 0.875rem;">
+                Different visual styles using modifier classes.
+            </p>
+            
+            <!-- Bordered variant -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Bordered Style</h3>
+                <div class="accordion accordion-single accordion-bordered">
+                    
+                    <details class="accordion-item">
+                        <summary class="accordion-trigger">
+                            <span class="accordion-trigger-text">Bordered accordion item</span>
+                            <i class="accordion-icon" data-lucide="chevron-down"></i>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>This accordion uses the <code>.accordion-bordered</code> class for a different visual treatment.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="accordion-item">
+                        <summary class="accordion-trigger">
+                            <span class="accordion-trigger-text">Another bordered item</span>
+                            <i class="accordion-icon" data-lucide="chevron-down"></i>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Borders help create clear visual separation between items.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+            <!-- Flush variant -->
+            <div>
+                <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Flush Style</h3>
+                <div class="accordion accordion-multiple accordion-flush">
+                    
+                    <details class="accordion-item">
+                        <summary class="accordion-trigger">
+                            <span class="accordion-trigger-text">Flush accordion item</span>
+                            <i class="accordion-icon" data-lucide="chevron-down"></i>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>The <code>.accordion-flush</code> class removes borders and backgrounds for a minimal look.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="accordion-item" open>
+                        <summary class="accordion-trigger">
+                            <span class="accordion-trigger-text">Clean, minimal design</span>
+                            <i class="accordion-icon" data-lucide="chevron-down"></i>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Perfect for content-heavy interfaces where you want the accordion to blend seamlessly with the surrounding design.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================== -->
+        <!-- SHOWCASE 5: API DEMONSTRATION                                      -->
+        <!-- ================================================================== -->
+        <section>
+            <h2 style="margin-bottom: 1rem; color: var(--foreground);">Programmatic Control</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--muted-foreground); font-size: 0.875rem;">
+                Control accordions programmatically using the JavaScript API.
+            </p>
+            
+            <div class="accordion accordion-multiple" id="api-demo-accordion">
+                
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">API Item 1</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>This is the first item that can be controlled via the API buttons below.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">API Item 2</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>This is the second item. Try using the control buttons to see the API in action.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="accordion-item">
+                    <summary class="accordion-trigger">
+                        <span class="accordion-trigger-text">API Item 3</span>
+                        <i class="accordion-icon" data-lucide="chevron-down"></i>
+                    </summary>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Third item for testing the various API methods available.</p>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+
+            <!-- Control buttons -->
+            <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button class="btn btn-primary btn-sm" onclick="openAllItems()">Open All</button>
+                <button class="btn btn-secondary btn-sm" onclick="closeAllItems()">Close All</button>
+                <button class="btn btn-outline btn-sm" onclick="toggleItem(0)">Toggle Item 1</button>
+                <button class="btn btn-outline btn-sm" onclick="toggleItem(1)">Toggle Item 2</button>
+                <button class="btn btn-outline btn-sm" onclick="toggleItem(2)">Toggle Item 3</button>
+                <button class="btn btn-ghost btn-sm" onclick="getOpenItems()">Log Open Items</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script type="module" src="zed.js"></script>
+    
+    <!-- API Demo Scripts -->
+    <script>
+        function openAllItems() {
+            const accordion = document.getElementById('api-demo-accordion').accordion;
+            if (accordion) {
+                accordion.openAll();
+                console.log('Opened all items');
+            }
+        }
+
+        function closeAllItems() {
+            const accordion = document.getElementById('api-demo-accordion').accordion;
+            if (accordion) {
+                accordion.closeAll();
+                console.log('Closed all items');
+            }
+        }
+
+        function toggleItem(index) {
+            const accordion = document.getElementById('api-demo-accordion').accordion;
+            if (accordion) {
+                accordion.toggle(index);
+                console.log(`Toggled item ${index + 1}`);
+            }
+        }
+
+        function getOpenItems() {
+            const accordion = document.getElementById('api-demo-accordion').accordion;
+            if (accordion) {
+                const openItems = accordion.getOpenItems();
+                console.log('Open items:', openItems.map(item => item.index + 1));
+            }
+        }
+
+        // Listen to accordion events
+        document.addEventListener('accordion:toggle', (e) => {
+            console.log('Accordion toggled:', {
+                item: e.detail.index + 1,
+                open: e.detail.open
+            });
+        });
+
+        document.addEventListener('accordion:init', (e) => {
+            console.log('Accordion initialized:', {
+                type: e.detail.type,
+                totalItems: e.detail.totalItems
+            });
+        });
+    </script>
+</body>
+</html>
