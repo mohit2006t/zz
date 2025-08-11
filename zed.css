@@ -97,6 +97,44 @@ body {
 body.js-loaded {
   visibility: visible;
 }
+
+/* ================================================================== */
+/* GLOBAL SCROLLBAR STYLES                                            */
+/* ================================================================== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground);
+}
+
+/* ================================================================== */
+/* SCROLLBAR HOVER BEHAVIOR                                           */
+/* ================================================================== */
+.scrollbar-hover::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hide thumb by default */
+}
+
+.scrollbar-hover:hover::-webkit-scrollbar-thumb {
+  background-color: var(--border); /* Show thumb on container hover */
+}
+
+.scrollbar-hover::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground); /* Still allow thumb hover highlight */
+}
 *:focus-visible {
     outline: 3px solid oklch(from var(--ring) l c h / 0.5);
     outline-offset: 0px;
