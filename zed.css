@@ -87,6 +87,12 @@
   --sidebar-border: oklch(0.2750 0 0);
   --sidebar-ring: oklch(0.4390 0 0);
 }
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-foreground) var(--muted);
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -98,51 +104,28 @@ body.js-loaded {
   visibility: visible;
 }
 
-/* ================================================================== */
-/* GLOBAL SCROLLBAR STYLES                                            */
-/* ================================================================== */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background-color: var(--muted);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  background-color: var(--muted-foreground);
   border-radius: 9999px;
-  border: 2px solid transparent;
-  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--muted-foreground);
+  background-color: var(--foreground);
 }
 
-/* ================================================================== */
-/* SCROLLBAR HOVER BEHAVIOR                                           */
-/* ================================================================== */
-.scrollbar-hover::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Hide thumb by default */
-}
-
-.scrollbar-hover:hover::-webkit-scrollbar-thumb {
-  background-color: var(--border); /* Show thumb on container hover */
-}
-
-.scrollbar-hover::-webkit-scrollbar-thumb:hover {
-  background-color: var(--muted-foreground); /* Still allow thumb hover highlight */
-}
 *:focus-visible {
     outline: 3px solid oklch(from var(--ring) l c h / 0.5);
     outline-offset: 0px;
 }
-/**
- * @file accordion.css
- * @description Styles for a reusable and accessible accordion component.
- */
  .accordion {
     width: 100%;
 }
@@ -204,6 +187,9 @@ body.js-loaded {
     min-height: 0;
     line-height: 1.6;
 }
+.accordion-content-inner > :first-child {
+    margin-top: 0;
+}
 .accordion-item[disabled] {
     opacity: 0.6;
 }
@@ -214,13 +200,6 @@ body.js-loaded {
 .accordion-item[disabled] .accordion-trigger:hover .accordion-trigger-text {
     text-decoration: none;
 }
-.accordion-content-inner > :first-child {
-    margin-top: 0;
-}
-/**
- * @file alert.css
- * @description Styles for a reusable alert component.
- */
  .alert {
     position: relative;
     width: 100%;
@@ -269,19 +248,11 @@ body.js-loaded {
 .alert-destructive .alert-description {
     color: oklch(from var(--destructive) l c h / 0.9);
 }
-/**
- * @file aspect-ratio.css
- * @description Styles for a reusable aspect ratio container.
- */
  .aspect-ratio {
     position: relative;
     width: 100%;
 }
-/* 
- * This pseudo-element creates the vertical space that enforces the aspect ratio.
- * The padding-bottom is a percentage of the element's width.
- * The ratio is controlled by the --aspect-ratio custom property.
-*/
+
 .aspect-ratio::before {
     content: '';
     display: block;
@@ -296,10 +267,6 @@ body.js-loaded {
     object-fit: cover;
     border-radius: var(--radius);
 }
-/**
- * @file avatar.css
- * @description Styles for a reusable avatar component.
- */
  .avatar {
     position: relative;
     display: inline-flex;
@@ -455,10 +422,7 @@ a.badge[aria-disabled="true"] {
   opacity: 0.6;
   pointer-events: none;
   cursor: not-allowed;
-}/**
- * @file breadcrumb.css
- * @description Styles for a reusable breadcrumb navigation component.
- */
+}
  .breadcrumb {
   font-size: 0.875rem;
 }
@@ -510,10 +474,6 @@ a.badge[aria-disabled="true"] {
 .breadcrumb-ellipsis:hover {
     background-color: var(--accent);
 }
-/**
- * @file button.css
- * @description Styles for a reusable button component.
- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -682,10 +642,7 @@ a.badge[aria-disabled="true"] {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
-}/**
- * @file calendar.css
- * @description Styles for a reusable calendar component.
- */
+}
  .calendar {
   display: inline-flex;
   flex-direction: column;
@@ -804,10 +761,6 @@ a.badge[aria-disabled="true"] {
   background-color: var(--primary);
   color: var(--primary-foreground);
 }
-/**
- * @file card.css
- * @description Styles for a reusable card component for grouping content.
- */
  .card {
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -848,10 +801,6 @@ a.badge[aria-disabled="true"] {
 .card-content + .card-footer {
   padding-top: 0;
 }
-/**
- * @file carousel.css
- * @description Styles for a reusable carousel component.
- */
  .carousel {
   position: relative;
   width: 100%;
@@ -934,10 +883,6 @@ a.badge[aria-disabled="true"] {
 .carousel-dot[data-active="true"] {
   background-color: var(--primary);
 }
-/**
- * @file checkbox.css
- * @description Styles for a reusable and accessible checkbox component.
- */
  .checkbox {
     display: flex;
     align-items: center;
@@ -1127,10 +1072,6 @@ a.badge[aria-disabled="true"] {
   font-size: 0.875rem;
   color: var(--muted-foreground);
 }
-/**
- * @file command.css
- * @description Styles for a command palette component (shadcn style).
- */
  .command {
   display: flex;
   flex-direction: column;
@@ -1225,10 +1166,6 @@ a.badge[aria-disabled="true"] {
   font-size: 0.875rem;
   color: var(--muted-foreground);
 }
-/**
- * @file context-menu.css
- * @description Styles for a rich, interactive context menu component.
- */
 .context-menu-content,
 .context-menu-sub-content {
   position: fixed;
@@ -1344,10 +1281,6 @@ a.badge[aria-disabled="true"] {
 .context-menu-disabled [data-context-menu-trigger] {
   cursor: default;
 }
-/**
- * @file dialog.css
- * @description Styles for a modal dialog component.
- */
 .dialog-overlay {
   position: fixed;
   inset: 0;
@@ -1435,10 +1368,6 @@ a.badge[aria-disabled="true"] {
 .dialog-close:hover {
   opacity: 1;
 }
-/**
- * @file dropdown-menu.css
- * @description Styles for a reusable dropdown menu component.
- */
  .dropdown-menu-content,
  .dropdown-menu-sub-content {
    position: fixed;
@@ -1545,10 +1474,6 @@ a.badge[aria-disabled="true"] {
    opacity: 0.5;
    pointer-events: none;
  }
- /**
- * @file hover-card.css
- * @description Styles for a reusable hover card component.
- */
  .hover-card {
   position: relative;
   display: inline-block;
@@ -1603,10 +1528,6 @@ a.badge[aria-disabled="true"] {
   from { transform: translateY(-0.5rem); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
-/**
- * @file input-otp.css
- * @description Styles for a reusable One-Time Password (OTP) input component.
- */
  .input-otp {
   display: flex;
   align-items: center;
@@ -1674,10 +1595,6 @@ a.badge[aria-disabled="true"] {
   color: var(--muted-foreground);
   text-align: center;
 }
-/**
- * @file input.css
- * @description Styles for a reusable text input component.
- */
  .input {
     display: flex;
     align-items: center;
@@ -1736,10 +1653,6 @@ a.badge[aria-disabled="true"] {
     outline-offset: 0px;
     border-color: var(--ring);
 }
-/**
- * @file label.css
- * @description Styles for a reusable form label component.
- */
  .label {
     display: block; 
     font-size: 0.875rem;
@@ -1752,19 +1665,11 @@ a.badge[aria-disabled="true"] {
 .label[for] {
     cursor: pointer; 
 }
-/* 
- * When the element associated with the label is disabled,
- * style the label to appear disabled as well.
- * This works for any immediately following disabled element.
-*/
+
 .label[for]:has(+ :disabled) {
     color: var(--muted-foreground);
     cursor: not-allowed;
 }
-/**
- * @file menubar.css
- * @description Styles for a desktop-style menubar component, aligned with dropdown-menu.
- */
  .menubar {
   display: inline-flex;
   align-items: center;
@@ -1899,10 +1804,6 @@ a.badge[aria-disabled="true"] {
   opacity: 0.5;
   pointer-events: none;
 }
-/**
- * @file navigation-menu.css
- * @description Styles for a reusable, data-driven, and animated navigation menu component.
- */
 .navmenu {
   position: relative;
   display: flex;
@@ -2064,10 +1965,6 @@ a.badge[aria-disabled="true"] {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-/**
- * @file pagination.css
- * @description Styles for a dynamic pagination component.
- */
  .pagination-container {
   display: flex;
   justify-content: center;
@@ -2132,10 +2029,6 @@ a.badge[aria-disabled="true"] {
 [data-theme='dark'] .pagination-link:hover:not(.is-disabled) {
   background-color: oklch(from var(--border) l c h / 0.5);
 }
-/**
- * @file popover.css
- * @description Minimal popover styles - positioning handled by components.
- */
  .popover-content {
   transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
   opacity: 0;
@@ -2156,10 +2049,6 @@ a.badge[aria-disabled="true"] {
 .popover-content.popover-hidden {
   pointer-events: none;
 }
-/**
- * @file progress.css
- * @description Styles for a reusable progress bar component.
- */
  .progress {
   position: relative;
   height: 0.5rem;
@@ -2176,10 +2065,6 @@ a.badge[aria-disabled="true"] {
   transition: transform 0.66s cubic-bezier(0.65, 0, 0.35, 1);
   transform: translateX(-100%);
 }
-/**
- * @file radio-group.css
- * @description Styles for a reusable radio button group component.
- */
  .radio-group {
   display: grid;
   gap: 0.5rem;
@@ -2240,10 +2125,6 @@ a.badge[aria-disabled="true"] {
   opacity: 0.6;
   cursor: not-allowed;
 }
-/**
- * @file resizable.css
- * @description Styles for a resizable panel component using class-based states.
- */
  .resizable-root {
   display: flex;
   width: 100%;
@@ -2354,10 +2235,6 @@ a.badge[aria-disabled="true"] {
 .resizable-root.resizable-disabled .resizable-handle::after {
   background: var(--muted-foreground);
 }
-/**
- * @file scroll-area.css
- * @description Styles for a reusable scroll area component with custom scrollbars.
- */
  .scroll-area {
   position: relative;
   overflow: hidden;
@@ -2456,10 +2333,6 @@ a.badge[aria-disabled="true"] {
 .scroll-area.scroll-area-thick .scroll-area-scrollbar-horizontal > .scroll-area-thumb {
   height: 10px;
 }
-/**
- * @file select.css
- * @description Styles for a reusable custom select component.
- */
  .select {
     position: relative;
     width: 100%;
@@ -2570,10 +2443,6 @@ a.badge[aria-disabled="true"] {
     opacity: 0.6;
     cursor: not-allowed;
 }
-/**
- * @file separator.css
- * @description Styles for a reusable separator component.
- */
  .separator {
   background-color: var(--border);
   flex-shrink: 0;
@@ -2591,10 +2460,6 @@ a.badge[aria-disabled="true"] {
   margin: 0 1rem; 
   vertical-align: middle;
 }
-/**
- * @file sheet.css
- * @description Styles for a customizable sheet component.
- */
  .sheet-overlay {
   position: fixed;
   inset: 0;
@@ -2705,10 +2570,6 @@ a.badge[aria-disabled="true"] {
 .sheet-close:hover {
   opacity: 1;
 }
-/**
- * @file sidebar.css
- * @description A reusable and customizable sidebar component.
- */
  .sidebar {
   --sidebar-width: 16rem;
   --sidebar-width-mobile: 18rem;
@@ -2716,7 +2577,7 @@ a.badge[aria-disabled="true"] {
   --sidebar-icon-size: 1rem;
   --sidebar-menu-item-size: 2.25rem; 
   --sidebar-menu-item-spacing: 0.25rem; 
-  --sidebar-content-padding: 0.5rem; 
+  --sidebar-padding: 0.5rem;
   --sidebar-group-padding: 0.5rem; 
   --sidebar-label-padding: 0.75rem; 
   display: flex;
@@ -3137,34 +2998,10 @@ a.badge[aria-disabled="true"] {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: var(--sidebar-content-padding);
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
-}
-.sidebar-content::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  background: transparent;
-}
-.sidebar-content:hover {
-  scrollbar-width: thin; 
-  scrollbar-color: var(--sidebar-border) transparent;
-}
-.sidebar-content:hover::-webkit-scrollbar {
-  width: 4px;
-}
-.sidebar-content:hover::-webkit-scrollbar-track {
-  background: transparent;
-}
-.sidebar-content:hover::-webkit-scrollbar-thumb {
-  background: var(--sidebar-border);
-  border-radius: 2px;
-}
-.sidebar-content:hover::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
+  padding: 0 var(--sidebar-padding);
 }
 .sidebar-header {
-  padding-top: 0;
+  padding-top: 0.5rem;
   padding-bottom: var(--sidebar-group-padding);
   flex-shrink: 0;
   order: -1; 
@@ -3181,7 +3018,7 @@ a.badge[aria-disabled="true"] {
 }
 .sidebar-footer {
   padding-top: var(--sidebar-group-padding);
-  padding-bottom: 0;
+  padding-bottom: 0.5rem;
   flex-shrink: 0;
   order: 999; 
   margin-top: auto; 
@@ -3309,10 +3146,6 @@ a.badge[aria-disabled="true"] {
   outline: 2px solid var(--sidebar-ring);
   outline-offset: 2px;
 }
-/**
- * @file skeleton.css
- * @description Styles for a reusable skeleton loader component.
- */
  .skeleton {
   display: block;
   background-color: var(--accent);
@@ -3327,10 +3160,6 @@ a.badge[aria-disabled="true"] {
     opacity: 0.85; 
   }
 }
-/**
- * @file slider.css
- * @description Styles for a reusable slider component.
- */
  .slider {
   position: relative;
   display: flex;
@@ -3398,9 +3227,6 @@ a.badge[aria-disabled="true"] {
   left: 50%;
   transform: translate(-50%, 50%);
 }
-.slider-thumb:hover,
-.slider-thumb-vertical:hover {
-}
 .slider-input[type="range"] {
   position: absolute;
   margin: 0;
@@ -3462,10 +3288,6 @@ a.badge[aria-disabled="true"] {
 .slider-input:disabled ~ .slider-range-vertical {
   opacity: 0.5;
 }
-/**
- * @file sonner.css
- * @description Styles for a toast notification component.
- */
  .sonner-container {
   position: fixed;
   z-index: 9999;
@@ -3518,10 +3340,6 @@ a.badge[aria-disabled="true"] {
 }
 .sonner-close-button { flex-shrink: 0; width: 1.5rem; height: 1.5rem; background-color: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted-foreground); transition: color 0.1s; border-radius: 9999px; }
 .sonner-close-button:hover { background-color: var(--accent); color: var(--foreground); }
-/**
- * @file switch.css
- * @description Styles for a reusable switch toggle component.
- */
  .switch {
   position: relative;
   display: inline-flex;
@@ -3628,10 +3446,6 @@ a.badge[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
-/**
- * @file table.css
- * @description Styles for a responsive, modern table component.
- */
  .table {
   width: 100%;
   caption-side: bottom;
@@ -3645,11 +3459,7 @@ a.badge[aria-disabled="true"] {
   border-bottom: 1px solid var(--border);
   transition: background-color 0.1s ease-in-out;
 }
-/* 
-.table-body .table-row:last-child {
-  border-bottom: 0;
-} 
-*/
+
 .table-body .table-row:hover {
   background-color: oklch(from var(--foreground) l c h / 0.05);
 }
@@ -3676,10 +3486,6 @@ a.badge[aria-disabled="true"] {
   font-size: 0.875rem;
   color: var(--muted-foreground);
 }
-/**
- * @file tabs.css
- * @description Styles for the tabs component.
- */
  .tabs-list {
   display: inline-flex;
   height: 2.5rem;
@@ -3725,10 +3531,6 @@ a.badge[aria-disabled="true"] {
   outline-offset: 2px;
   border-radius: var(--radius);
 }
-/**
- * @file textarea.css
- * @description Styles for a reusable textarea component.
- */
  .textarea {
   display: flex;
   width: 100%;
@@ -3756,10 +3558,6 @@ a.badge[aria-disabled="true"] {
 .textarea--no-resize {
   resize: none;
 }
-/**
- * @file toggle-group.css
- * @description A self-contained stylesheet for the toggle group component.
- */
  .toggle-group {
   display: inline-flex;
 }
@@ -3820,10 +3618,6 @@ a.badge[aria-disabled="true"] {
   pointer-events: none;
   cursor: not-allowed;
 }
-/**
- * @file toggle.css
- * @description Styles for a reusable toggle button component.
- */
  .toggle {
   display: inline-flex;
   align-items: center;
@@ -3943,10 +3737,6 @@ a.badge[aria-disabled="true"] {
   cursor: not-allowed;
   pointer-events: none;
 }
-/**
- * @file tooltip.css
- * @description Styles for a reusable tooltip component using class-based states.
- */
  .tooltip-content {
   position: fixed;
   z-index: 50;
