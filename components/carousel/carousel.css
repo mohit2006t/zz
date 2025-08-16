@@ -1,0 +1,107 @@
+/**
+ * @file carousel.css
+ * @description Styles for a reusable carousel component.
+ */
+
+ .carousel {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.carousel-content {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  min-width: 0;
+  /* Add padding to create space between items if needed */
+  /* padding-left: 1rem; */
+}
+
+/* --- Arrow Button Styles --- */
+.carousel-previous,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.1s, color 0.1s, left 0.2s, right 0.2s;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-previous:hover:not([data-disabled="true"]),
+.carousel-next:hover:not([data-disabled="true"]) {
+  background-color: oklch(from var(--foreground) l c h / 0.05);
+  color: var(--foreground);
+}
+
+/* Default position: Outside */
+.carousel-previous { left: -3rem; }
+.carousel-next { right: -3rem; }
+
+/* Modifier class for inside button position */
+.carousel--buttons-inside .carousel-previous {
+  left: 1rem;
+}
+.carousel--buttons-inside .carousel-next {
+  right: 1rem;
+}
+
+.carousel-previous[data-disabled="true"],
+.carousel-next[data-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* --- Dot Indicator Styles --- */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  /* Default position: Inside */
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* Modifier class for outside dot position */
+.carousel--dots-outside .carousel-dots {
+    position: static;
+    transform: none;
+    margin-top: 1rem;
+}
+
+.carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--input);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.carousel-dot[data-active="true"] {
+  background-color: var(--primary);
+}

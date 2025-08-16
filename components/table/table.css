@@ -1,0 +1,60 @@
+/**
+ * @file table.css
+ * @description Styles for a responsive, modern table component.
+ */
+
+ .table {
+  width: 100%;
+  caption-side: bottom;
+  border-collapse: collapse;
+  font-size: 0.875rem; /* text-sm */
+}
+
+.table-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.table-row {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.1s ease-in-out;
+}
+
+/* This rule was removed to ensure the last row also has a border */
+/* 
+.table-body .table-row:last-child {
+  border-bottom: 0;
+} 
+*/
+
+.table-body .table-row:hover {
+  background-color: oklch(from var(--foreground) l c h / 0.05);
+}
+
+.table-head {
+  padding: 0.5em 1em;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.table-cell {
+  padding: 0.75em 1em;
+  vertical-align: middle;
+}
+
+.table-footer {
+  background-color: oklch(from var(--foreground) l c h / 0.05);
+  font-weight: 500;
+}
+
+/* The row inside the footer will not have a bottom border now */
+.table-footer .table-row {
+    border-bottom: 0;
+}
+
+.table-caption {
+  margin-top: 1rem; /* mt-4 */
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}

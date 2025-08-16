@@ -1,0 +1,22 @@
+/**
+ * @file skeleton.css
+ * @description Styles for a reusable skeleton loader component.
+ */
+
+ .skeleton {
+  display: block;
+  /* Using --accent as the base color, which is brighter than --muted */
+  background-color: var(--accent);
+  border-radius: var(--radius);
+  animation: skeleton-fade 1.5s infinite ease-in-out;
+}
+
+/* The animation now pulses to a brighter state */
+@keyframes skeleton-fade {
+  0%, 100% {
+    opacity: 0.5; /* Base, more subtle state */
+  }
+  50% {
+    opacity: 0.85; /* Pulse to a brighter, more visible state */
+  }
+}

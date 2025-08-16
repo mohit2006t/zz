@@ -1,0 +1,142 @@
+/**
+ * @file resizable.css
+ * @description Styles for a resizable panel component using class-based states.
+ */
+
+ .resizable-root {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+  border-radius: var(--radius);
+}
+
+.resizable-panel > .resizable-root {
+  border: none;
+}
+
+.resizable-root.resizable-vertical {
+  flex-direction: column;
+}
+
+.resizable-panel {
+  position: relative;
+  overflow: auto;
+  outline: none;
+  background: inherit;
+  min-width: 0;
+  min-height: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.resizable-handle {
+  flex-shrink: 0;
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 0;
+  z-index: 2;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.resizable-handle:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -1px;
+}
+
+/* Horizontal layout handles */
+.resizable-root.resizable-horizontal > .resizable-handle {
+  width: 4px;
+  cursor: ew-resize;
+  margin: 0 -1.5px;
+}
+
+.resizable-root.resizable-horizontal > .resizable-handle::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background: var(--border);
+}
+
+/* Vertical layout handles */
+.resizable-root.resizable-vertical > .resizable-handle {
+  height: 4px;
+  width: 100%;
+  cursor: ns-resize;
+  margin: -1.5px 0;
+}
+
+.resizable-root.resizable-vertical > .resizable-handle::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  width: 100%;
+  background: var(--border);
+}
+
+/* Handle states */
+.resizable-handle:hover::after {
+  background: var(--primary);
+}
+
+.resizable-handle-dragging::after {
+  background: var(--primary);
+}
+
+.resizable-handle:focus-visible::after {
+  background: var(--primary);
+}
+
+/* Nested resizable styling */
+.resizable-panel .resizable-root {
+  border-radius: 0;
+}
+
+/* Panel content styling */
+.resizable-panel-content {
+  padding: 1rem;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Size variants */
+.resizable-root.resizable-thick .resizable-handle {
+  background: var(--muted);
+}
+
+.resizable-root.resizable-thick.resizable-horizontal > .resizable-handle {
+  width: 8px;
+  margin: 0 -3px;
+}
+
+.resizable-root.resizable-thick.resizable-vertical > .resizable-handle {
+  height: 8px;
+  margin: -3px 0;
+}
+
+.resizable-root.resizable-thick .resizable-handle::after {
+  display: none;
+}
+
+/* Disabled state */
+.resizable-root.resizable-disabled .resizable-handle {
+  cursor: default;
+  pointer-events: none;
+}
+
+.resizable-root.resizable-disabled .resizable-handle::after {
+  background: var(--muted-foreground);
+}

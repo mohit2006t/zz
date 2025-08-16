@@ -1,0 +1,76 @@
+/**
+ * @file hover-card.css
+ * @description Styles for a reusable hover card component.
+ */
+
+ .hover-card {
+  position: relative;
+  display: inline-block;
+}
+
+/* The trigger can be any element, this class is just a hook for JS */
+.hover-card-trigger {
+  cursor: pointer;
+}
+
+.hover-card-content {
+  position: fixed;
+  z-index: 50;
+  width: 256px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  outline: none;
+  
+  /* Animation setup */
+  opacity: 0;
+  transform: scale(0.98) translateY(-0.5rem);
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.hover-card-content[data-state="open"] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: hover-card-slide-in 150ms ease;
+}
+
+.hover-card-content[data-state="closed"] {
+  opacity: 0;
+  transform: scale(0.98) translateY(-0.5rem);
+  animation: hover-card-fade-out 150ms ease;
+}
+
+/* Positioning variants */
+.hover-card-content[data-position="top"] {
+  transform-origin: bottom center;
+}
+
+.hover-card-content[data-position="bottom"] {
+  transform-origin: top center;
+}
+
+.hover-card-content[data-position="left"] {
+  transform-origin: right center;
+}
+
+.hover-card-content[data-position="right"] {
+  transform-origin: left center;
+}
+
+/* Disabled state */
+.hover-card-disabled .hover-card-trigger {
+  cursor: default;
+  opacity: 0.5;
+}
+
+@keyframes hover-card-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes hover-card-slide-in {
+  from { transform: translateY(-0.5rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

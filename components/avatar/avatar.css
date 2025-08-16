@@ -1,0 +1,66 @@
+/**
+ * @file avatar.css
+ * @description Styles for a reusable avatar component.
+ */
+ .avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px; /* circular */
+    vertical-align: middle;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    z-index: -1;
+}
+
+/* This clever selector shows the fallback only when the image fails to load */
+.avatar-image:error + .avatar-fallback {
+    z-index: 1;
+}
+
+/* Modifier for stacking avatars */
+.avatar-stack {
+    display: flex;
+}
+.avatar-stack > .avatar:not(:first-child) {
+    margin-left: -0.5rem;
+}
+
+/* Modifier for adding a ring around the avatar */
+.avatar-ring {
+    outline: 2px solid var(--background);
+    outline-offset: -2px;
+}
+
+/* Shape and style modifiers */
+.avatar-rounded-lg {
+    border-radius: var(--radius);
+}
+.avatar-grayscale {
+    filter: grayscale(100%);
+}

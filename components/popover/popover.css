@@ -1,0 +1,33 @@
+/**
+ * @file popover.css
+ * @description Minimal popover styles - positioning handled by components.
+ */
+
+ .popover-content {
+  /* Only basic display and animation styles */
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+  
+  /* Default hidden state */
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+/* State classes */
+.popover-content.popover-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.popover-content.popover-visible {
+  pointer-events: auto;
+}
+
+.popover-content.popover-closed {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.popover-content.popover-hidden {
+  pointer-events: none;
+}

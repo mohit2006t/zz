@@ -1,0 +1,128 @@
+/**
+ * @file toggle.css
+ * @description Styles for a reusable toggle button component.
+ */
+
+ .toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  background-color: transparent;
+  color: var(--foreground);
+}
+.toggle {
+  height: 2.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  gap: calc(var(--spacing) * 2.5);
+}
+.toggle-xs {
+  height: 1.75rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  gap: calc(var(--spacing) * 1.5);
+}
+.toggle-sm {
+  height: 2rem;
+  padding: 0.375rem 0.75rem;
+  gap: calc(var(--spacing) * 2);
+}
+.toggle-lg {
+  height: 2.5rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  gap: calc(var(--spacing) * 3);
+}
+.toggle-xl {
+  height: 2.75rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 1.125rem;
+  gap: calc(var(--spacing) * 3.5);
+}
+
+.toggle-icon {
+  padding: 0;
+  gap: 0;
+}
+.toggle-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.toggle-icon.toggle-xs {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.toggle-icon.toggle-sm {
+  width: 2rem;
+  height: 2rem;
+}
+.toggle-icon.toggle-lg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.toggle-icon.toggle-xl {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+.toggle i,
+.toggle svg {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+.toggle-xs i,
+.toggle-xs svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.toggle-sm i,
+.toggle-sm svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.toggle-lg i,
+.toggle-lg svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.toggle-xl i,
+.toggle-xl svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.toggle:not(.toggle-outline):not([data-state='on']):hover:not(:disabled) {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+}
+.toggle:not(.toggle-outline)[data-state='on'] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.toggle-outline {
+  border-color: var(--border);
+}
+.toggle-outline:not([data-state='on']):hover:not(:disabled),
+.toggle-outline[data-state='on'] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+[data-theme='dark'] .toggle-outline:not([data-state='on']):hover:not(:disabled),
+[data-theme='dark'] .toggle-outline[data-state='on'] {
+  border-color: var(--ring);
+}
+
+.toggle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}

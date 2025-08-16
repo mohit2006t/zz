@@ -1,0 +1,139 @@
+/**
+ * @file context-menu.css
+ * @description Styles for a rich, interactive context menu component.
+ */
+
+/* 1. Content Panels (Main and Sub) */
+.context-menu-content,
+.context-menu-sub-content {
+  position: fixed;
+  z-index: 50;
+  min-width: 12rem;
+  overflow: hidden;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.25rem;
+  transition: opacity 0.1s ease-in-out;
+  /* Hide by default to prevent flicker */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.context-menu-content[data-state="open"],
+.context-menu-sub-content[data-state="open"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 2. All Item Types */
+.context-menu-item,
+.context-menu-checkbox-item,
+.context-menu-radio-item,
+.context-menu-sub-trigger {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 2rem;
+  padding: 0 0.75rem;
+  padding-left: 2rem; 
+  font-size: 0.875rem;
+  border-radius: calc(var(--radius) - 2px);
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.1s, color 0.1s;
+}
+
+.context-menu-item.context-menu-item--no-icon,
+.context-menu-sub-trigger.context-menu-item--no-icon {
+  padding-left: 0.75rem;
+}
+
+.context-menu-item:hover,
+.context-menu-checkbox-item:hover,
+.context-menu-radio-item:hover,
+.context-menu-sub-trigger:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* 3. Indicators */
+.context-menu-item-indicator {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.context-menu-item-indicator .dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background-color: currentColor;
+}
+
+/* Hide indicators by default, show when checked */
+.context-menu-checkbox-item[aria-checked="false"] .context-menu-item-indicator,
+.context-menu-radio-item[aria-checked="false"] .context-menu-item-indicator {
+    display: none;
+}
+
+/* 4. Other Elements */
+.context-menu-separator {
+  height: 1px;
+  background-color: var(--border);
+  margin: 0.25rem -0.25rem;
+}
+.context-menu-label {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  padding: 0 0.75rem;
+  padding-left: 2rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.context-menu-label.context-menu-item--no-icon {
+    padding-left: 0.75rem;
+}
+
+.context-menu-shortcut {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+.context-menu-sub-trigger .context-menu-chevron {
+  margin-left: auto;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* 5. Destructive & Disabled States */
+.context-menu-item[data-destructive="true"] {
+  color: var(--destructive);
+}
+.context-menu-item[data-destructive="true"]:hover {
+  background-color: oklch(from var(--destructive) l c h / 0.15);
+  color: var(--destructive);
+}
+.context-menu-item[data-disabled="true"],
+.context-menu-checkbox-item[data-disabled="true"],
+.context-menu-radio-item[data-disabled="true"],
+.context-menu-sub-trigger[data-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Disabled context menu */
+.context-menu-disabled [data-context-menu-trigger] {
+  cursor: default;
+}

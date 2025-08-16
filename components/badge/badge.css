@@ -1,0 +1,113 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  user-select: none;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+
+.badge-default,
+.badge:not(.badge-secondary):not(.badge-destructive):not(.badge-outline) {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: transparent;
+}
+
+a.badge-default:hover,
+a.badge:not(.badge-secondary):not(.badge-destructive):not(.badge-outline):hover {
+  background-color: oklch(from var(--primary) l c h / 0.9);
+}
+
+.badge-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: transparent;
+}
+a.badge-secondary:hover {
+  background-color: oklch(from var(--secondary) l c h / 0.9);
+}
+
+.badge-destructive {
+  background-color: var(--destructive);
+  color: oklch(1 0 0);
+  border-color: transparent;
+}
+a.badge-destructive:hover {
+  background-color: oklch(from var(--destructive) l c h / 0.9);
+}
+a.badge-destructive:focus-visible {
+  outline: 2px solid oklch(from var(--destructive) l c h / 0.2);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .badge-destructive {
+  background-color: oklch(from var(--destructive) l c h / 0.6);
+  color: oklch(1 0 0);
+}
+[data-theme="dark"] a.badge-destructive:focus-visible {
+  outline: 2px solid oklch(from var(--destructive) l c h / 0.4);
+  outline-offset: 2px;
+}
+
+.badge-outline {
+  background-color: transparent;
+  color: var(--foreground);
+  border-color: var(--border);
+}
+a.badge-outline:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.badge-xs {
+  font-size: 0.6rem;
+  padding: 0.05rem 0.375rem;
+  border-radius: 0.22rem;
+}
+.badge-sm {
+  font-size: 0.7rem;
+  padding: 0.12rem 0.43rem;
+}
+.badge-lg {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.3rem;
+}
+.badge-xl {
+  font-size: 1.05rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.35rem;
+}
+
+.badge-icon {
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}
+.badge > i,
+.badge > svg {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.33em;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.badge-pill {
+  border-radius: 9999px;
+}
+.badge[aria-disabled="true"],
+a.badge[aria-disabled="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}

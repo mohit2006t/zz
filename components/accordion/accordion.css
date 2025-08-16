@@ -1,0 +1,93 @@
+/**
+ * @file accordion.css
+ * @description Styles for a reusable and accessible accordion component.
+ */
+ .accordion {
+    width: 100%;
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.accordion-item:last-of-type {
+    border-bottom: none;
+}
+
+.accordion-trigger {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.25rem;
+    cursor: pointer;
+    width: 100%;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--card-foreground);
+    text-align: left;
+    transition: color 0.2s;
+    border-radius: var(--radius);
+}
+
+.accordion-trigger::-webkit-details-marker {
+    display: none;
+}
+
+.accordion-trigger-text {
+    text-decoration: none;
+}
+
+.accordion-trigger:hover .accordion-trigger-text {
+    text-decoration: underline;
+}
+
+.accordion-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--muted-foreground);
+    transform: translateY(1px);
+    transition: transform 0.2s ease-in-out;
+}
+
+.accordion-item[open] .accordion-icon {
+    transform: translateY(1px) rotate(180deg);
+}
+
+.accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease-out;
+    overflow: hidden;
+    font-size: 0.875rem;
+    color: oklch(from var(--foreground) l c h / 0.85);
+}
+
+.accordion-item[open] > .accordion-content {
+    grid-template-rows: 1fr;
+}
+
+.accordion-content-inner {
+    padding-inline: 0.25rem;
+    padding-bottom: 1rem;
+    min-height: 0;
+    line-height: 1.6;
+}
+
+.accordion-item[disabled] {
+    opacity: 0.6;
+}
+
+.accordion-item[disabled] .accordion-trigger {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.accordion-item[disabled] .accordion-trigger:hover .accordion-trigger-text {
+    text-decoration: none;
+}
+
+.accordion-content-inner > :first-child {
+    margin-top: 0;
+}

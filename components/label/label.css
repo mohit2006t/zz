@@ -1,0 +1,27 @@
+/**
+ * @file label.css
+ * @description Styles for a reusable form label component.
+ */
+ .label {
+    display: block; /* Common default for form layouts */
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--foreground);
+    user-select: none;
+    margin-bottom: 0.5rem; /* Adds default spacing below the label */
+}
+
+.label[for] {
+    cursor: pointer; /* Indicates the label is clickable */
+}
+
+/* 
+ * When the element associated with the label is disabled,
+ * style the label to appear disabled as well.
+ * This works for any immediately following disabled element.
+*/
+.label[for]:has(+ :disabled) {
+    color: var(--muted-foreground);
+    cursor: not-allowed;
+}
