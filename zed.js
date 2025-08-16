@@ -219,8 +219,19 @@
     _setupEventListeners() {
       this.items.forEach(function(item) {
         var trigger = item.querySelector('.accordion-trigger');
+        if (trigger) {
+          trigger.addEventListener('click', function(e) {
+            if (item.hasAttribute('disabled')) {
+              e.preventDefault();
+            }
+          });
+        }
         if (this.type === 'single') item.addEventListener('toggle', this._boundHandlers.toggle);
         item.addEventListener('toggle', function(e) {
+          if (e.target.hasAttribute('disabled')) {
+            e.target.open = !e.target.open;
+            return;
+          }
           return this._updateAriaExpanded(e.target);
         }.bind(this));
         if (this.options.keyboard && trigger) {
@@ -239,6 +250,9 @@
     }
     _handleToggle(event) {
       var currentItem = event.target;
+      if (currentItem.hasAttribute('disabled')) {
+        return;
+      }
       if (currentItem.open && this.options.closeOthers) {
         this.items.forEach(function(otherItem) {
           if (otherItem !== currentItem && otherItem.open) otherItem.open = false;
@@ -251,29 +265,38 @@
       });
     }
     _handleKeydown(event) {
-      var currentIndex = this.items.indexOf(event.target.closest('.accordion-item'));
-      var nextIndex;
+      const enabledItems = this.items.filter(item => !item.hasAttribute('disabled'));
+      if (enabledItems.length === 0) return;
+      const currentItem = event.target.closest('.accordion-item');
+      if (!currentItem) return;
+      const currentIndexInEnabled = enabledItems.indexOf(currentItem);
+      if (currentIndexInEnabled === -1) return;
+      let nextEnabledItem = null;
       switch (event.key) {
         case 'ArrowDown':
         case 'ArrowRight':
           event.preventDefault();
-          nextIndex = (currentIndex + 1) % this.items.length;
-          this._focusTrigger(nextIndex);
+          nextEnabledItem = enabledItems[(currentIndexInEnabled + 1) % enabledItems.length];
           break;
         case 'ArrowUp':
         case 'ArrowLeft':
           event.preventDefault();
-          nextIndex = (currentIndex - 1 + this.items.length) % this.items.length;
-          this._focusTrigger(nextIndex);
+          nextEnabledItem = enabledItems[(currentIndexInEnabled - 1 + enabledItems.length) % enabledItems.length];
           break;
         case 'Home':
           event.preventDefault();
-          this._focusTrigger(0);
+          nextEnabledItem = enabledItems[0];
           break;
         case 'End':
           event.preventDefault();
-          this._focusTrigger(this.items.length - 1);
+          nextEnabledItem = enabledItems[enabledItems.length - 1];
           break;
+        default:
+          return;
+      }
+      if (nextEnabledItem) {
+        const nextIndexInAll = this.items.indexOf(nextEnabledItem);
+        this._focusTrigger(nextIndexInAll);
       }
     }
     _updateAriaExpanded(item) {
@@ -477,6 +500,13 @@
     emit(event, data) {
       UI.utils.emitEvent(this.element, event, 'calendar', data);
     }
+    destroy() {
+      this.element.removeEventListener('click', this._boundHandlers.click);
+      this.element.removeEventListener('change', this._boundHandlers.change);
+      this.element.classList.remove('calendar-initialized');
+      delete this.element.calendar;
+      this.emit('destroy');
+    }
   }
 
   class Carousel {
@@ -668,7 +698,9 @@
       this.trigger = this.element.querySelector('.combobox-trigger');
       this.triggerText = this.element.querySelector('.combobox-trigger-text');
       this.popoverContent = this.element.querySelector('.popover-content');
-      if (!this.trigger || !this.triggerText || !this.popoverContent) return;
+      if (!this.trigger || !this.popoverContent) return;
+      if (!this.triggerText) this.triggerText = this.trigger;
+
       this.isOpen = false;
       this.selectedValue = null;
       this.filteredItems = [];
@@ -708,8 +740,10 @@
       });
     }
     setupUI() {
-      this.triggerText.textContent = this.options.placeholder;
-      this.triggerText.classList.add('combobox-trigger-placeholder');
+      if (this.triggerText.matches('.combobox-trigger-text')) {
+        this.triggerText.textContent = this.options.placeholder;
+        this.triggerText.classList.add('combobox-trigger-placeholder');
+      }
       this.popoverContent.innerHTML = "\n            <div class=\"combobox-search\">\n                <i data-lucide=\"search\" class=\"combobox-search-icon\"></i>\n                <input type=\"text\" class=\"combobox-search-input\" placeholder=\"".concat(this.options.searchPlaceholder, "\" autocomplete=\"off\">\n            </div>\n            <div class=\"combobox-list\" role=\"listbox\"></div>");
       this.searchInput = this.popoverContent.querySelector('.combobox-search-input');
       this.itemsList = this.popoverContent.querySelector('.combobox-list');
@@ -832,8 +866,10 @@
     }
     selectItem(item) {
       this.selectedValue = item;
-      this.triggerText.textContent = item.label;
-      this.triggerText.classList.remove('combobox-trigger-placeholder');
+      if (this.triggerText.matches('.combobox-trigger-text')) {
+        this.triggerText.textContent = item.label;
+        this.triggerText.classList.remove('combobox-trigger-placeholder');
+      }
       this.close();
       setTimeout(function() {
         return this.trigger.focus();
@@ -851,8 +887,10 @@
         }.bind(this));
         if (item) {
           this.selectedValue = item;
-          this.triggerText.textContent = item.label;
-          this.triggerText.classList.remove('combobox-trigger-placeholder');
+          if (this.triggerText.matches('.combobox-trigger-text')) {
+            this.triggerText.textContent = item.label;
+            this.triggerText.classList.remove('combobox-trigger-placeholder');
+          }
         }
       }
     }
@@ -1656,118 +1694,275 @@
   }
 
   class InputOTP {
-    constructor(element, options) {
-      if (!UI.core.initComponent(this, element, 'inputOTP', this.defaults, options)) return;
-      this.slots = Array.from(this.element.querySelectorAll('.input-otp-slot'));
-      if (this.slots.length === 0) return;
-      this._boundHandlers = {
-        keydown: function(e) {
-          return this._onKeyDown(e);
-        }.bind(this),
-        input: function(e) {
-          return this._onInput(e);
-        }.bind(this),
-        paste: function(e) {
-          return this._onPaste(e);
-        }.bind(this),
-        focusin: function(e) {
-          return e.target.select();
-        },
-        click: function(e) {
-          return this._onClick(e);
-        }.bind(this)
-      };
-      this.init();
-    }
-    defaults = {
-      onComplete: function onComplete() {},
-      onValueChange: function onValueChange() {}
-    };
-    init() {
-      this.element.addEventListener('keydown', this._boundHandlers.keydown);
-      this.element.addEventListener('input', this._boundHandlers.input);
-      this.element.addEventListener('paste', this._boundHandlers.paste);
-      this.element.addEventListener('focusin', this._boundHandlers.focusin);
-      this.element.addEventListener('click', this._boundHandlers.click);
-      this.element.classList.add('input-otp-initialized');
-      this.emit('init');
-    }
-    _onKeyDown(e) {
-      var target = e.target;
-      if (!target.matches('.input-otp-slot')) return;
-      var index = this.slots.indexOf(target);
-      if (e.key === 'Backspace') {
-        e.preventDefault();
-        if (target.value === '' && index > 0) {
-          this.slots[index - 1].focus();
-        } else {
-          target.value = '';
-          this._updateValue();
+    constructor(otpElement, options = {}) {
+        if (!otpElement || otpElement.inputOTP) return;
+
+        this.element = otpElement;
+        this.id = otpElement.id || `input-otp-${Math.random().toString(36).substr(2, 9)}`;
+        this.options = { ...this.defaults, ...options };
+
+        // Core elements
+        this.slots = Array.from(this.element.querySelectorAll('.input-otp-slot'));
+        this.valueInput = this.element.querySelector('input[type="hidden"]');
+
+        if (this.slots.length === 0) {
+            console.error('InputOTP missing required elements: .input-otp-slot', this.element);
+            return;
         }
-      } else if (e.key === 'ArrowLeft' && index > 0) {
-        this.slots[index - 1].focus();
-      } else if (e.key === 'ArrowRight' && index < this.slots.length - 1) {
-        this.slots[index + 1].focus();
-      }
+
+        // State
+        this.isProgrammaticFocus = false;
+        this._handleDeselect = null;
+
+        // Bound event handlers for proper cleanup
+        this._boundHandlers = {
+            keydown: (e) => this._onKeyDown(e),
+            input: (e) => this._onInput(e),
+            paste: (e) => this._onPaste(e),
+            focusin: (e) => this._onFocus(e),
+            click: (e) => this._onClick(e)
+        };
+
+        this.init();
+        this.element.inputOTP = this;
     }
-    _onInput(e) {
-      var target = e.target;
-      if (!target.matches('.input-otp-slot')) return;
-      var index = this.slots.indexOf(target);
-      if (target.value && index < this.slots.length - 1) {
-        this.slots[index + 1].focus();
-      }
-      this._updateValue();
+
+    defaults = {
+        onComplete: () => {},
+        onValueChange: () => {}
     }
-    _onPaste(e) {
-      var _this = this;
-      e.preventDefault();
-      var pastedData = e.clipboardData.getData('text').trim().slice(0, this.slots.length);
-      pastedData.split('').forEach(function(char, i) {
-        if (_this.slots[i]) _this.slots[i].value = char;
-      });
-      var nextFocusIndex = Math.min(pastedData.length, this.slots.length - 1);
-      this.slots[nextFocusIndex].focus();
-      this._updateValue();
+
+    init() {
+        this.setupEvents();
+        this.element.classList.add('input-otp-initialized');
+        this.emit('init');
     }
-    _onClick(e) {
-      var _this$slots$find;
-      if (e.target.matches('.input-otp-slot')) {
-        e.preventDefault();
-        (_this$slots$find = this.slots.find(function(slot) {
-          return !slot.value;
-        })) !== null && _this$slots$find !== void 0 ? _this$slots$find : this.slots[this.slots.length - 1].focus();
-      }
+
+    setupEvents() {
+        this.element.addEventListener('keydown', this._boundHandlers.keydown);
+        this.element.addEventListener('input', this._boundHandlers.input);
+        this.element.addEventListener('paste', this._boundHandlers.paste);
+        this.element.addEventListener('focusin', this._boundHandlers.focusin);
+        this.element.addEventListener('click', this._boundHandlers.click);
     }
+
+    _clearSelection() {
+        this.slots.forEach(s => s.classList.remove('is-selected'));
+        if (this._handleDeselect) {
+            document.removeEventListener('click', this._handleDeselect);
+            this._handleDeselect = null;
+        }
+    }
+
     _updateValue() {
-      var value = this.slots.map(function(slot) {
-        return slot.value;
-      }).join('');
-      this.options.onValueChange(value);
-      this.emit('value-change', {
-        value: value
-      });
-      if (value.length === this.slots.length) {
-        this.options.onComplete(value);
-        this.emit('complete', {
-          value: value
+        const value = this.slots.map(slot => slot.value).join('');
+
+        if (this.valueInput) {
+            this.valueInput.value = value;
+        }
+
+        this.options.onValueChange(value);
+        this.emit('value-change', {
+            value
         });
-      }
+
+        // Check if complete
+        if (value.length === this.slots.length && value.split('').every(char => char !== '')) {
+            this.options.onComplete(value);
+            this.emit('complete', {
+                value
+            });
+        }
     }
-    emit(event, data) {
-      UI.utils.emitEvent(this.element, event, 'inputOTP', data);
+
+    _handleSelectAll() {
+        this._clearSelection();
+        const filledSlots = this.slots.filter(slot => slot.value);
+        if (filledSlots.length > 0) {
+            filledSlots.forEach(slot => slot.classList.add('is-selected'));
+            this.isProgrammaticFocus = true;
+            filledSlots[filledSlots.length - 1].focus();
+            this.isProgrammaticFocus = false;
+
+            this._handleDeselect = (e) => {
+                if (!this.element.contains(e.target)) {
+                    this._clearSelection();
+                }
+            };
+            document.addEventListener('click', this._handleDeselect);
+        }
     }
+
+    _handleMultiDelete(selectedSlots) {
+        selectedSlots.forEach(slot => {
+            slot.value = '';
+        });
+        this._clearSelection();
+        this._updateValue();
+        this.slots[0].focus();
+    }
+
+    _handleSingleDelete(currentIndex) {
+        let effectiveIndex = currentIndex;
+        if (!this.slots[effectiveIndex].value && effectiveIndex > 0) {
+            effectiveIndex--;
+        }
+        for (let i = effectiveIndex; i < this.slots.length - 1; i++) {
+            this.slots[i].value = this.slots[i + 1].value;
+        }
+        this.slots[this.slots.length - 1].value = '';
+        this._updateValue();
+        this.slots[effectiveIndex].focus();
+        this.slots[effectiveIndex].select();
+    }
+
+    _onKeyDown(e) {
+        const target = e.target;
+        if (!target.matches('.input-otp-slot')) return;
+        const index = this.slots.indexOf(target);
+
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
+            e.preventDefault();
+            this._handleSelectAll();
+            return;
+        }
+
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            const selectedSlots = this.slots.filter(s => s.classList.contains('is-selected'));
+            if (selectedSlots.length > 0) {
+                this._handleMultiDelete(selectedSlots);
+            } else {
+                this._handleSingleDelete(index);
+            }
+            return;
+        }
+
+        this._clearSelection();
+
+        switch (e.key) {
+            case 'ArrowLeft':
+                e.preventDefault();
+                if (index > 0) {
+                    this.slots[index - 1].focus();
+                }
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                if (index < this.slots.length - 1) {
+                    this.slots[index + 1].focus();
+                }
+                break;
+        }
+    }
+
+    _onInput(e) {
+        const target = e.target;
+        if (!target.matches('.input-otp-slot')) return;
+        this._clearSelection();
+        const index = this.slots.indexOf(target);
+        if (target.value && index < this.slots.length - 1) {
+            this.slots[index + 1].focus();
+        } else if (target.value && index === this.slots.length - 1) {
+            target.select();
+        }
+        this._updateValue();
+    }
+
+    _onPaste(e) {
+        const target = e.target;
+        if (!target.matches('.input-otp-slot')) return;
+        e.preventDefault();
+        this._clearSelection();
+        const index = this.slots.indexOf(target);
+        const pastedData = e.clipboardData.getData('text').trim().slice(0, this.slots.length - index);
+        for (let i = 0; i < pastedData.length; i++) {
+            if (this.slots[index + i]) {
+                this.slots[index + i].value = pastedData[i];
+            }
+        }
+        const nextFocusIndex = Math.min(index + pastedData.length, this.slots.length - 1);
+        this.slots[nextFocusIndex].focus();
+        this._updateValue();
+    }
+
+    _onFocus(e) {
+        if (this.isProgrammaticFocus) return;
+        if (e.target.matches('.input-otp-slot')) {
+            this._clearSelection();
+            e.target.select();
+        }
+    }
+
+    _onClick(e) {
+        if (e.target.matches('.input-otp-slot')) {
+            e.preventDefault();
+            const firstEmptySlot = this.slots.find(slot => !slot.value);
+            if (firstEmptySlot) {
+                firstEmptySlot.focus();
+            } else {
+                this.slots[this.slots.length - 1].focus();
+            }
+        }
+    }
+
+    // Public API methods
+    getValue() {
+        return this.slots.map(slot => slot.value).join('');
+    }
+
+    setValue(value) {
+        const valueStr = String(value);
+        for (let i = 0; i < this.slots.length; i++) {
+            this.slots[i].value = valueStr[i] || '';
+        }
+        this._updateValue();
+    }
+
+    clear() {
+        this.slots.forEach(slot => {
+            slot.value = '';
+        });
+        this._clearSelection();
+        this._updateValue();
+        this.slots[0].focus();
+    }
+
+    focus() {
+        const firstEmptySlot = this.slots.find(slot => !slot.value);
+        if (firstEmptySlot) {
+            firstEmptySlot.focus();
+        } else {
+            this.slots[0].focus();
+        }
+    }
+
+    emit(event, data = {}) {
+        this.element.dispatchEvent(new CustomEvent(`input-otp:${event}`, {
+            bubbles: true,
+            detail: { ...data,
+                instance: this
+            }
+        }));
+    }
+
     destroy() {
-      this.element.removeEventListener('keydown', this._boundHandlers.keydown);
-      this.element.removeEventListener('input', this._boundHandlers.input);
-      this.element.removeEventListener('paste', this._boundHandlers.paste);
-      this.element.removeEventListener('focusin', this._boundHandlers.focusin);
-      this.element.removeEventListener('click', this._boundHandlers.click);
-      this.element.classList.remove('input-otp-initialized');
-      delete this.element.inputOTP;
-      this.emit('destroy');
+        this.element.removeEventListener('keydown', this._boundHandlers.keydown);
+        this.element.removeEventListener('input', this._boundHandlers.input);
+        this.element.removeEventListener('paste', this._boundHandlers.paste);
+        this.element.removeEventListener('focusin', this._boundHandlers.focusin);
+        this.element.removeEventListener('click', this._boundHandlers.click);
+
+        if (this._handleDeselect) {
+            document.removeEventListener('click', this._handleDeselect);
+        }
+
+        this.element.classList.remove('input-otp-initialized');
+        delete this.element.inputOTP;
+
+        this.emit('destroy');
     }
-  }
+}
 
   class Menubar {
     constructor(element, options) {
@@ -1967,111 +2162,6 @@
     }
   }
 
-  class Pagination {
-    constructor(element, options) {
-      if (!UI.core.initComponent(this, element, 'pagination', this.defaults, options)) return;
-      this.totalPages = parseInt(this.element.dataset.totalPages, 10) || this.options.totalPages;
-      this.currentPage = parseInt(this.element.dataset.currentPage, 10) || this.options.currentPage;
-      this._boundHandlers = {
-        click: function(e) {
-          return this._handleClick(e);
-        }.bind(this)
-      };
-      this.init();
-    }
-    defaults = {
-      totalPages: 10,
-      currentPage: 1,
-      siblingCount: 1,
-      onPageChange: function onPageChange() {}
-    };
-    init() {
-      this.element.addEventListener('click', this._boundHandlers.click);
-      this.render();
-      this.element.classList.add('pagination-initialized');
-      this.emit('init');
-    }
-    goToPage(page) {
-      if (page < 1 || page > this.totalPages || page === this.currentPage) return;
-      this.currentPage = page;
-      this.render();
-      this.options.onPageChange(this.currentPage);
-      this.emit('page-change', {
-        currentPage: this.currentPage
-      });
-    }
-    render() {
-      var _this = this;
-      this.element.innerHTML = '';
-      var ul = document.createElement('ul');
-      ul.className = 'pagination';
-      ul.appendChild(this._createLinkItem('previous', 'Go to previous page', this.currentPage > 1));
-      this._getPageNumbers().forEach(function(page) {
-        if (page === '...') ul.insertAdjacentHTML('beforeend', '<li><span class="pagination-ellipsis">&hellip;</span></li>');
-        else ul.appendChild(_this._createLinkItem(page, "Go to page ".concat(page), true, page === _this.currentPage));
-      });
-      ul.appendChild(this._createLinkItem('next', 'Go to next page', this.currentPage < this.totalPages));
-      this.element.appendChild(ul);
-      if (window.lucide) window.lucide.createIcons({
-        nodes: [ul]
-      });
-    }
-    _range(start, end) {
-      var length = end - start + 1;
-      return Array.from({
-        length: length
-      }, function(_, idx) {
-        return idx + start;
-      });
-    }
-    _getPageNumbers() {
-      var _this$options = this.options,
-        siblingCount = _this$options.siblingCount,
-        totalPages = _this$options.totalPages,
-        currentPage = _this$options.currentPage;
-      totalPages = this.totalPages;
-      currentPage = this.currentPage;
-      if (totalPages <= siblingCount + 5) return this._range(1, totalPages);
-      var leftSibling = Math.max(currentPage - siblingCount, 1);
-      var rightSibling = Math.min(currentPage + siblingCount, totalPages);
-      var showLeftDots = leftSibling > 2;
-      var showRightDots = rightSibling < totalPages - 2;
-      if (!showLeftDots && showRightDots) return [].concat(this._range(1, 3 + 2 * siblingCount), ['...', totalPages]);
-      if (showLeftDots && !showRightDots) return [1, '...'].concat(this._range(totalPages - (3 + 2 * siblingCount) + 1, totalPages));
-      if (showLeftDots && showRightDots) return [1, '...'].concat(this._range(leftSibling, rightSibling), ['...', totalPages]);
-    }
-    _createLinkItem(page, label, enabled, active) {
-      var li = document.createElement('li');
-      li.innerHTML = "<a href=\"#\" class=\"pagination-link\" data-page=\"".concat(page, "\" aria-label=\"").concat(label, "\">").concat(page, "</a>");
-      var link = li.firstElementChild;
-      if (!enabled) link.classList.add('is-disabled');
-      if (active) link.classList.add('is-active');
-      if (page === 'previous') link.innerHTML = "<i data-lucide=\"chevron-left\" style=\"width:1rem;height:1rem;\"></i><span>Previous</span>";
-      else if (page === 'next') link.innerHTML = "<span>Next</span><i data-lucide=\"chevron-right\" style=\"width:1rem;height:1rem;\"></i>";
-      return li;
-    }
-    _handleClick(e) {
-      e.preventDefault();
-      var target = e.target.closest('.pagination-link');
-      if (!target || target.classList.contains('is-disabled') || target.classList.contains('is-active')) return;
-      var newPageStr = target.dataset.page;
-      var newPage = this.currentPage;
-      if (newPageStr === 'previous') newPage--;
-      else if (newPageStr === 'next') newPage++;
-      else newPage = parseInt(newPageStr, 10);
-      this.goToPage(newPage);
-    }
-    emit(event, data) {
-      UI.utils.emitEvent(this.element, event, 'pagination', data);
-    }
-    destroy() {
-      this.element.removeEventListener('click', this._boundHandlers.click);
-      this.element.classList.remove('pagination-initialized');
-      delete this.element.pagination;
-      this.emit('destroy');
-    }
-  }
-
   class PopoverBehavior {
     constructor(element, options) {
       if (!UI.core.initComponent(this, element, 'popoverBehavior', this.defaults, options)) return;
@@ -2223,85 +2313,347 @@
 
   class Resizable {
     constructor(element, options) {
-      if (!UI.core.initComponent(this, element, 'resizable', this.defaults, options)) return;
-      this.orientation = this.element.classList.contains('resizable-vertical') ? 'vertical' : 'horizontal';
-      this.handles = Array.from(this.element.querySelectorAll(':scope > .resizable-handle'));
-      this.panels = Array.from(this.element.querySelectorAll(':scope > .resizable-panel'));
-      if (this.panels.length < 2) return;
+      if (!UI.core.initComponent(this, element, 'resizable', this.defaults, options)) {
+        return;
+      }
+      this.handles = [];
+      this.panels = [];
+      this.orientation = this._getOrientationFromClasses();
       this.isDragging = false;
+      this.isCornerDragging = false;
+      this.dragState = null;
       this._boundHandlers = {
-        mousemove: function(e) {
-          return this._handleMouseMove(e);
-        }.bind(this),
-        mouseup: function() {
-          return this._handleMouseUp();
-        }.bind(this)
+        mousedown: new Map(),
+        mousemove: (e) => this._handleMouseMove(e),
+        mouseup: () => this._handleMouseUp(),
       };
       this.init();
     }
     defaults = {
-      minPanelSize: 50,
-      keyboard: true
-    };
+      orientation: 'horizontal',
+      minPanelSize: 0,
+      cornerResize: true,
+      constrainDrag: false
+    }
     init() {
-      this.handles.forEach(function(handle, index) {
-        handle.addEventListener('mousedown', function(e) {
-          return this._handleMouseDown(e, handle, this.panels[index], this.panels[index + 1]);
-        }.bind(this));
-      }.bind(this));
-      if (this.options.keyboard) this.element.addEventListener('keydown', function(e) {
-        return this._handleKeydown(e);
-      }.bind(this));
-      this.panels.forEach(function(panel) {
-        if (!panel.style.flexBasis) panel.style.flexBasis = "".concat(100 / this.panels.length, "%");
-      }.bind(this));
+      this.setupStructure();
+      this.setupEvents();
+      this.setupInitialState();
+      this._applyClassBasedSettings();
       this.element.classList.add('resizable-initialized');
-      this.emit('init');
+      this.emit('init', {
+        orientation: this.orientation,
+        panels: this.panels.length,
+        handles: this.handles.length
+      });
+    }
+    _getOrientationFromClasses() {
+      if (this.element.classList.contains('resizable-vertical')) return 'vertical';
+      return 'horizontal';
+    }
+    setupStructure() {
+      this.handles = Array.from(this.element.querySelectorAll(':scope > .resizable-handle'));
+      this.panels = Array.from(this.element.querySelectorAll(':scope > .resizable-panel'));
+      if (this.panels.length < 2) {
+        return;
+      }
+    }
+    setupEvents() {
+      this.handles.forEach((handle, index) => {
+        const prevPanel = this.panels[index];
+        const nextPanel = this.panels[index + 1];
+        if (!prevPanel || !nextPanel) return;
+        const boundMouseDown = (e) => this._handleMouseDown(e, handle, prevPanel, nextPanel);
+        this._boundHandlers.mousedown.set(handle, boundMouseDown);
+        handle.addEventListener('mousedown', boundMouseDown);
+        if (this.options.cornerResize) {
+          this._initCornerDetection(handle, prevPanel, nextPanel);
+        }
+        handle.setAttribute('role', 'separator');
+        handle.setAttribute('aria-orientation', this.orientation);
+      });
+    }
+    setupInitialState() {
+      this.element.classList.add('resizable-root');
+      if (this.orientation === 'vertical') {
+        this.element.classList.add('resizable-vertical');
+      } else {
+        this.element.classList.add('resizable-horizontal');
+      }
+      this.panels.forEach(panel => {
+        if (!panel.style.flexBasis) {
+          panel.style.flexBasis = `${100 / this.panels.length}%`;
+        }
+      });
+    }
+    _applyClassBasedSettings() {
+      if (this.element.classList.contains('resizable-no-corner')) this.options.cornerResize = false;
+      if (this.element.classList.contains('resizable-no-constrain')) this.options.constrainDrag = false;
+      this.orientation = this._getOrientationFromClasses();
     }
     _handleMouseDown(e, handle, prevPanel, nextPanel) {
       e.preventDefault();
+      let cornerTarget = null;
+      if (this.options.cornerResize && this.orientation === 'horizontal') {
+        cornerTarget = this._findCornerTarget(e, prevPanel, nextPanel);
+      }
+      if (cornerTarget) {
+        this._startCornerDrag(e, prevPanel, nextPanel, cornerTarget);
+      } else {
+        this._startDrag(e, handle, prevPanel, nextPanel);
+      }
+    }
+    _findCornerTarget(e, prevPanel, nextPanel) {
+      const verticalHandles = [
+        ...prevPanel.querySelectorAll('.resizable-vertical .resizable-handle'),
+        ...nextPanel.querySelectorAll('.resizable-vertical .resizable-handle')
+      ];
+      for (const vHandle of verticalHandles) {
+        if (this._isMouseEventOnCorner(e, vHandle)) return vHandle;
+      }
+      return null;
+    }
+    _initCornerDetection(handle, prevPanel, nextPanel) {
+      if (this.orientation !== 'horizontal') return;
+      const verticalHandles = [
+        ...prevPanel.querySelectorAll('.resizable-vertical .resizable-handle'),
+        ...nextPanel.querySelectorAll('.resizable-vertical .resizable-handle')
+      ];
+      if (verticalHandles.length === 0) return;
+      handle.addEventListener('mousemove', (e) => {
+        let isOverAnyCorner = false;
+        for (const vHandle of verticalHandles) {
+          if (this._isMouseEventOnCorner(e, vHandle)) {
+            isOverAnyCorner = true;
+            break;
+          }
+        }
+        handle.style.cursor = isOverAnyCorner ? 'all-scroll' : (this.orientation === 'horizontal' ? 'ew-resize' : 'ns-resize');
+      });
+      handle.addEventListener('mouseleave', () => {
+        handle.style.cursor = this.orientation === 'horizontal' ? 'ew-resize' : 'ns-resize';
+      });
+    }
+    _isMouseEventOnCorner(event, verticalHandle) {
+      const vRect = verticalHandle.getBoundingClientRect();
+      const hitArea = 4;
+      return event.clientY >= vRect.top - hitArea && event.clientY <= vRect.bottom + hitArea;
+    }
+    _startDrag(e, handle, prevPanel, nextPanel) {
       this.isDragging = true;
-      var isHorizontal = this.orientation === 'horizontal';
+      const isHorizontal = this.orientation === 'horizontal';
       this.dragState = {
-        handle: handle,
-        prevPanel: prevPanel,
-        nextPanel: nextPanel,
+        handle,
+        prevPanel,
+        nextPanel,
         startPos: isHorizontal ? e.clientX : e.clientY,
         prevSize: isHorizontal ? prevPanel.offsetWidth : prevPanel.offsetHeight,
-        nextSize: isHorizontal ? nextPanel.offsetWidth : nextPanel.offsetHeight
+        nextSize: isHorizontal ? nextPanel.offsetWidth : nextPanel.offsetHeight,
+        isHorizontal
       };
+      handle.classList.add('resizable-handle-dragging');
       document.body.style.cursor = isHorizontal ? 'ew-resize' : 'ns-resize';
+      document.body.style.userSelect = 'none';
       document.addEventListener('mousemove', this._boundHandlers.mousemove);
       document.addEventListener('mouseup', this._boundHandlers.mouseup);
+      this.emit('drag-start', {
+        handle,
+        prevPanel,
+        nextPanel,
+        orientation: this.orientation
+      });
+    }
+    _startCornerDrag(e, leftPanel, rightPanel, verticalHandle) {
+      this.isCornerDragging = true;
+      const topPanel = verticalHandle.previousElementSibling;
+      const bottomPanel = verticalHandle.nextElementSibling;
+      if (!topPanel || !bottomPanel) return;
+      this.dragState = {
+        leftPanel,
+        rightPanel,
+        topPanel,
+        bottomPanel,
+        verticalHandle,
+        startX: e.clientX,
+        startY: e.clientY,
+        leftStartWidth: leftPanel.offsetWidth,
+        rightStartWidth: rightPanel.offsetWidth,
+        topStartHeight: topPanel.offsetHeight,
+        bottomStartHeight: bottomPanel.offsetHeight
+      };
+      document.body.style.cursor = 'all-scroll';
+      document.body.style.userSelect = 'none';
+      document.addEventListener('mousemove', this._boundHandlers.mousemove);
+      document.addEventListener('mouseup', this._boundHandlers.mouseup);
+      this.emit('corner-drag-start', {
+        leftPanel,
+        rightPanel,
+        topPanel,
+        bottomPanel
+      });
     }
     _handleMouseMove(e) {
-      if (!this.isDragging) return;
-      var _this$dragState = this.dragState,
-        startPos = _this$dragState.startPos,
-        prevSize = _this$dragState.prevSize,
-        nextSize = _this$dragState.nextSize,
-        prevPanel = _this$dragState.prevPanel,
-        nextPanel = _this$dragState.nextPanel;
-      var currentPos = this.orientation === 'horizontal' ? e.clientX : e.clientY;
-      var delta = currentPos - startPos;
-      var newPrevSize = prevSize + delta;
-      var newNextSize = nextSize - delta;
-      if (newPrevSize < this.options.minPanelSize || newNextSize < this.options.minPanelSize) return;
-      prevPanel.style.flexBasis = "".concat(newPrevSize, "px");
-      nextPanel.style.flexBasis = "".concat(newNextSize, "px");
+      if (!this.isDragging && !this.isCornerDragging) return;
+      e.preventDefault();
+      if (this.isCornerDragging) {
+        this._updateCornerDrag(e);
+      } else {
+        this._updateDrag(e);
+      }
+    }
+    _updateDrag(e) {
+      const {
+        startPos,
+        prevSize,
+        nextSize,
+        prevPanel,
+        nextPanel,
+        isHorizontal
+      } = this.dragState;
+      const currentPos = isHorizontal ? e.clientX : e.clientY;
+      const delta = currentPos - startPos;
+      let newPrevSize = prevSize + delta;
+      let newNextSize = nextSize - delta;
+      if (this.options.constrainDrag) {
+        const minSize = this.options.minPanelSize;
+        if (newPrevSize < minSize) {
+          newNextSize += newPrevSize - minSize;
+          newPrevSize = minSize;
+        }
+        if (newNextSize < minSize) {
+          newPrevSize += newNextSize - minSize;
+          newNextSize = minSize;
+        }
+      }
+      prevPanel.style.flexBasis = `${Math.max(0, newPrevSize)}px`;
+      nextPanel.style.flexBasis = `${Math.max(0, newNextSize)}px`;
+      this.emit('drag', {
+        prevSize: newPrevSize,
+        nextSize: newNextSize,
+        delta
+      });
+    }
+    _updateCornerDrag(e) {
+      const {
+        leftPanel,
+        rightPanel,
+        topPanel,
+        bottomPanel,
+        startX,
+        startY,
+        leftStartWidth,
+        rightStartWidth,
+        topStartHeight,
+        bottomStartHeight
+      } = this.dragState;
+      const deltaX = e.clientX - startX;
+      let newLeftWidth = leftStartWidth + deltaX;
+      let newRightWidth = rightStartWidth - deltaX;
+      if (this.options.constrainDrag) {
+        const minSize = this.options.minPanelSize;
+        if (newLeftWidth < minSize) {
+          newRightWidth += newLeftWidth - minSize;
+          newLeftWidth = minSize;
+        }
+        if (newRightWidth < minSize) {
+          newLeftWidth += newRightWidth - minSize;
+          newRightWidth = minSize;
+        }
+      }
+      leftPanel.style.flexBasis = `${Math.max(0, newLeftWidth)}px`;
+      rightPanel.style.flexBasis = `${Math.max(0, newRightWidth)}px`;
+      const deltaY = e.clientY - startY;
+      let newTopHeight = topStartHeight + deltaY;
+      let newBottomHeight = bottomStartHeight - deltaY;
+      if (this.options.constrainDrag) {
+        const minSize = this.options.minPanelSize;
+        if (newTopHeight < minSize) {
+          newBottomHeight += newTopHeight - minSize;
+          newTopHeight = minSize;
+        }
+        if (newBottomHeight < minSize) {
+          newTopHeight += newBottomHeight - minSize;
+          newBottomHeight = minSize;
+        }
+      }
+      topPanel.style.flexBasis = `${Math.max(0, newTopHeight)}px`;
+      bottomPanel.style.flexBasis = `${Math.max(0, newBottomHeight)}px`;
+      this.emit('corner-drag', {
+        deltaX,
+        deltaY,
+        leftWidth: newLeftWidth,
+        rightWidth: newRightWidth,
+        topHeight: newTopHeight,
+        bottomHeight: newBottomHeight
+      });
     }
     _handleMouseUp() {
+      if (!this.isDragging && !this.isCornerDragging) return;
+      if (this.isDragging) {
+        this.dragState.handle?.classList.remove('resizable-handle-dragging');
+        this.emit('drag-end', this.dragState);
+      }
+      if (this.isCornerDragging) {
+        this.emit('corner-drag-end', this.dragState);
+      }
       this.isDragging = false;
+      this.isCornerDragging = false;
+      this.dragState = null;
       document.body.style.cursor = '';
+      document.body.style.userSelect = '';
       document.removeEventListener('mousemove', this._boundHandlers.mousemove);
       document.removeEventListener('mouseup', this._boundHandlers.mouseup);
     }
-    _handleKeydown(e) {}
+    setOrientation(orientation) {
+      if (!['horizontal', 'vertical'].includes(orientation)) return;
+      this.orientation = orientation;
+      this.element.classList.remove('resizable-horizontal', 'resizable-vertical');
+      this.element.classList.add(`resizable-${orientation}`);
+      this.handles.forEach(handle => {
+        handle.setAttribute('aria-orientation', orientation);
+      });
+      this.emit('orientation-change', {
+        orientation
+      });
+    }
+    getPanelSizes() {
+      return this.panels.map((panel, index) => {
+        const isHorizontal = this.orientation === 'horizontal';
+        return {
+          index,
+          size: isHorizontal ? panel.offsetWidth : panel.offsetHeight,
+          flexBasis: panel.style.flexBasis
+        };
+      });
+    }
+    setPanelSize(panelIndex, size) {
+      const panel = this.panels[panelIndex];
+      if (!panel) return;
+      panel.style.flexBasis = typeof size === 'number' ? `${size}px` : size;
+      this.emit('panel-resize', {
+        panelIndex,
+        size
+      });
+    }
+    resetPanelSizes() {
+      const equalSize = `${100 / this.panels.length}%`;
+      this.panels.forEach(panel => {
+        panel.style.flexBasis = equalSize;
+      });
+      this.emit('reset');
+    }
     emit(event, data) {
       UI.utils.emitEvent(this.element, event, 'resizable', data);
     }
     destroy() {
-      if (this.isDragging) this._handleMouseUp();
+      if (this.isDragging || this.isCornerDragging) {
+        this._handleMouseUp();
+      }
+      this._boundHandlers.mousedown.forEach((handler, handle) => {
+        handle.removeEventListener('mousedown', handler);
+      });
+      document.removeEventListener('mousemove', this._boundHandlers.mousemove);
+      document.removeEventListener('mouseup', this._boundHandlers.mouseup);
       this.element.classList.remove('resizable-initialized');
       delete this.element.resizable;
       this.emit('destroy');
@@ -2644,44 +2996,93 @@
   }
 
   class Slider {
-    constructor(element) {
-      if (!UI.core.initComponent(this, element, 'slider', {}, {})) return;
-      this.input = this.element.querySelector('input[type=range]');
-      this.track = this.element.querySelector('.slider-track');
-      this.range = this.element.querySelector('.slider-range');
-      if (!this.input || !this.track || !this.range) return;
-      this.init();
+    constructor(sliderElement) {
+        if (sliderElement.dataset.initialized) return;
+        this.slider = sliderElement;
+        this.slider.dataset.initialized = 'true';
+
+        this.input = this.slider.querySelector('.slider-input');
+        this.track = this.slider.querySelector('.slider-track, .slider-track-vertical');
+        this.range = this.slider.querySelector('.slider-range, .slider-range-vertical');
+        this.thumb = this.slider.querySelector('.slider-thumb, .slider-thumb-vertical');
+        
+        if (!this.input || !this.track || !this.range || !this.thumb) return;
+
+        this.isVertical = this.slider.classList.contains('vertical');
+        this.valueDisplay = this.slider.parentElement.querySelector('.slider-value');
+
+        this.bindEvents();
+        this.update();
+
+        this.slider.slider = this;
     }
-    init() {
-      this.input.addEventListener('input', function() {
-        return this.update();
-      }.bind(this));
-      this.track.addEventListener('click', function(e) {
-        return this._handleTrackClick(e);
-      }.bind(this));
-      this.update();
-      this.element.classList.add('slider-initialized');
+
+    bindEvents() {
+        this.input.addEventListener('input', this.update.bind(this));
+        this.track.addEventListener('click', this.handleTrackClick.bind(this));
     }
+
     update() {
-      var min = parseFloat(this.input.min);
-      var max = parseFloat(this.input.max);
-      var value = parseFloat(this.input.value);
-      var percent = (value - min) / (max - min) * 100;
-      this.range.style.width = "".concat(percent, "%");
-      this.input.style.setProperty('--value', "".concat(percent, "%"));
+        const value = parseFloat(this.input.value);
+        const min = parseFloat(this.input.min);
+        const max = parseFloat(this.input.max);
+        const percent = max > min ? ((value - min) / (max - min)) * 100 : 0;
+
+        if (this.isVertical) {
+            this.range.style.height = `${percent}%`;
+            this.thumb.style.bottom = `${percent}%`;
+        } else {
+            this.range.style.width = `${percent}%`;
+            this.thumb.style.left = `${percent}%`;
+        }
+
+        if (this.valueDisplay) {
+            this.valueDisplay.textContent = value;
+        }
+        
+        this.input.setAttribute('aria-valuenow', value);
     }
-    _handleTrackClick(e) {
-      var rect = this.track.getBoundingClientRect();
-      var percent = (e.clientX - rect.left) / rect.width;
-      var min = parseFloat(this.input.min);
-      var max = parseFloat(this.input.max);
-      var step = parseFloat(this.input.step || '1');
-      var value = min + percent * (max - min);
-      value = Math.round(value / step) * step;
-      this.input.value = Math.max(min, Math.min(max, value));
-      this.input.dispatchEvent(new Event('input', {
-        bubbles: true
-      }));
+
+    handleTrackClick(e) {
+        if (this.input.disabled) return;
+        
+        e.preventDefault();
+        const rect = this.track.getBoundingClientRect();
+        const step = parseFloat(this.input.step || '1');
+        let percent;
+
+        if (this.isVertical) {
+            percent = 1 - ((e.clientY - rect.top) / rect.height);
+        } else {
+            percent = (e.clientX - rect.left) / rect.width;
+        }
+
+        percent = Math.max(0, Math.min(1, percent));
+        const min = parseFloat(this.input.min);
+        const max = parseFloat(this.input.max);
+        let value = min + percent * (max - min);
+        value = Math.round(value / step) * step;
+        value = Math.max(min, Math.min(max, value));
+
+        this.input.value = value;
+        this.input.dispatchEvent(new Event('input', { bubbles: true }));
+        this.input.focus();
+    }
+
+    setValue(value) {
+        const min = parseFloat(this.input.min);
+        const max = parseFloat(this.input.max);
+        value = Math.max(min, Math.min(max, parseFloat(value)));
+        this.input.value = value;
+        this.update();
+    }
+
+    getValue() {
+        return parseFloat(this.input.value);
+    }
+
+    setDisabled(disabled) {
+        this.input.disabled = disabled;
     }
   }
 
@@ -2831,15 +3232,7 @@
       if (!UI.core.initComponent(this, element, 'tabs', this.defaults, options)) return;
       this.tabsList = this.element.querySelector('.tabs-list');
       if (!this.tabsList) return;
-      this.triggers = Array.from(this.tabsList.querySelectorAll('.tabs-trigger'));
-      this.tabsData = this.triggers.map(function(trigger) {
-        return {
-          trigger: trigger,
-          content: this.element.querySelector("#".concat(trigger.getAttribute('aria-controls')))
-        };
-      }.bind(this)).filter(function(tab) {
-        return tab.content;
-      });
+      this._updateTabs();
       if (this.tabsData.length === 0) return;
       this._boundHandlers = {
         click: function(e) {
@@ -2856,23 +3249,55 @@
       onTabChange: function onTabChange() {},
       activateOnFocus: false
     };
+
+    _updateTabs() {
+      this.triggers = Array.from(this.tabsList.querySelectorAll('.tabs-trigger'));
+      this.tabsData = this.triggers.map(function(trigger) {
+        const controls = trigger.getAttribute('aria-controls');
+        return {
+          trigger: trigger,
+          content: controls ? this.element.querySelector(`#${controls}`) || document.querySelector(`#${controls}`) : null
+        };
+      }.bind(this)).filter(function(tab) {
+        return tab.content;
+      });
+    }
+
     init() {
       this.tabsList.addEventListener('click', this._boundHandlers.click);
       this.tabsList.addEventListener('keydown', this._boundHandlers.keydown);
-      var initialTab = this.tabsData.find(function(tab) {
-        return tab.trigger.classList.contains('tabs-trigger-active');
-      }) || this.tabsData[0];
-      this._activateTab(initialTab);
+
+      let initialTab = this.tabsData.find(function(tab) {
+        return tab.trigger.classList.contains('tabs-trigger-active') || tab.trigger.getAttribute('aria-selected') === 'true';
+      });
+
+      if (!initialTab && this.tabsData.length > 0) {
+        initialTab = this.tabsData[0];
+      }
+
+      if (initialTab) {
+        this._activateTab(initialTab);
+      } else {
+        // No tabs to activate, hide all content
+        this.tabsData.forEach(({
+          content
+        }) => {
+          if (content) content.hidden = true;
+        });
+      }
+
       this.element.classList.add('tabs-initialized');
       this.emit('init');
     }
     activateTab(triggerOrIndex) {
+      this._updateTabs();
       var tabData = typeof triggerOrIndex === 'number' ? this.tabsData[triggerOrIndex] : this.tabsData.find(function(tab) {
         return tab.trigger === triggerOrIndex;
       });
       if (tabData && !tabData.trigger.disabled) this._activateTab(tabData);
     }
     _handleKeydown(e) {
+      this._updateTabs();
       var activeTriggers = this.tabsData.filter(function(tab) {
         return !tab.trigger.disabled;
       });
@@ -2896,13 +3321,15 @@
       this.activateTab(activeTriggers[nextIndex].trigger);
     }
     _activateTab(tabData) {
-      this.tabsData.forEach(function(_ref) {
-        var trigger = _ref.trigger,
-          content = _ref.content;
+      this.tabsData.forEach(function({
+        trigger,
+        content
+      }) {
         var isActive = trigger === tabData.trigger;
         trigger.setAttribute('aria-selected', isActive);
         trigger.setAttribute('tabindex', isActive ? '0' : '-1');
-        content.hidden = !isActive;
+        trigger.classList.toggle('tabs-trigger-active', isActive);
+        if (content) content.hidden = !isActive;
       });
       this.activeTab = tabData;
       this.emit('tab-change', {
@@ -3143,6 +3570,369 @@
     }
   }
 
+  class TreeView {
+    constructor(element, options) {
+      if (!UI.core.initComponent(this, element, 'treeView', this.defaults, options)) return;
+      this.data = this.options.data || [];
+      this.selectedNodeId = null;
+      this.nodes = new Map();
+      this._boundHandlers = {
+        click: this._handleClick.bind(this),
+        keydown: this._handleKeydown.bind(this),
+      };
+      this.init();
+    }
+
+    defaults = {
+      data: [],
+      defaultIcon: 'file-text',
+      folderIcon: 'folder',
+      onSelect: () => {},
+      onExpand: () => {},
+      onCollapse: () => {},
+    };
+
+    init() {
+      this.element.classList.add('tree-view');
+      this.element.setAttribute('role', 'tree');
+      this.render();
+      this.element.addEventListener('click', this._boundHandlers.click);
+      this.element.addEventListener('keydown', this._boundHandlers.keydown);
+      this.element.classList.add('tree-view-initialized');
+      this.emit('init');
+    }
+
+    render() {
+      this.element.innerHTML = '';
+      this.nodes.clear();
+      const treeFragment = document.createDocumentFragment();
+      this.data.forEach(nodeData => this._buildNode(nodeData, treeFragment, 0));
+      this.element.appendChild(treeFragment);
+
+      if (window.lucide) {
+        window.lucide.createIcons({
+          nodes: Array.from(this.element.querySelectorAll('[data-lucide]'))
+        });
+      }
+    }
+
+    _buildNode(nodeData, parentElement, level) {
+      const isParent = nodeData.children && nodeData.children.length > 0;
+      const isExpanded = !!nodeData.expanded;
+      const icon = nodeData.icon || (isParent ? this.options.folderIcon : this.options.defaultIcon);
+
+      const nodeEl = document.createElement('div');
+      nodeEl.className = 'tree-view-node';
+      nodeEl.setAttribute('role', 'treeitem');
+      nodeEl.setAttribute('aria-expanded', isParent ? String(isExpanded) : 'false');
+      nodeEl.setAttribute('aria-selected', 'false');
+      nodeEl.dataset.id = nodeData.id;
+      nodeEl.tabIndex = -1;
+
+      const nodeContent = document.createElement('div');
+      nodeContent.className = 'tree-view-node-content';
+      nodeContent.style.paddingLeft = `${0.5 + level * 1.5}rem`;
+
+      if (isParent) {
+        const chevron = document.createElement('i');
+        chevron.dataset.lucide = 'chevron-right';
+        chevron.className = `tree-view-chevron ${isExpanded ? 'expanded' : ''}`;
+        nodeContent.appendChild(chevron);
+      } else {
+        const spacer = document.createElement('span');
+        spacer.className = 'tree-view-spacer';
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        nodeContent.appendChild(spacer);
+      }
+
+      const nodeIcon = document.createElement('i');
+      nodeIcon.dataset.lucide = icon;
+      nodeIcon.className = 'tree-view-node-icon';
+
+      const label = document.createElement('span');
+      label.className = 'tree-view-node-label';
+      label.textContent = nodeData.label;
+
+      nodeContent.appendChild(nodeIcon);
+      nodeContent.appendChild(label);
+      nodeEl.appendChild(nodeContent);
+
+      this.nodes.set(nodeData.id, {
+        element: nodeEl,
+        data: nodeData
+      });
+      parentElement.appendChild(nodeEl);
+
+      if (isParent) {
+        const childrenContainer = document.createElement('div');
+        childrenContainer.className = `tree-view-children ${isExpanded ? '' : 'collapsed'}`;
+        nodeData.children.forEach(childData => this._buildNode(childData, childrenContainer, level + 1));
+        parentElement.appendChild(childrenContainer);
+      }
+    }
+
+    _handleClick(e) {
+      const nodeEl = e.target.closest('.tree-view-node');
+      if (!nodeEl) return;
+
+      const nodeId = nodeEl.dataset.id;
+      const node = this.nodes.get(nodeId);
+
+      this.selectNode(nodeId);
+
+      if (node && node.data.children && node.data.children.length > 0) {
+        this.toggleNode(nodeId);
+      }
+    }
+
+    _handleKeydown(e) {
+      const currentItem = e.target.closest('[role="treeitem"]');
+      if (!currentItem) return;
+
+      let nextItem;
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          nextItem = this._findNextVisibleNode(currentItem);
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          nextItem = this._findPreviousVisibleNode(currentItem);
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          if (currentItem.hasAttribute('aria-expanded') && currentItem.getAttribute('aria-expanded') === 'false') {
+            this.toggleNode(currentItem.dataset.id);
+          } else {
+            nextItem = this._findNextVisibleNode(currentItem);
+          }
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          if (currentItem.hasAttribute('aria-expanded') && currentItem.getAttribute('aria-expanded') === 'true') {
+            this.toggleNode(currentItem.dataset.id);
+          } else {
+            const parentNodeId = this._findParentNodeId(currentItem.dataset.id);
+            if (parentNodeId) {
+              nextItem = this.nodes.get(parentNodeId)?.element;
+            }
+          }
+          break;
+        case 'Home':
+          e.preventDefault();
+          nextItem = this.element.querySelector('[role="treeitem"]:first-of-type');
+          break;
+        case 'End':
+          e.preventDefault();
+          const allVisibleNodes = Array.from(this.element.querySelectorAll('[role="treeitem"]')).filter(node => node.offsetParent !== null);
+          nextItem = allVisibleNodes[allVisibleNodes.length - 1];
+          break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          this.selectNode(currentItem.dataset.id);
+          if (currentItem.hasAttribute('aria-expanded')) {
+            this.toggleNode(currentItem.dataset.id);
+          }
+          break;
+      }
+
+      if (nextItem) {
+        nextItem.focus();
+      }
+    }
+
+    _findParentNodeId(nodeId) {
+      let parentData = null;
+      const findParent = (nodes, targetId, parent = null) => {
+        for (const node of nodes) {
+          if (node.id === targetId) {
+            parentData = parent;
+            return true;
+          }
+          if (node.children && node.children.length > 0) {
+            if (findParent(node.children, targetId, node)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      };
+      findParent(this.data, nodeId);
+      return parentData ? parentData.id : null;
+    }
+
+
+    _findNextVisibleNode(currentNode) {
+      const allNodes = Array.from(this.element.querySelectorAll('[role="treeitem"]'));
+      let currentIndex = -1;
+
+      for (let i = 0; i < allNodes.length; i++) {
+        if (allNodes[i] === currentNode) {
+          currentIndex = i;
+          break;
+        }
+      }
+
+      if (currentIndex === -1) return null;
+
+      if (currentNode.getAttribute('aria-expanded') === 'true') {
+        const childrenContainer = currentNode.nextElementSibling;
+        if (childrenContainer && childrenContainer.classList.contains('tree-view-children')) {
+          const firstChild = childrenContainer.querySelector('[role="treeitem"]');
+          if (firstChild) return firstChild;
+        }
+      }
+
+      let nextSibling = currentNode.nextElementSibling;
+      while (nextSibling) {
+        if (nextSibling.classList.contains('tree-view-node') && nextSibling.offsetParent !== null) {
+          return nextSibling;
+        }
+        nextSibling = nextSibling.nextElementSibling;
+      }
+
+      let current = currentNode;
+      while (current.parentElement && current.parentElement !== this.element) {
+        let parentContainer = current.parentElement;
+        if (parentContainer.classList.contains('tree-view-children')) {
+          let parentNode = parentContainer.previousElementSibling;
+          if (parentNode && parentNode.classList.contains('tree-view-node')) {
+            let nextParentSibling = parentNode.nextElementSibling;
+            while (nextParentSibling) {
+              if (nextParentSibling.classList.contains('tree-view-node') && nextParentSibling.offsetParent !== null) {
+                return nextParentSibling;
+              }
+              nextParentSibling = nextParentSibling.nextElementSibling;
+            }
+          }
+        }
+        current = current.parentElement.closest('.tree-view-node');
+        if (!current) break;
+      }
+
+      return null;
+    }
+
+
+    _findPreviousVisibleNode(currentNode) {
+      const allNodes = Array.from(this.element.querySelectorAll('[role="treeitem"]'));
+      let currentIndex = -1;
+
+      for (let i = 0; i < allNodes.length; i++) {
+        if (allNodes[i] === currentNode) {
+          currentIndex = i;
+          break;
+        }
+      }
+
+      if (currentIndex <= 0) return null;
+
+      let prevCandidate = allNodes[currentIndex - 1];
+
+      while (prevCandidate && prevCandidate.hasAttribute('aria-expanded') && prevCandidate.getAttribute('aria-expanded') === 'true') {
+        const childrenContainer = prevCandidate.nextElementSibling;
+        if (childrenContainer && childrenContainer.classList.contains('tree-view-children')) {
+          const visibleChildren = Array.from(childrenContainer.querySelectorAll('[role="treeitem"]')).filter(node => node.offsetParent !== null);
+          if (visibleChildren.length > 0) {
+            prevCandidate = visibleChildren[visibleChildren.length - 1];
+          } else {
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+
+      return prevCandidate.offsetParent !== null ? prevCandidate : null;
+    }
+
+
+    selectNode(nodeId) {
+      if (this.selectedNodeId) {
+        const oldNode = this.nodes.get(this.selectedNodeId);
+        if (oldNode) {
+          oldNode.element.classList.remove('selected');
+          oldNode.element.setAttribute('aria-selected', 'false');
+        }
+      }
+
+      const newNode = this.nodes.get(nodeId);
+      if (newNode) {
+        newNode.element.classList.add('selected');
+        newNode.element.setAttribute('aria-selected', 'true');
+        this.selectedNodeId = nodeId;
+
+        newNode.element.focus();
+
+        this.options.onSelect({
+          id: nodeId,
+          data: newNode.data,
+          element: newNode.element
+        });
+        this.emit('select', {
+          id: nodeId,
+          data: newNode.data,
+          element: newNode.element
+        });
+      }
+    }
+
+    toggleNode(nodeId) {
+      const node = this.nodes.get(nodeId);
+      if (!node || !node.element.hasAttribute('aria-expanded')) return;
+
+      const isExpanded = node.element.getAttribute('aria-expanded') === 'true';
+      const childrenEl = node.element.nextElementSibling;
+      const chevronEl = node.element.querySelector('.tree-view-chevron');
+
+      node.element.setAttribute('aria-expanded', !isExpanded);
+      if (childrenEl && childrenEl.classList.contains('tree-view-children')) {
+        childrenEl.classList.toggle('collapsed');
+      }
+      if (chevronEl) {
+        chevronEl.classList.toggle('expanded');
+      }
+
+      if (isExpanded) {
+        this.options.onCollapse({
+          id: nodeId,
+          data: node.data,
+          element: node.element
+        });
+        this.emit('collapse', {
+          id: nodeId,
+          data: node.data,
+          element: node.element
+        });
+      } else {
+        this.options.onExpand({
+          id: nodeId,
+          data: node.data,
+          element: node.element
+        });
+        this.emit('expand', {
+          id: nodeId,
+          data: node.data,
+          element: node.element
+        });
+      }
+    }
+
+    emit(event, data) {
+      UI.utils.emitEvent(this.element, event, 'treeView', data);
+    }
+
+    destroy() {
+      this.element.removeEventListener('click', this._boundHandlers.click);
+      this.element.removeEventListener('keydown', this._boundHandlers.keydown);
+      this.element.classList.remove('tree-view-initialized');
+      delete this.element.treeView;
+      this.emit('destroy');
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     var componentMap = {
       '.accordion': {
@@ -3240,6 +4030,10 @@
       '.tooltip': {
         C: Tooltip,
         name: 'tooltip'
+      },
+      '.tree-view': {
+        C: TreeView,
+        name: 'treeView'
       }
     };
     for (var selector in componentMap) {
@@ -3390,20 +4184,31 @@
         openSidebar === null || openSidebar === void 0 ? void 0 : (_e$target$closest2 = openSidebar.sidebar) === null || _e$target$closest2 === void 0 ? void 0 : _e$target$closest2.toggle();
       }
     });
-    var html = document.documentElement;
+    
+    const root = document.documentElement;
+    const applyTheme = (theme) => {
+        root.classList.toggle('dark', theme === 'dark');
+        try {
+            localStorage.setItem('theme', theme);
+        } catch (e) {}
+    };
+
+    let initialTheme;
     try {
-      html.dataset.theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        initialTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     } catch (e) {
-      html.dataset.theme = 'light';
+        initialTheme = 'light';
     }
-    document.addEventListener('click', function(_ref) {
-      var target = _ref.target;
-      if (target.closest('[data-theme-toggle]')) {
-        var newTheme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-        html.dataset.theme = newTheme;
-        localStorage.setItem('theme', newTheme);
-      }
+    applyTheme(initialTheme);
+
+    document.addEventListener('click', function({ target }) {
+        const toggle = target.closest('.theme-toggle');
+        if (toggle) {
+            const isDark = root.classList.contains('dark');
+            applyTheme(isDark ? 'light' : 'dark');
+        }
     });
+
     if (typeof lucide !== 'undefined') lucide.createIcons();
     document.body.classList.add('js-loaded');
   });
@@ -3427,35 +4232,46 @@
     return globalToastManager.dismiss(id);
   };
 
-  var componentsToExport = {
-    Accordion: Accordion,
-    Calendar: Calendar,
-    Carousel: Carousel,
-    Combobox: Combobox,
-    Command: Command,
-    ContextMenu: ContextMenu,
-    Dialog: Dialog,
-    DropdownMenu: DropdownMenu,
-    HoverCard: HoverCard,
-    InputOTP: InputOTP,
-    Menubar: Menubar,
-    NavigationMenu: NavigationMenu,
-    Pagination: Pagination,
-    PopoverBehavior: PopoverBehavior,
-    Progress: Progress,
-    Resizable: Resizable,
-    ScrollArea: ScrollArea,
-    Select: Select,
+  const componentsToExport = {
+    Accordion,
+    Calendar,
+    Carousel,
+    Combobox,
+    Command,
+    ContextMenu,
+    Dialog,
+    DropdownMenu,
+    HoverCard,
+    InputOTP,
+    Menubar,
+    NavigationMenu,
+    Pagination,
+    PopoverBehavior,
+    Progress,
+    Resizable,
+    ScrollArea,
+    Select,
     Sheet: window.Sheet,
-    Sidebar: Sidebar,
-    Slider: Slider,
-    ToastManager: ToastManager,
-    Tabs: Tabs,
-    ToggleGroup: ToggleGroup,
-    Toggle: Toggle,
-    Tooltip: Tooltip,
-    toast: toast
+    Sidebar,
+    Slider,
+    ToastManager,
+    Tabs,
+    ToggleGroup,
+    Toggle,
+    Tooltip,
+    TreeView,
+    toast,
   };
-  Object.assign(window, componentsToExport);
+
+  Object.assign(window, {
+    UI: UI.core,
+    ...componentsToExport
+  });
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = componentsToExport;
+  } else {
+    Object.assign(window, componentsToExport);
+  }
 
 })(window, document);
