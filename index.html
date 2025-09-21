@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Component Test Page</title>
+    <link rel="stylesheet" href="ui.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .component-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h2 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .component-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>UI Component Library Test Page</h1>
+    <div style="position: fixed; top: 1rem; right: 1rem; z-index: 10000;">
+        <button class="theme-toggle btn btn-icon">
+            <i data-lucide="sun" class="light-icon"></i>
+            <i data-lucide="moon" class="dark-icon"></i>
+        </button>
+    </div>
+
+
+    <!-- Accordion -->
+    <div class="component-section">
+        <h2>Accordion</h2>
+        <div class="component-container">
+            <div class="accordion" style="width: 300px;">
+                <div class="accordion-item">
+                    <button class="accordion-trigger">
+                        <span class="accordion-title">Is it accessible?</span>
+                        <span class="accordion-icons">
+                            <i data-lucide="chevron-down" class="icon-open"></i>
+                            <i data-lucide="chevron-up" class="icon-close"></i>
+                        </span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Yes. It adheres to the WAI-ARIA design pattern.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-trigger" aria-expanded="true">
+                        <span class="accordion-title">Is it styled?</span>
+                         <span class="accordion-icons">
+                            <i data-lucide="chevron-down" class="icon-open"></i>
+                            <i data-lucide="chevron-up" class="icon-close"></i>
+                        </span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Yes. It comes with default styles that matches the other components' aesthetic.</p>
+                    </div>
+                </div>
+                <div class="accordion-item is-disabled">
+                     <button class="accordion-trigger" disabled>
+                        <span class="accordion-title">Is it disabled?</span>
+                         <span class="accordion-icons">
+                            <i data-lucide="chevron-down" class="icon-open"></i>
+                            <i data-lucide="chevron-up" class="icon-close"></i>
+                        </span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Yes. This item is disabled.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="component-section">
+        <h2>Dropdown Menu</h2>
+        <div class="component-container">
+            <div class="dropdown-menu">
+                <button class="dropdown-menu-trigger btn">Open Menu</button>
+                <div class="dropdown-menu-content">
+                    <div class="dropdown-menu-label">My Account</div>
+                    <div class="dropdown-menu-separator"></div>
+                    <button class="dropdown-menu-item">Profile</button>
+                    <button class="dropdown-menu-item">Billing</button>
+                    <div class="dropdown-menu-sub">
+                        <button class="dropdown-menu-item dropdown-menu-sub-trigger">
+                            <span>More</span>
+                            <i data-lucide="chevron-right" class="dropdown-menu-sub-chevron"></i>
+                        </button>
+                        <div class="dropdown-menu-sub-content">
+                            <button class="dropdown-menu-item">Settings</button>
+                            <button class="dropdown-menu-item">Keyboard shortcuts</button>
+                        </div>
+                    </div>
+                    <div class="dropdown-menu-separator"></div>
+                    <button class="dropdown-menu-item" disabled>Log out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle -->
+    <div class="component-section">
+        <h2>Toggle</h2>
+        <div class="component-container">
+            <button class="toggle">
+                <i data-lucide="bold"></i>
+            </button>
+            <button class="toggle" aria-pressed="true">
+                <i data-lucide="italic"></i>
+            </button>
+            <button class="toggle" disabled>
+                <i data-lucide="underline"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Popover -->
+    <div class="component-section">
+        <h2>Popover</h2>
+        <div class="component-container">
+             <div class="popover">
+                <button class="popover-trigger btn">Open Popover</button>
+                <div class="popover-content side-bottom align-start">
+                    <h4 class="popover-title">Popover Title</h4>
+                    <p>This is the popover content. It can contain any HTML.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="component-section">
+        <h2>Tooltip</h2>
+        <div class="component-container">
+            <div class="tooltip">
+                <button class="tooltip-trigger btn">Hover me</button>
+                <div class="tooltip-content">This is a tooltip</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="component-section">
+        <h2>Pagination</h2>
+        <div class="component-container">
+             <div class="pagination" data-current-page="5" data-total-pages="10">
+                <button class="pagination-item pagination-prev"><i data-lucide="chevron-left"></i></button>
+                <button class="pagination-item pagination-next"><i data-lucide="chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input -->
+    <div class="component-section">
+        <h2>Input</h2>
+        <div class="component-container" style="flex-direction: column; gap: 1rem;">
+            <input class="input" placeholder="Basic Input">
+            <div class="input-wrapper">
+                <input type="password" class="input" value="password123">
+                <button class="password-toggle-btn btn btn-icon btn-sm">
+                    <i data-lucide="eye" class="icon-show"></i>
+                    <i data-lucide="eye-off" class="icon-hide"></i>
+                </button>
+            </div>
+            <div class="input-wrapper">
+                <input class="input" value="Text to copy">
+                <button class="input-copy-btn btn btn-icon btn-sm">
+                     <i data-lucide="copy" class="copy-icon-initial"></i>
+                     <i data-lucide="check" class="copy-icon-success"></i>
+                </button>
+            </div>
+             <div class="input-wrapper">
+                <input class="input" value="Some text here">
+                <button class="input-clear-btn btn btn-icon btn-sm">
+                     <i data-lucide="x"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog -->
+    <div class="component-section">
+        <h2>Dialog</h2>
+        <div class="component-container">
+            <button class="dialog-trigger btn" data-target="#dialog-1">Open Dialog</button>
+            <div id="dialog-1" class="dialog">
+                <div class="dialog-overlay"></div>
+                <div class="dialog-content">
+                    <button class="dialog-close-btn btn btn-icon btn-sm dialog-close-icon"><i data-lucide="x"></i></button>
+                    <div class="dialog-header">
+                        <h3 class="dialog-title">Dialog Title</h3>
+                        <p class="dialog-description">This is a description for the dialog.</p>
+                    </div>
+                    <div class="dialog-body">
+                        <p>This is the main body of the dialog. You can put any content here.</p>
+                    </div>
+                    <div class="dialog-footer">
+                        <button class="dialog-close-btn btn btn-outline">Cancel</button>
+                        <button class="dialog-close-btn btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="component-section">
+        <h2>Progress Bar</h2>
+        <div class="component-container" style="width: 300px;">
+            <div class="progress" data-value="60" data-max="100">
+                <div class="progress-indicator"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="component-section">
+        <h2>Carousel</h2>
+        <div class="component-container" style="width: 400px;">
+            <div class="carousel carousel-loop carousel-autoplay">
+                <div class="carousel-viewport">
+                    <div class="carousel-content">
+                        <div class="carousel-item" style="background-color: var(--accent); height: 200px; display:flex; justify-content:center; align-items:center;">Slide 1</div>
+                        <div class="carousel-item" style="background-color: var(--muted); height: 200px; display:flex; justify-content:center; align-items:center;">Slide 2</div>
+                        <div class="carousel-item" style="background-color: var(--secondary); height: 200px; display:flex; justify-content:center; align-items:center;">Slide 3</div>
+                    </div>
+                </div>
+                <button class="carousel-previous btn btn-icon"><i data-lucide="arrow-left"></i></button>
+                <button class="carousel-next btn btn-icon"><i data-lucide="arrow-right"></i></button>
+                <div class="carousel-dots"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="component-section">
+        <h2>Slider</h2>
+        <div class="component-container" style="width: 300px;">
+            <div class="slider" data-value="50" data-max="100" data-step="1">
+                <div class="slider-track">
+                    <div class="slider-range"></div>
+                </div>
+                <div class="slider-thumb"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sonner (Toast) -->
+    <div class="component-section">
+        <h2>Sonner (Toast Notifications)</h2>
+        <div class="component-container">
+            <button class="btn" onclick="toast('Event has been created.')">Default</button>
+            <button class="btn" onclick="toast.success('Success!', { description: 'Your profile has been updated.' })">Success</button>
+            <button class="btn" onclick="toast.error('Error!', { description: 'Could not save changes.' })">Error</button>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="component-section">
+        <h2>Tabs</h2>
+        <div class="component-container">
+            <div class="tabs" data-default-value="account">
+                <div class="tabs-list">
+                    <button class="tabs-trigger" data-value="account">Account</button>
+                    <button class="tabs-trigger" data-value="password">Password</button>
+                </div>
+                <div class="tabs-content" data-value="account">
+                    <p>This is the account tab content.</p>
+                </div>
+                <div class="tabs-content" data-value="password">
+                    <p>This is the password tab content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="component-section">
+        <h2>Context Menu</h2>
+        <div class="component-container">
+            <div class="context-menu-trigger" data-target="context-menu-1" style="border: 2px dashed var(--border); padding: 2rem; border-radius: var(--radius);">
+                Right-click me
+            </div>
+            <div id="context-menu-1" class="context-menu-content">
+                <button class="context-menu-item">Back</button>
+                <button class="context-menu-item" disabled>Forward</button>
+                <div class="context-menu-separator"></div>
+                <button class="context-menu-item">Reload</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide/dist/lucide.min.js"></script>
+    <script src="ui.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
