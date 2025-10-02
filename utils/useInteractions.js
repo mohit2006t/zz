@@ -47,6 +47,8 @@
  * }
  */
 
+import { useState } from './useState.js';
+
 const defaultConfig = {
   isDisabled: false,
   longPressDelay: 0,
@@ -63,39 +65,31 @@ export const useInteractions = (element, options = {}) => {
   let isActive = false;
   let longPressTimeout = null;
 
-  let state = {
+  const state = useState({
     isHovered: false,
     isFocused: false,
     isPressed: false,
     isLongPressed: false,
-  };
+  });
 
-  const updateState = (updates) => {
-    const oldState = { ...state };
-    const newState = { ...state, ...updates };
+  // The component's onChange is now handled by subscribing to our state engine.
+  const unsubscribe = state.subscribe(config.onChange);
 
-    // Only notify if the state has actually changed.
-    if (JSON.stringify(oldState) !== JSON.stringify(newState)) {
-      state = newState;
-      config.onChange(state);
-    }
-  };
-
-  const handlePointerEnter = () => updateState({ isHovered: true });
+  const handlePointerEnter = () => state.set(s => ({ ...s, isHovered: true }));
   const handlePointerLeave = () => {
     clearTimeout(longPressTimeout);
-    updateState({ isHovered: false, isPressed: false, isLongPressed: false });
+    state.set(s => ({ ...s, isHovered: false, isPressed: false, isLongPressed: false }));
   };
-  const handleFocus = () => updateState({ isFocused: true });
-  const handleBlur = () => updateState({ isFocused: false, isPressed: false });
+  const handleFocus = () => state.set(s => ({ ...s, isFocused: true }));
+  const handleBlur = () => state.set(s => ({ ...s, isFocused: false, isPressed: false }));
 
   const handlePointerDown = (event) => {
     if (event.button !== 0) return; // Only main button
-    updateState({ isPressed: true });
+    state.set(s => ({ ...s, isPressed: true }));
 
     if (config.longPressDelay > 0) {
       longPressTimeout = setTimeout(() => {
-        updateState({ isLongPressed: true });
+        state.set(s => ({ ...s, isLongPressed: true }));
         config.onLongPress(event);
       }, config.longPressDelay);
     }
@@ -103,20 +97,20 @@ export const useInteractions = (element, options = {}) => {
 
   const handlePointerUp = () => {
     clearTimeout(longPressTimeout);
-    updateState({ isPressed: false, isLongPressed: false });
+    state.set(s => ({ ...s, isPressed: false, isLongPressed: false }));
   };
   
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       if (event.repeat) return;
       event.preventDefault();
-      updateState({ isPressed: true });
+      state.set(s => ({ ...s, isPressed: true }));
     }
   };
 
   const handleKeyUp = (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
-      updateState({ isPressed: false });
+      state.set(s => ({ ...s, isPressed: false }));
     }
   };
 
@@ -147,7 +141,7 @@ export const useInteractions = (element, options = {}) => {
       element.removeEventListener(eventName, handler);
     }
     // Reset to initial state
-    updateState({ isHovered: false, isFocused: false, isPressed: false, isLongPressed: false });
+    state.set({ isHovered: false, isFocused: false, isPressed: false, isLongPressed: false });
   };
   
   const update = (newOptions) => {
@@ -161,13 +155,18 @@ export const useInteractions = (element, options = {}) => {
     }
   };
 
+  const destroy = () => {
+    deactivate();
+    unsubscribe();
+  };
+
   return {
     activate,
     deactivate,
     update,
-    destroy: deactivate,
+    destroy,
     get state() {
-      return { ...state }; // Return a copy to prevent mutation
+      return state.get();
     },
   };
 };

@@ -41,6 +41,7 @@
  *   }
  * }
  */
+import { useState } from './useState.js';
 import { useFocus } from './useFocus.js';
 import { useDismiss } from './useDismiss.js';
 import { useScroll } from './useScroll.js';
@@ -67,7 +68,7 @@ export const useModal = (elements, options = {}) => {
   }
 
   const config = { ...defaultConfig, ...options };
-  let state = 'closed'; // 'closed', 'opening', 'open', 'closing'
+  const state = useState('closed'); // 'closed', 'opening', 'open', 'closing'
 
   const focusEngine = useFocus(dialog, config.focus);
   const scrollLockEngine = useScroll.lock(config.scrollLock);
@@ -77,9 +78,9 @@ export const useModal = (elements, options = {}) => {
   });
 
   const show = async ({ triggerElement } = {}) => {
-    if (state !== 'closed') return;
+    if (state.get() !== 'closed') return;
 
-    state = 'opening';
+    state.set('opening');
     config.onShow();
     scrollLockEngine.lock();
 
@@ -92,16 +93,16 @@ export const useModal = (elements, options = {}) => {
     await awaitMotion(container);
 
     container.classList.remove(config.openingClass);
-    state = 'open';
+    state.set('open');
     focusEngine.activate({ initialFocus: triggerElement });
     dismissEngine.activate({ triggerElement });
     config.onShown();
   };
 
   const hide = async ({ triggerElement } = {}) => {
-    if (state !== 'open') return;
+    if (state.get() !== 'open') return;
 
-    state = 'closing';
+    state.set('closing');
     config.onHide();
 
     // Deactivate engines first to prevent race conditions
@@ -116,7 +117,7 @@ export const useModal = (elements, options = {}) => {
     container.classList.remove(config.closingClass);
     container.hidden = true;
     scrollLockEngine.unlock();
-    state = 'closed';
+    state.set('closed');
     config.onHidden();
   };
 
@@ -126,6 +127,7 @@ export const useModal = (elements, options = {}) => {
     focusEngine.destroy();
     scrollLockEngine.destroy();
     dismissEngine.destroy();
+    state.destroy();
   };
 
   return {
@@ -133,10 +135,11 @@ export const useModal = (elements, options = {}) => {
     hide,
     destroy,
     get state() {
-      return state;
+      return state.get();
     },
     get isVisible() {
-      return state === 'open' || state === 'opening';
+      const current = state.get();
+      return current === 'open' || current === 'opening';
     },
   };
 };
