@@ -1,0 +1,46 @@
+/* /components/textarea/textarea.css */
+
+/* Base Textarea Styles */
+textarea {
+  display: block;
+  width: 100%;
+  /* min-height: 80px; */
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.5; /* A standard line-height for readability */
+  color: var(--foreground);
+  background-color: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius);
+  overflow: auto; /* Ensures scrollbar appears when content overflows */
+}
+
+/*
+* CSS-only Expanding Textarea with Max Rows
+* This approach uses modern CSS properties to handle sizing automatically.
+*/
+.textarea-expanding {
+  /* The future-proof way: allows the textarea to size to its content */
+  field-sizing: content;
+
+  /* Define the max-height based on a number of rows.
+     Calculated as: line-height * font-size * max-rows + vertical-padding */
+  max-height: calc(1.5 * 0.875rem * var(--max-rows, 10) + (2 * 0.625rem));
+
+  /* Fallback for older browsers: allows manual resizing */
+  resize: vertical;
+}
+
+textarea::placeholder {
+  color: var(--muted-foreground);
+}
+
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--ring);
+}

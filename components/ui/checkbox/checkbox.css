@@ -1,0 +1,61 @@
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.875rem;
+}
+
+.checkbox-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.checkbox-root {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    border: 1px solid var(--input);
+    border-radius: 0.25rem;
+    background-color: var(--background);
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.checkbox-indicator {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--primary-foreground);
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.checkbox-input:checked + .checkbox-root {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkbox-input:checked + .checkbox-root > .checkbox-indicator {
+    opacity: 1;
+}
+
+.checkbox-input:disabled + .checkbox-root {
+    background-color: var(--muted);
+    border-color: var(--border);
+}
+
+.checkbox-input:disabled ~ .label,
+.checkbox-input:disabled + .checkbox-root {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

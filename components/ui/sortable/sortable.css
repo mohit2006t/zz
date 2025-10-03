@@ -1,0 +1,78 @@
+/**
+ * @file sortable.css
+ * @description Styles for a clean, drag-and-drop sortable component.
+ */
+.sortable-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.375rem;
+}
+
+.sortable-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: background-color 0.15s, box-shadow 0.15s;
+  box-shadow: none;
+}
+
+.sortable-item:hover {
+  background-color: var(--card);
+}
+
+.dark .sortable-item:hover {
+  background-color: oklch(from var(--card) l c h / 0.6);
+}
+
+.sortable-handle {
+  cursor: grab;
+  margin-right: 0.375rem;
+  color: var(--muted-foreground);
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.sortable-handle i {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sortable-handle:hover {
+  color: var(--foreground);
+}
+
+.sortable-chosen {
+  cursor: grabbing;
+}
+
+.sortable-chosen .sortable-handle {
+  color: var(--foreground);
+}
+
+/* During drag, prevent hover effects on other items */
+.sortable-sorting .sortable-item:not(.sortable-chosen):hover {
+  background-color: var(--background);
+}
+
+.dark .sortable-sorting .sortable-item:not(.sortable-chosen):hover {
+  background-color: var(--background);
+}
+
+.sortable-sorting .sortable-item:not(.sortable-chosen) .sortable-handle:hover {
+  color: var(--muted-foreground);
+}
+
+.sortable-ghost {
+  opacity: 0.4;
+  background-color: var(--background);
+  box-shadow: none;
+}

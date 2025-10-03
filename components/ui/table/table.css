@@ -1,0 +1,40 @@
+.table {
+  width: 100%;
+  caption-side: bottom;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.table-row {
+  border-bottom: 1px solid var(--border);
+}
+
+.table-header .table-row:hover,
+.table-body .table-row:hover {
+  background-color: oklch(from var(--foreground) l c h / 0.05);
+}
+
+.table-head {
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+.table-cell {
+  padding: 0.5rem;
+  vertical-align: middle;
+}
+
+.table-footer {
+  background-color: oklch(from var(--foreground) l c h / 0.05);
+  font-weight: 500;
+}
+
+.table-footer .table-row {
+  border-bottom: 0;
+}

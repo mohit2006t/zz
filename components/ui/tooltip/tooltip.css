@@ -1,0 +1,57 @@
+/**
+ * @file tooltip.css
+ * @description Styles for an interactive tooltip component.
+ */
+ .tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-content {
+  position: absolute;
+  z-index: 50;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  color: var(--secondary-foreground);
+  background-color: var(--secondary);
+  border-radius: calc(var(--radius) / 2);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.tooltip-content.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Positioning */
+.tooltip-content:not([data-position]),
+.tooltip-content[data-position="top"] {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
+}
+
+.tooltip-content[data-position="bottom"] {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+}
+
+.tooltip-content[data-position="left"] {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 0.5rem;
+}
+
+.tooltip-content[data-position="right"] {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0.5rem;
+}

@@ -1,0 +1,19 @@
+/**
+ * @file progress.css
+ * @description Styles for a progress bar component.
+ */
+ .progress {
+  position: relative;
+  height: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--secondary);
+  border-radius: var(--radius);
+}
+
+.progress-indicator {
+  height: 100%;
+  width: var(--progress-value, 0%);
+  background-color: var(--primary);
+  transition: width 0.3s ease-in-out;
+}

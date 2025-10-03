@@ -1,0 +1,101 @@
+/**
+ * @file input-otp.css
+ * @description Styles for a reusable One-Time Password (OTP) input component.
+ */
+ .input-otp {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.input-otp-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-otp-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  border: 1px solid var(--input);
+  background-color: var(--background);
+  color: var(--foreground);
+  border-radius: 0;
+  margin-left: -1px;
+  transition: border-color 0.1s, z-index 0.1s;
+  caret-color: var(--foreground);
+}
+
+.input-otp-group .input-otp-slot:first-child {
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+  margin-left: 0;
+}
+
+.input-otp-group .input-otp-slot:last-child {
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.input-otp-slot::-webkit-outer-spin-button,
+.input-otp-slot::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-otp-slot:focus {
+  outline: none;
+  border-color: var(--ring);
+  z-index: 1;
+}
+
+.input-otp-slot.is-selected {
+  border-color: var(--ring);
+  z-index: 1;
+}
+
+.input-otp-slot.is-selected:focus {
+  caret-color: transparent;
+}
+
+.input-otp-slot::selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+.input-otp-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+/* Sizing Variants */
+.input-otp-sm .input-otp-slot {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.input-otp-lg .input-otp-slot {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+}
+
+.input-otp-sm .input-otp-separator {
+  font-size: 1rem;
+}
+
+.input-otp-lg .input-otp-separator {
+  font-size: 1.5rem;
+}

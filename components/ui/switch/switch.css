@@ -1,0 +1,116 @@
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  height: 1.5rem;
+  width: 2.75rem;
+}
+
+.switch-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.switch-track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--input);
+  border-radius: 9999px;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.switch-thumb {
+  display: block;
+  position: relative;
+  background-color: var(--background);
+  border-radius: 50%;
+  transition: transform 0.15s ease-in-out;
+  pointer-events: none;
+  height: 1.25rem;
+  width: 1.25rem;
+  transform: translateX(0.125rem);
+}
+
+.switch-xs {
+  height: 1rem;
+  width: 1.75rem;
+}
+.switch-xs .switch-thumb {
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.switch-sm {
+  height: 1.25rem;
+  width: 2.25rem;
+}
+.switch-sm .switch-thumb {
+  height: 1rem;
+  width: 1rem;
+}
+
+.switch-lg {
+  height: 1.75rem;
+  width: 3.25rem;
+}
+.switch-lg .switch-thumb {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.switch-xl {
+  height: 2rem;
+  width: 3.75rem;
+}
+.switch-xl .switch-thumb {
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.switch-input:checked ~ .switch-track {
+  background-color: var(--primary);
+}
+
+.switch.switch-xs .switch-input:checked ~ .switch-thumb {
+  transform: translateX(0.875rem);
+}
+.switch.switch-sm .switch-input:checked ~ .switch-thumb {
+  transform: translateX(1.125rem);
+}
+.switch .switch-input:checked ~ .switch-thumb {
+  transform: translateX(1.375rem);
+}
+.switch.switch-lg .switch-input:checked ~ .switch-thumb {
+  transform: translateX(1.625rem);
+}
+.switch.switch-xl .switch-input:checked ~ .switch-thumb {
+  transform: translateX(1.875rem);
+}
+
+.switch-input:disabled ~ .switch-track,
+.switch-input:disabled ~ .switch-thumb {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.switch-input:focus-visible ~ .switch-track {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.dark .switch-thumb {
+  background-color: var(--foreground);
+}
+
+.dark .switch-input:checked ~ .switch-thumb {
+  background-color: var(--primary-foreground);
+}

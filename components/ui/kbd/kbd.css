@@ -1,0 +1,28 @@
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: 500;
+  border-radius: calc(var(--radius) * 0.6);
+  user-select: none;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  border: 1px solid var(--border);
+  background-color: color-mix(in oklch, var(--muted) 25%, var(--background));
+  color: var(--foreground);
+  font-size: 0.875rem;
+  height: 1.6em;
+  min-width: 1.6em;
+  padding: 0.3em;
+  line-height: 1;
+  vertical-align: middle;
+  gap: 0.25em;
+}
+
+kbd svg,
+kbd i {
+width: 1em;
+height: 1em;
+flex-shrink: 0;
+}

@@ -1,0 +1,145 @@
+/**
+ * @file combobox.css
+ * @description Styles for a combobox, integrating the command component.
+ */
+ .combobox {
+  position: relative;
+}
+
+.combobox-trigger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 2.25rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--input);
+  background-color: var(--background);
+  color: var(--foreground);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  text-align: left;
+}
+
+.combobox-trigger:hover:not(:disabled) {
+  background-color: var(--accent);
+}
+
+.combobox-trigger .placeholder {
+  color: var(--muted-foreground);
+}
+
+.combobox-trigger .chevrons {
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.combobox-content {
+  position: fixed;
+  z-index: 50;
+  width: var(--trigger-width);
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity 150ms, transform 150ms;
+}
+
+.combobox-content[data-state="open"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.combobox-content .command {
+  border: none;
+  height: auto;
+}
+
+.combobox-content .command-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: calc(var(--radius) - 2px);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: background-color 0.1s, color 0.1s;
+  width: 100%;
+}
+
+.combobox-content .command-item .item-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+}
+
+.combobox-content .command-item .check-icon {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: opacity 0.15s;
+}
+
+.combobox-content.has-icons .command-item {
+  padding-left: 2rem;
+}
+
+.combobox-content.has-icons .command-item .item-icon {
+  position: absolute;
+  left: 0.75rem;
+}
+
+/* Style for the hovered/focused item from the command component */
+.combobox-content .command-item[aria-selected="true"] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.combobox-content .command-item[aria-selected="true"] .item-icon,
+.combobox-content .command-item[aria-selected="true"] .check-icon {
+  color: var(--accent-foreground);
+}
+
+/* Style for the permanently selected item */
+.combobox-content .command-item[data-selected="true"] .check-icon {
+  opacity: 1;
+}
+
+.combobox-content .command-item[data-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dark .combobox-trigger {
+  background-color: oklch(from var(--input) l c h / 0.3);
+}
+
+.dark .combobox-trigger:hover:not(:disabled) {
+  background-color: oklch(from var(--input) l c h / 0.5);
+}
+
+.combobox-trigger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
