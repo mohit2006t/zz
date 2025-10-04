@@ -212,6 +212,53 @@
     </button>
   </div>
 
+  <!-- Card Section -->
+  <div class="component-section">
+    <h2>Card</h2>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Card Title</h3>
+        <p class="card-description">A brief description of the card's content.</p>
+      </div>
+      <div class="card-content">
+        <p>This is the main content area of the card. It can contain any elements you need, such as text, images, or lists.</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-secondary">Cancel</button>
+        <button class="btn btn-primary">Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forms Section -->
+  <div class="component-section">
+    <h2>Forms</h2>
+    <div class="flex flex-col gap-4">
+      <div>
+        <label class="label" for="email-input">E-mail</label>
+        <input class="input" type="email" id="email-input" placeholder="you@example.com" />
+      </div>
+      <div>
+        <label class="label" for="input-disabled-2">Disabled</label>
+        <input class="input" type="text" id="input-disabled-2" placeholder="Disabled" disabled />
+      </div>
+      <div class="flex flex-col gap-2" style="margin-top: 1rem;">
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="checkbox-standard" class="checkbox-input" />
+          <label for="checkbox-standard" class="label-inline">Accept terms and conditions</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="checkbox-checked" class="checkbox-input" checked />
+          <label for="checkbox-checked" class="label-inline">Always send notifications</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="checkbox-disabled" class="checkbox-input" disabled />
+          <label for="checkbox-disabled" class="label-inline text-muted-foreground">Receive marketing emails (disabled)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast container (should be at the end of the body) -->
   <div id="toast-container"></div>
 </body>

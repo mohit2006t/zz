@@ -1,0 +1,28 @@
+<!-- =================================================================
+   CHECKBOX COMPONENT
+   - A control that allows the user to select one or more options.
+   - This component uses a native <input type="checkbox"> that is
+     visually hidden and replaced with a custom-styled element
+     for a consistent appearance across browsers.
+   - This component is CSS-only.
+   ================================================================= -->
+
+<div class="flex flex-col gap-4">
+  <!-- Standard Checkbox -->
+  <div class="flex items-center gap-2">
+    <input type="checkbox" id="checkbox-standard" class="checkbox-input" />
+    <label for="checkbox-standard" class="label-inline">Accept terms and conditions</label>
+  </div>
+
+  <!-- Checked Checkbox -->
+  <div class="flex items-center gap-2">
+    <input type="checkbox" id="checkbox-checked" class="checkbox-input" checked />
+    <label for="checkbox-checked" class="label-inline">Always send notifications</label>
+  </div>
+
+  <!-- Disabled Checkbox -->
+  <div class="flex items-center gap-2">
+    <input type="checkbox" id="checkbox-disabled" class="checkbox-input" disabled />
+    <label for="checkbox-disabled" class="label-inline text-muted-foreground">Receive marketing emails (disabled)</label>
+  </div>
+</div>
