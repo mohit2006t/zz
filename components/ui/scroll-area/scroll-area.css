@@ -1,9 +1,0 @@
-/**
- * @file scroll-area.css
- * @description A simple container to enable system-styled scrolling.
- */
- .scroll-area {
-  overflow: auto; /* Enables scrolling only when content overflows */
-  height: 100%;
-  width: 100%;
-}
