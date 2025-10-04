@@ -1,0 +1,87 @@
+<!-- =================================================================
+   ACCORDION COMPONENT
+   - A vertically stacked set of interactive headings that each
+     reveal a section of content.
+   - Built using the native <details> and <summary> elements for
+     accessibility.
+   - The `.accordion` class on the parent container enables the
+     "one-at-a-time" open behavior via JavaScript.
+   ================================================================= -->
+
+<div class="accordion">
+  <details class="accordion-item" open>
+    <summary class="accordion-trigger">
+      <span>Is it accessible?</span>
+      <!-- Chevron icon for visual feedback -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="accordion-icon"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-content">
+      <p>
+        Yes. It uses the native <code>&lt;details&gt;</code> and
+        <code>&lt;summary&gt;</code> elements, which are accessible by default.
+      </p>
+    </div>
+  </details>
+
+  <details class="accordion-item">
+    <summary class="accordion-trigger">
+      <span>Is it styled?</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="accordion-icon"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-content">
+      <p>
+        Yes. It comes with default styles that match the other components'
+        aesthetic. You can customize it using CSS variables.
+      </p>
+    </div>
+  </details>
+
+  <details class="accordion-item">
+    <summary class="accordion-trigger">
+      <span>Is it animated?</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="accordion-icon"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-content">
+      <p>Yes. The opening and closing are animated with a smooth transition.</p>
+    </div>
+  </details>
+</div>

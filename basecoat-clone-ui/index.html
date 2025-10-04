@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basecoat Clone UI - Component Showcase</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <script defer src="js/base.js"></script>
+  <style>
+    body {
+      padding: var(--space-8);
+    }
+    .component-section {
+      margin-bottom: var(--space-8);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .component-section h2 {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--space-4);
+      border-bottom: 1px solid hsl(var(--border));
+      padding-bottom: var(--space-2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align: center; margin-bottom: var(--space-12);">Component Showcase</h1>
+
+  <!-- Components will be injected here -->
+
+  <!-- Button Section -->
+  <div class="component-section">
+    <h2>Button</h2>
+    <div class="flex items-center gap-4">
+      <!-- Primary Button -->
+      <button class="btn btn-primary">Primary</button>
+
+      <!-- Secondary Button -->
+      <button class="btn btn-secondary">Secondary</button>
+
+      <!-- Destructive Button -->
+      <button class="btn btn-destructive">Destructive</button>
+
+      <!-- Ghost Button -->
+      <button class="btn btn-ghost">Ghost</button>
+
+      <!-- Link Button -->
+      <button class="btn btn-link">Link</button>
+
+      <!-- Button with an icon -->
+      <button class="btn btn-primary flex items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12h14" />
+          <path d="M12 5v14" />
+        </svg>
+        <span>Icon</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Accordion Section -->
+  <div class="component-section">
+    <h2>Accordion</h2>
+    <div class="accordion">
+      <details class="accordion-item" open>
+        <summary class="accordion-trigger">
+          <span>Is it accessible?</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="accordion-icon"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </summary>
+        <div class="accordion-content">
+          <p>
+            Yes. It uses the native <code>&lt;details&gt;</code> and
+            <code>&lt;summary&gt;</code> elements, which are accessible by default.
+          </p>
+        </div>
+      </details>
+
+      <details class="accordion-item">
+        <summary class="accordion-trigger">
+          <span>Is it styled?</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="accordion-icon"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </summary>
+        <div class="accordion-content">
+          <p>
+            Yes. It comes with default styles that match the other components'
+            aesthetic. You can customize it using CSS variables.
+          </p>
+        </div>
+      </details>
+
+      <details class="accordion-item">
+        <summary class="accordion-trigger">
+          <span>Is it animated?</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="accordion-icon"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </summary>
+        <div class="accordion-content">
+          <p>Yes. The opening and closing are animated with a smooth transition.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Dialog Section -->
+  <div class="component-section">
+    <h2>Dialog</h2>
+    <!-- Trigger Button -->
+    <button class="btn btn-primary" data-dialog-target="#dialog-example">
+      Open Dialog
+    </button>
+
+    <!-- Dialog Element -->
+    <dialog id="dialog-example" class="dialog">
+      <div class="dialog-content">
+        <h2 class="dialog-header">Dialog Title</h2>
+        <p class="dialog-body">
+          This is the main content of the dialog. You can put any HTML you want in
+          here. Pressing the 'Escape' key or clicking the close button will
+          dismiss it.
+        </p>
+        <div class="dialog-footer">
+          <button class="btn btn-secondary" data-dialog-close>Close</button>
+          <button class="btn btn-primary" onclick="this.closest('.dialog').close()">Confirm</button>
+        </div>
+        <!-- Optional: Add a dedicated close button inside the dialog -->
+        <button class="dialog-close-btn" data-dialog-close>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+    </dialog>
+  </div>
+
+  <!-- Tooltip Section -->
+  <div class="component-section">
+    <h2>Tooltip</h2>
+    <div class="tooltip" data-tooltip>
+      <button class="btn btn-secondary tooltip-trigger">Hover over me</button>
+      <div class="tooltip-content">
+        This is a tooltip!
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Section -->
+  <div class="component-section">
+    <h2>Toast</h2>
+    <button class="btn btn-primary" onclick="showToast('This is a toast message!', 'Event Scheduled')">
+      Show Toast
+    </button>
+  </div>
+
+  <!-- Toast container (should be at the end of the body) -->
+  <div id="toast-container"></div>
+</body>
+</html>

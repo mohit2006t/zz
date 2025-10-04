@@ -1,0 +1,47 @@
+<!-- =================================================================
+   DIALOG (MODAL) COMPONENT
+   - A window overlaid on either the primary window or another
+     dialog window.
+   - Built using the native <dialog> element for accessibility.
+   - JavaScript is required to open/close the dialog and trap focus.
+   - The trigger button must have a `data-dialog-target` attribute
+     pointing to the ID of the dialog element.
+   ================================================================= -->
+
+<!-- Trigger Button -->
+<button class="btn btn-primary" data-dialog-target="#dialog-example">
+  Open Dialog
+</button>
+
+<!-- Dialog Element -->
+<dialog id="dialog-example" class="dialog">
+  <div class="dialog-content">
+    <h2 class="dialog-header">Dialog Title</h2>
+    <p class="dialog-body">
+      This is the main content of the dialog. You can put any HTML you want in
+      here. Pressing the 'Escape' key or clicking the close button will
+      dismiss it.
+    </p>
+    <div class="dialog-footer">
+      <button class="btn btn-secondary" data-dialog-close>Close</button>
+      <button class="btn btn-primary">Confirm</button>
+    </div>
+    <!-- Optional: Add a dedicated close button inside the dialog -->
+    <button class="dialog-close-btn" data-dialog-close>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+  </div>
+</dialog>
