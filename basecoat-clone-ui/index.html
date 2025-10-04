@@ -8,258 +8,432 @@
   <script defer src="js/base.js"></script>
   <style>
     body {
-      padding: var(--space-8);
+      padding: 2rem 4rem;
+      background-color: var(--background);
+      color: var(--foreground);
     }
     .component-section {
-      margin-bottom: var(--space-8);
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 3rem;
+      max-width: 900px;
     }
-    .component-section h2 {
-      font-size: var(--font-size-2xl);
-      margin-bottom: var(--space-4);
-      border-bottom: 1px solid hsl(var(--border));
-      padding-bottom: var(--space-2);
+    .component-section > h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .component-preview {
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        margin-top: 1rem;
+    }
+    .component-preview > div:not(:last-child) {
+        margin-bottom: 1.5rem;
     }
   </style>
 </head>
 <body>
 
-  <h1 style="text-align: center; margin-bottom: var(--space-12);">Component Showcase</h1>
+  <h1 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem; font-weight: 700;">Component Showcase</h1>
 
-  <!-- Components will be injected here -->
-
-  <!-- Button Section -->
+  <!-- ===============================================================
+       Display Components
+       =============================================================== -->
   <div class="component-section">
-    <h2>Button</h2>
-    <div class="flex items-center gap-4">
-      <!-- Primary Button -->
-      <button class="btn btn-primary">Primary</button>
-
-      <!-- Secondary Button -->
-      <button class="btn btn-secondary">Secondary</button>
-
-      <!-- Destructive Button -->
-      <button class="btn btn-destructive">Destructive</button>
-
-      <!-- Ghost Button -->
-      <button class="btn btn-ghost">Ghost</button>
-
-      <!-- Link Button -->
-      <button class="btn btn-link">Link</button>
-
-      <!-- Button with an icon -->
-      <button class="btn btn-primary flex items-center gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M5 12h14" />
-          <path d="M12 5v14" />
-        </svg>
-        <span>Icon</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Accordion Section -->
-  <div class="component-section">
-    <h2>Accordion</h2>
-    <div class="accordion">
-      <details class="accordion-item" open>
-        <summary class="accordion-trigger">
-          <span>Is it accessible?</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="accordion-icon"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </summary>
-        <div class="accordion-content">
-          <p>
-            Yes. It uses the native <code>&lt;details&gt;</code> and
-            <code>&lt;summary&gt;</code> elements, which are accessible by default.
-          </p>
-        </div>
-      </details>
-
-      <details class="accordion-item">
-        <summary class="accordion-trigger">
-          <span>Is it styled?</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="accordion-icon"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </summary>
-        <div class="accordion-content">
-          <p>
-            Yes. It comes with default styles that match the other components'
-            aesthetic. You can customize it using CSS variables.
-          </p>
-        </div>
-      </details>
-
-      <details class="accordion-item">
-        <summary class="accordion-trigger">
-          <span>Is it animated?</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="accordion-icon"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </summary>
-        <div class="accordion-content">
-          <p>Yes. The opening and closing are animated with a smooth transition.</p>
-        </div>
-      </details>
-    </div>
-  </div>
-
-  <!-- Dialog Section -->
-  <div class="component-section">
-    <h2>Dialog</h2>
-    <!-- Trigger Button -->
-    <button class="btn btn-primary" data-dialog-target="#dialog-example">
-      Open Dialog
-    </button>
-
-    <!-- Dialog Element -->
-    <dialog id="dialog-example" class="dialog">
-      <div class="dialog-content">
-        <h2 class="dialog-header">Dialog Title</h2>
-        <p class="dialog-body">
-          This is the main content of the dialog. You can put any HTML you want in
-          here. Pressing the 'Escape' key or clicking the close button will
-          dismiss it.
-        </p>
-        <div class="dialog-footer">
-          <button class="btn btn-secondary" data-dialog-close>Close</button>
-          <button class="btn btn-primary" onclick="this.closest('.dialog').close()">Confirm</button>
-        </div>
-        <!-- Optional: Add a dedicated close button inside the dialog -->
-        <button class="dialog-close-btn" data-dialog-close>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
-      </div>
-    </dialog>
-  </div>
-
-  <!-- Tooltip Section -->
-  <div class="component-section">
-    <h2>Tooltip</h2>
-    <div class="tooltip" data-tooltip>
-      <button class="btn btn-secondary tooltip-trigger">Hover over me</button>
-      <div class="tooltip-content">
-        This is a tooltip!
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Section -->
-  <div class="component-section">
-    <h2>Toast</h2>
-    <button class="btn btn-primary" onclick="showToast('This is a toast message!', 'Event Scheduled')">
-      Show Toast
-    </button>
-  </div>
-
-  <!-- Card Section -->
-  <div class="component-section">
-    <h2>Card</h2>
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Card Title</h3>
-        <p class="card-description">A brief description of the card's content.</p>
-      </div>
-      <div class="card-content">
-        <p>This is the main content area of the card. It can contain any elements you need, such as text, images, or lists.</p>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-secondary">Cancel</button>
-        <button class="btn btn-primary">Action</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Forms Section -->
-  <div class="component-section">
-    <h2>Forms</h2>
-    <div class="flex flex-col gap-4">
+    <h2>Display</h2>
+    <div class="component-preview">
+      <!-- Alert -->
       <div>
-        <label class="label" for="email-input">E-mail</label>
+        <label class="label">Alert</label>
+        <div class="flex flex-col gap-2">
+            <div class="alert">
+              <h4 class="alert-title">Alert Title</h4>
+              <div class="alert-description">This is a standard alert message.</div>
+            </div>
+            <div class="alert alert-destructive">
+              <h4 class="alert-title">Error</h4>
+              <div class="alert-description">This is a destructive alert.</div>
+            </div>
+        </div>
+      </div>
+      <!-- Avatar -->
+      <div>
+        <label class="label">Avatar</label>
+        <div class="flex items-center gap-4">
+          <div class="avatar">
+            <img class="avatar-image" src="https://github.com/shadcn.png" alt="User Avatar" />
+          </div>
+          <div class="avatar">
+            <div class="avatar-fallback">CN</div>
+          </div>
+        </div>
+      </div>
+      <!-- Badge -->
+      <div>
+        <label class="label">Badge</label>
+        <div class="flex items-center gap-2">
+          <span class="badge">Default</span>
+          <span class="badge badge-primary">Primary</span>
+          <span class="badge badge-secondary">Secondary</span>
+          <span class="badge badge-destructive">Destructive</span>
+        </div>
+      </div>
+      <!-- Hover Card -->
+      <div>
+        <label class="label">Hover Card</label>
+        <div class="hover-card" data-hover-card>
+          <button class="btn btn-secondary hover-card-trigger">Hover Me</button>
+          <div class="hover-card-content">
+            <div class="flex items-center gap-4">
+              <div class="avatar">
+                <div class="avatar-fallback">VC</div>
+              </div>
+              <div>
+                <h4 class="font-semibold">Vercel</h4>
+                <p class="text-sm text-muted-foreground">The platform for frontend developers.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       Buttons & Controls
+       =============================================================== -->
+  <div class="component-section">
+    <h2>Buttons & Controls</h2>
+    <div class="component-preview">
+      <!-- Buttons -->
+      <div>
+        <label class="label">Button</label>
+        <div class="flex items-center gap-4">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-destructive">Destructive</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-link">Link</button>
+        </div>
+      </div>
+      <!-- Switch -->
+      <div>
+        <label class="label">Switch</label>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="switch-off" class="switch-input" />
+            <label for="switch-off" class="switch-track"></label>
+            <label for="switch-off" class="label-inline pl-0">Off</label>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="switch-on" class="switch-input" checked />
+            <label for="switch-on" class="switch-track"></label>
+            <label for="switch-on" class="label-inline pl-0">On</label>
+          </div>
+        </div>
+      </div>
+      <!-- Toggle & Toggle Group -->
+      <div>
+        <label class="label">Toggle & Group</label>
+        <div class="flex items-center gap-4">
+            <button class="toggle" aria-pressed="false" data-toggle>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.5 10.478V3.5a.5.5 0 0 0-1 0v6.978l-2.146-2.147a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.478Z"/></svg>
+            </button>
+            <div class="toggle-group" role="group">
+                <button class="toggle" aria-pressed="true" data-toggle><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
+                <button class="toggle" aria-pressed="false" data-toggle><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       Form Inputs
+       =============================================================== -->
+  <div class="component-section">
+    <h2>Form Inputs</h2>
+    <div class="component-preview">
+      <!-- Input -->
+      <div>
+        <label class="label" for="email-input">Input</label>
         <input class="input" type="email" id="email-input" placeholder="you@example.com" />
       </div>
+      <!-- Textarea -->
       <div>
-        <label class="label" for="input-disabled-2">Disabled</label>
-        <input class="input" type="text" id="input-disabled-2" placeholder="Disabled" disabled />
+        <label for="message" class="label">Textarea</label>
+        <textarea id="message" class="input" rows="4" placeholder="Type your message here."></textarea>
       </div>
-      <div class="flex flex-col gap-2" style="margin-top: 1rem;">
+      <!-- Checkbox -->
+      <div>
+        <label class="label">Checkbox</label>
         <div class="flex items-center gap-2">
           <input type="checkbox" id="checkbox-standard" class="checkbox-input" />
-          <label for="checkbox-standard" class="label-inline">Accept terms and conditions</label>
+          <label for="checkbox-standard" class="label-inline">Accept terms</label>
         </div>
-        <div class="flex items-center gap-2">
-          <input type="checkbox" id="checkbox-checked" class="checkbox-input" checked />
-          <label for="checkbox-checked" class="label-inline">Always send notifications</label>
+      </div>
+      <!-- Radio Group -->
+      <div>
+        <label class="label">Radio Group</label>
+        <div role="radiogroup" class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <input type="radio" id="radio-a" name="radio-group-demo" class="radio-input" />
+            <label for="radio-a" class="label-inline">Option A</label>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="radio" id="radio-b" name="radio-group-demo" class="radio-input" checked />
+            <label for="radio-b" class="label-inline">Option B</label>
+          </div>
         </div>
-        <div class="flex items-center gap-2">
-          <input type="checkbox" id="checkbox-disabled" class="checkbox-input" disabled />
-          <label for="checkbox-disabled" class="label-inline text-muted-foreground">Receive marketing emails (disabled)</label>
+      </div>
+      <!-- Select -->
+      <div>
+        <label class="label">Select</label>
+        <div class="select" data-select>
+          <select class="hidden-select" name="fruit">
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="blueberry" selected>Blueberry</option>
+          </select>
+          <button class="select-trigger btn btn-secondary">
+            <span class="select-value">Select a fruit...</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-chevron"><path d="m6 9 6 6 6-6" /></svg>
+          </button>
+          <div class="select-popover">
+            <div class="select-content">
+              <div class="select-option" data-value="apple">Apple</div>
+              <div class="select-option" data-value="banana">Banana</div>
+              <div class="select-option" data-value="blueberry">Blueberry</div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- Input Group -->
+       <div>
+        <label class="label">Input Group</label>
+        <div class="input-group">
+          <input type="text" class="input" placeholder="Search..." />
+          <button class="btn btn-primary">Search</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast container (should be at the end of the body) -->
+  <!-- ===============================================================
+       Overlays & Feedback
+       =============================================================== -->
+  <div class="component-section">
+    <h2>Overlays & Feedback</h2>
+    <div class="component-preview flex items-center gap-4">
+      <!-- Dialog -->
+      <div>
+        <label class="label">Dialog</label>
+        <button class="btn btn-primary" data-dialog-target="#dialog-example">Open Dialog</button>
+      </div>
+      <!-- Alert Dialog -->
+      <div>
+        <label class="label">Alert Dialog</label>
+        <button class="btn btn-destructive" data-dialog-target="#alert-dialog-example">Delete</button>
+      </div>
+      <!-- Tooltip -->
+      <div>
+        <label class="label">Tooltip</label>
+        <div class="tooltip" data-tooltip>
+          <button class="btn btn-secondary tooltip-trigger">Hover me</button>
+          <div class="tooltip-content">This is a tooltip!</div>
+        </div>
+      </div>
+      <!-- Toast -->
+       <div>
+        <label class="label">Toast</label>
+        <button class="btn btn-primary" onclick="showToast('Your message has been sent.', 'Success')">Show Toast</button>
+      </div>
+      <!-- Drawer -->
+      <div>
+        <label class="label">Drawer</label>
+        <button class="btn btn-primary" data-drawer-target="#drawer-example">Open Drawer</button>
+      </div>
+      <!-- Dropdown Menu -->
+      <div>
+        <label class="label">Dropdown Menu</label>
+        <div class="dropdown" data-dropdown>
+          <button class="btn btn-secondary dropdown-trigger">Open Menu</button>
+          <div class="dropdown-popover">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item">My Account</a>
+              <a href="#" class="dropdown-item">Settings</a>
+              <div class="dropdown-separator"></div>
+              <a href="#" class="dropdown-item">Team</a>
+              <a href="#" class="dropdown-item">New Team</a>
+              <div class="dropdown-separator"></div>
+              <a href="#" class="dropdown-item text-destructive">Log out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Popover -->
+      <div>
+        <label class="label">Popover</label>
+        <div class="popover" data-popover>
+          <button class="btn btn-secondary popover-trigger">Open Popover</button>
+          <div class="popover-content">
+            <div class="popover-header">
+              <h4 class="popover-title">Popover Title</h4>
+            </div>
+            <div class="popover-body">
+              <p>This is the popover content. It can contain any HTML.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       Layout & Structure
+       =============================================================== -->
+  <div class="component-section">
+    <h2>Layout & Structure</h2>
+    <div class="component-preview flex flex-col gap-4">
+      <!-- Card -->
+      <div>
+        <label class="label">Card</label>
+        <div class="card" style="max-width: 400px;">
+          <div class="card-header"><h3 class="card-title">Card Title</h3></div>
+          <div class="card-content"><p>This is the card content.</p></div>
+          <div class="card-footer"><button class="btn btn-primary">Action</button></div>
+        </div>
+      </div>
+      <!-- Accordion -->
+      <div>
+        <label class="label">Accordion</label>
+        <div class="accordion" style="max-width: 400px;">
+          <details class="accordion-item"><summary class="accordion-trigger"><span>Section 1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon"><path d="m6 9 6 6 6-6" /></svg></summary><div class="accordion-content"><p>Content for section 1.</p></div></details>
+          <details class="accordion-item" open><summary class="accordion-trigger"><span>Section 2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon"><path d="m6 9 6 6 6-6" /></svg></summary><div class="accordion-content"><p>Content for section 2.</p></div></details>
+        </div>
+      </div>
+      <!-- Separator -->
+      <div>
+        <label class="label">Separator</label>
+        <div>
+          <p>Content above</p>
+          <div class="separator"></div>
+          <p>Content below</p>
+        </div>
+      </div>
+      <!-- Table -->
+      <div>
+        <label class="label">Table</label>
+        <table class="table">
+          <thead><tr><th>Name</th><th>Email</th></tr></thead>
+          <tbody>
+            <tr><td>John Doe</td><td>john.doe@example.com</td></tr>
+            <tr><td>Jane Smith</td><td>jane.smith@example.com</td></tr>
+          </tbody>
+        </table>
+      </div>
+       <!-- Resizable -->
+       <div>
+        <label class="label">Resizable Panel</label>
+        <div class="resizable" data-resizable style="width: 400px; height: 150px;">
+          <div class="resizable-content"><p>Drag the handle.</p></div>
+          <div class="resizable-handle"></div>
+        </div>
+      </div>
+      <!-- Scroll Area -->
+      <div>
+        <label class="label">Scroll Area</label>
+        <div class="scroll-area" style="height: 150px; width: 300px; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem;">
+          <p>Lots of content to make this scrollable...</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+       <!-- Aspect Ratio -->
+       <div>
+        <label class="label">Aspect Ratio (16:9)</label>
+        <div style="width: 400px;">
+          <div class="aspect-ratio-16-9">
+            <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80" alt="An abstract image." style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);" />
+          </div>
+        </div>
+      </div>
+      <!-- Navigation Menu -->
+      <div>
+        <label class="label">Navigation Menu</label>
+        <nav class="nav-menu" data-nav-menu><ul class="nav-menu-list"><li class="nav-menu-item"><a href="#" class="nav-menu-link">Home</a></li><li class="nav-menu-item" data-nav-submenu><a href="#" class="nav-menu-link">Products</a><div class="nav-submenu"><ul class="nav-submenu-list"><li><a href="#">Product A</a></li><li><a href="#">Product B</a></li></ul></div></li><li class="nav-menu-item"><a href="#" class="nav-menu-link">Contact</a></li></ul></nav>
+      </div>
+      <!-- Pagination -->
+      <div>
+        <label class="label">Pagination</label>
+        <nav aria-label="pagination"><ul class="pagination"><li class="pagination-item"><a class="pagination-link" href="#">Previous</a></li><li class="pagination-item"><a class="pagination-link" href="#">1</a></li><li class="pagination-item active"><a class="pagination-link" href="#" aria-current="page">2</a></li><li class="pagination-item disabled"><span class="pagination-link">...</span></li><li class="pagination-item"><a class="pagination-link" href="#">Next</a></li></ul></nav>
+      </div>
+      <!-- Tabs -->
+      <div>
+        <label class="label">Tabs</label>
+        <div class="tabs" data-tabs>
+          <div class="tabs-list" role="tablist"><button class="tab-trigger active" role="tab" aria-selected="true" aria-controls="panel-1">Account</button><button class="tab-trigger" role="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">Password</button></div>
+          <div id="panel-1" class="tab-content" role="tabpanel" tabindex="0"><p>Account content.</p></div>
+          <div id="panel-2" class="tab-content hidden" role="tabpanel" tabindex="0"><p>Password content.</p></div>
+        </div>
+      </div>
+      <!-- Collapsible -->
+      <div>
+        <label class="label">Collapsible</label>
+        <div class="collapsible open" data-collapsible style="width: 400px;">
+          <div class="flex items-center justify-between p-4 border rounded-md">
+            <h4 class="text-sm font-semibold">@peduarte starred 3 repositories</h4>
+            <button class="btn btn-ghost collapsible-trigger h-auto p-1">
+              <span class="collapsible-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+              <span class="sr-only">Toggle</span>
+            </button>
+          </div>
+          <div class="collapsible-content">
+            <div class="mt-2 rounded-md border p-4">@radix-ui/primitives</div>
+            <div class="mt-2 rounded-md border p-4">@radix-ui/colors</div>
+            <div class="mt-2 rounded-md border p-4">@stitches/react</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Dialog Elements (hidden by default) -->
+  <dialog id="dialog-example" class="dialog">
+    <div class="dialog-content">
+      <h2 class="dialog-header">Dialog Title</h2>
+      <p class="dialog-body">This is the dialog content.</p>
+      <div class="dialog-footer">
+        <button class="btn btn-secondary" data-dialog-close>Close</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="alert-dialog-example" class="dialog">
+    <div class="dialog-content">
+      <h2 class="dialog-header">Are you sure?</h2>
+      <p class="dialog-body">This action cannot be undone.</p>
+      <div class="dialog-footer">
+        <button class="btn btn-secondary" data-dialog-close>Cancel</button>
+        <button class="btn btn-destructive" data-dialog-close>Continue</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Drawer Element (hidden by default) -->
+  <div id="drawer-example" class="drawer" data-drawer>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <div class="drawer-content">
+      <h2 class="drawer-header">Drawer Title</h2>
+      <div class="drawer-body"><p>This is the drawer content.</p></div>
+      <div class="drawer-footer"><button class="btn btn-secondary" data-drawer-close>Close</button></div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
   <div id="toast-container"></div>
 </body>
 </html>

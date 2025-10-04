@@ -1,0 +1,25 @@
+<!-- =================================================================
+   DRAWER / SHEET COMPONENT
+   - A panel that slides in from the side of the screen.
+   - Requires JavaScript to manage its open/closed state.
+   ================================================================= -->
+
+<!-- Trigger Button -->
+<button class="btn btn-primary" data-drawer-target="#drawer-example">
+  Open Drawer
+</button>
+
+<!-- Drawer Element -->
+<div id="drawer-example" class="drawer" data-drawer>
+  <div class="drawer-overlay" data-drawer-close></div>
+  <div class="drawer-content">
+    <h2 class="drawer-header">Drawer Title</h2>
+    <p class="drawer-body">
+      This is the content of the drawer. It can be closed by clicking the
+      overlay, the close button, or by pressing the 'Escape' key.
+    </p>
+    <div class="drawer-footer">
+      <button class="btn btn-secondary" data-drawer-close>Close</button>
+    </div>
+  </div>
+</div>

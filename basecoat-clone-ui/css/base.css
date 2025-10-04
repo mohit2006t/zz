@@ -160,6 +160,20 @@ body {
 .gap-2 { gap: 0.5rem; }
 .gap-4 { gap: 1rem; }
 .text-muted-foreground { color: var(--muted-foreground); }
+.pl-0 { padding-left: 0 !important; }
+.ml-2 { margin-left: 0.5rem; }
+.ml-auto { margin-left: auto; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
 
 /* =================================================================
    Component Styles
@@ -265,15 +279,127 @@ details[open] > .accordion-content {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }
-.btn-link {
-  background-color: transparent;
-  color: var(--primary);
-  border-color: transparent;
-  text-decoration: underline;
-  padding: 0;
+
+/* -----------------------------------------------------------------
+   Popover
+   ----------------------------------------------------------------- */
+.popover {
+  position: relative;
+  display: inline-block;
 }
-.btn-link:hover {
-  text-decoration: none;
+
+.popover-content {
+  position: absolute;
+  bottom: calc(100% + 0.5rem); /* Position above the trigger */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 25;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) translateX(-50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.popover.open > .popover-content {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) translateX(-50%);
+}
+
+/* -----------------------------------------------------------------
+   Collapsible
+   ----------------------------------------------------------------- */
+.collapsible-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
+}
+
+.collapsible.open .collapsible-content {
+  max-height: 500px; /* Adjust as needed, can be set dynamically with JS */
+}
+
+.collapsible-icon {
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.collapsible.open .collapsible-icon {
+  transform: rotate(180deg);
+}
+
+.popover-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.popover-title {
+  font-weight: 500;
+}
+
+.popover-body {
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+/* -----------------------------------------------------------------
+   Hover Card
+   ----------------------------------------------------------------- */
+.hover-card {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-card-content {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 20;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) translateX(-50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hover-card:hover .hover-card-content {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) translateX(-50%);
+}
+
+/* -----------------------------------------------------------------
+   Toggle Group
+   ----------------------------------------------------------------- */
+.toggle-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Remove rounded corners between buttons in the group */
+.toggle-group > .toggle:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px; /* Overlap borders */
+}
+
+.toggle-group > .toggle:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 /* -----------------------------------------------------------------
@@ -544,6 +670,11 @@ details[open] > .accordion-content {
   opacity: 0.5;
 }
 
+/* Allow textarea to have a flexible height */
+textarea.input {
+  height: auto;
+}
+
 /* -----------------------------------------------------------------
    Checkbox
    ----------------------------------------------------------------- */
@@ -616,4 +747,797 @@ details[open] > .accordion-content {
 .checkbox-input:focus-visible + .label-inline::before {
     outline: 3px solid oklch(from var(--ring) l c h / 0.4);
     outline-offset: 0px;
+}
+
+/* -----------------------------------------------------------------
+   Alert
+   ----------------------------------------------------------------- */
+
+.alert {
+  position: relative;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--card-foreground);
+}
+
+.alert-title {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.alert-description {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+/* Destructive Variant */
+.alert-destructive {
+  border-color: oklch(from var(--destructive) l c h / 0.5);
+  color: oklch(from var(--destructive) l c h);
+}
+
+.alert-destructive .alert-title {
+  color: oklch(from var(--destructive) l c h);
+}
+
+.alert-destructive .alert-description {
+  color: oklch(from var(--destructive) l c h / 0.8);
+}
+
+/* -----------------------------------------------------------------
+   Radio Group
+   ----------------------------------------------------------------- */
+
+.radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The custom radio button */
+.radio-input + .label-inline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--input);
+  border-radius: 9999px;
+  background-color: transparent;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+/* The inner dot for the checked state */
+.radio-input:checked + .label-inline::after {
+  content: '';
+  position: absolute;
+  left: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--primary-foreground);
+}
+
+/* Checked state for the outer ring */
+.radio-input:checked + .label-inline::before {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Disabled state */
+.radio-input:disabled + .label-inline {
+  cursor: not-allowed;
+}
+.radio-input:disabled + .label-inline::before {
+  background-color: var(--muted);
+  border-color: var(--border);
+}
+.radio-input:disabled:checked + .label-inline::after {
+  background-color: var(--muted-foreground);
+}
+
+/* Focus state */
+.radio-input:focus-visible + .label-inline::before {
+    outline: 3px solid oklch(from var(--ring) l c h / 0.4);
+    outline-offset: 0px;
+}
+
+/* -----------------------------------------------------------------
+   Avatar
+   ----------------------------------------------------------------- */
+
+.avatar {
+  position: relative;
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9999px; /* A large value to ensure it's a circle */
+}
+
+.avatar-image {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.avatar-fallback {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* -----------------------------------------------------------------
+   Badge
+   ----------------------------------------------------------------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.badge-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+.badge-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--secondary);
+}
+
+.badge-destructive {
+  background-color: var(--destructive);
+  color: var(--primary-foreground);
+  border-color: var(--destructive);
+}
+
+/* -----------------------------------------------------------------
+   Select
+   ----------------------------------------------------------------- */
+.select {
+  position: relative;
+  width: 200px;
+}
+
+.hidden-select {
+  display: none;
+}
+
+.select-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select-chevron {
+  transition: transform 0.2s ease-in-out;
+}
+
+.select.open .select-chevron {
+  transform: rotate(180deg);
+}
+
+.select-popover {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 100%;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.select.open .select-popover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.select-content {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.select-option {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.select-option:hover {
+  background-color: var(--accent);
+}
+
+.select-option.selected {
+  background-color: var(--accent);
+  font-weight: 500;
+}
+
+/* -----------------------------------------------------------------
+   Switch
+   ----------------------------------------------------------------- */
+.switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-track {
+  position: relative;
+  display: inline-block;
+  width: 2.25rem;
+  height: 1.25rem;
+  background-color: var(--input);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* The thumb */
+.switch-track::before {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 0.2s ease;
+}
+
+/* Checked state */
+.switch-input:checked + .switch-track {
+  background-color: var(--primary);
+}
+
+.switch-input:checked + .switch-track::before {
+  transform: translateX(1rem);
+}
+
+/* Focus state */
+.switch-input:focus-visible + .switch-track {
+  outline: 3px solid oklch(from var(--ring) l c h / 0.4);
+  outline-offset: 2px;
+}
+
+/* -----------------------------------------------------------------
+   Input Group
+   ----------------------------------------------------------------- */
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group > .input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  /* The input needs to be on top so its focus ring isn't overlapped */
+  position: relative;
+  z-index: 1;
+}
+
+/* Make the button look connected */
+.input-group > .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* When the input is focused, its right border should not be hidden by the button */
+.input-group > .input:focus-visible {
+  border-right-width: 1px;
+}
+
+/* -----------------------------------------------------------------
+   Aspect Ratio
+   ----------------------------------------------------------------- */
+
+.aspect-ratio-16-9 {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 9 / 16 = 0.5625 */
+}
+
+.aspect-ratio-16-9 > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* -----------------------------------------------------------------
+   Resizable
+   ----------------------------------------------------------------- */
+.resizable {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.resizable-handle {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 4px;
+  height: 100%;
+  cursor: col-resize;
+  background-color: var(--border);
+  transition: background-color 0.2s;
+  z-index: 10; /* Ensure handle is on top */
+}
+
+.resizable-handle:hover,
+.resizable-handle.resizing {
+  background-color: var(--ring);
+}
+
+/* -----------------------------------------------------------------
+   Scroll Area
+   ----------------------------------------------------------------- */
+.scroll-area {
+  overflow: auto;
+}
+
+.scroll-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground);
+}
+
+/* -----------------------------------------------------------------
+   Table
+   ----------------------------------------------------------------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.table tbody tr:hover {
+  background-color: var(--accent);
+}
+
+/* -----------------------------------------------------------------
+   Breadcrumb
+   ----------------------------------------------------------------- */
+.breadcrumb {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item a {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--foreground);
+}
+
+.breadcrumb-item.active {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '/';
+  margin: 0 0.5rem;
+  color: var(--muted-foreground);
+}
+
+/* -----------------------------------------------------------------
+   Drawer / Sheet
+   ----------------------------------------------------------------- */
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 40;
+  display: flex;
+  justify-content: flex-end; /* Default to right side */
+  pointer-events: none;
+}
+
+.drawer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: oklch(from var(--background) l c h / 0.8);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.drawer-content {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background-color: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--shadow-2xl);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Open state */
+.drawer.open {
+  pointer-events: auto;
+}
+
+.drawer.open .drawer-overlay {
+  opacity: 1;
+}
+
+.drawer.open .drawer-content {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.drawer-body {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.drawer-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+/* -----------------------------------------------------------------
+   Navigation Menu
+   ----------------------------------------------------------------- */
+.nav-menu {
+  background-color: var(--card);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-menu-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+}
+
+.nav-menu-item {
+  position: relative;
+}
+
+.nav-menu-link {
+  color: var(--foreground);
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s, color 0.15s;
+  display: block;
+}
+
+.nav-menu-link:hover {
+  background-color: var(--accent);
+}
+
+.nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem;
+  min-width: 200px;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-menu-item:hover > .nav-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-submenu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-submenu-list a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--popover-foreground);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.nav-submenu-list a:hover {
+  background-color: var(--accent);
+}
+
+/* -----------------------------------------------------------------
+   Pagination
+   ----------------------------------------------------------------- */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+}
+
+.pagination-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.pagination-link:hover {
+  background-color: var(--accent);
+}
+
+.pagination-item.active .pagination-link {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+.pagination-item.disabled .pagination-link {
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------------
+   Dropdown Menu
+   ----------------------------------------------------------------- */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-popover {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 200px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 30;
+  padding: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown.open > .dropdown-popover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+.dropdown-item:hover {
+  background-color: var(--accent);
+}
+
+.dropdown-item.text-destructive:hover {
+    color: var(--primary-foreground);
+    background-color: var(--destructive);
+}
+
+.dropdown-separator {
+  height: 1px;
+  background-color: var(--border);
+  margin: 0.5rem -0.5rem;
+}
+
+/* Submenu */
+.dropdown-submenu {
+  position: relative;
+}
+
+.submenu-popover {
+  position: absolute;
+  top: -0.5rem; /* Align with parent item */
+  left: 100%;
+  margin-left: 0.5rem;
+  width: 200px;
+  background-color: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.dropdown-submenu:hover > .submenu-popover {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* -----------------------------------------------------------------
+   Tabs
+   ----------------------------------------------------------------- */
+.tabs-list {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-trigger {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  margin-bottom: -1px; /* Overlap the container's border */
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-trigger:hover {
+  color: var(--foreground);
+}
+
+.tab-trigger.active {
+  color: var(--foreground);
+  border-bottom-color: var(--primary);
+}
+
+.tab-content {
+  padding: 1.5rem 0;
+}
+
+/* -----------------------------------------------------------------
+   Toggle
+   ----------------------------------------------------------------- */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background-color: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.toggle:hover {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.toggle[aria-pressed="true"] {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }

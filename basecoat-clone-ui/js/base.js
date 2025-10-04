@@ -16,6 +16,14 @@ const initComponents = () => {
   initAccordions();
   initDialogs();
   initTooltips();
+  initSelects();
+  initResizable();
+  initTabs();
+  initToggles();
+  initDrawers();
+  initDropdowns();
+  initPopovers();
+  initCollapsibles();
   // Other component initializers will go here
 };
 
@@ -183,6 +191,300 @@ function showToast(description, title = 'Notification') {
   });
 }
 
+
+/**
+ * -----------------------------------------------------------------
+ * Select
+ *
+ * Handles the functionality for custom select/dropdown components.
+ * - Toggles the dropdown visibility on trigger click.
+ * - Updates the hidden native select when a custom option is chosen.
+ * - Closes the dropdown when clicking outside of it.
+ * -----------------------------------------------------------------
+ */
+const initSelects = () => {
+  const selectContainers = document.querySelectorAll('[data-select]');
+
+  selectContainers.forEach(container => {
+    const nativeSelect = container.querySelector('.hidden-select');
+    const trigger = container.querySelector('.select-trigger');
+    const valueDisplay = container.querySelector('.select-value');
+    const options = container.querySelectorAll('.select-option');
+
+    // Set initial value
+    const selectedOption = Array.from(nativeSelect.options).find(o => o.selected);
+    if (selectedOption) {
+        valueDisplay.textContent = selectedOption.textContent;
+        const customOption = container.querySelector(`.select-option[data-value="${selectedOption.value}"]`);
+        if(customOption) customOption.classList.add('selected');
+    }
+
+    // Toggle popover
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      container.classList.toggle('open');
+    });
+
+    // Handle option selection
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        const value = option.getAttribute('data-value');
+
+        // Update native select
+        nativeSelect.value = value;
+
+        // Update displayed value
+        valueDisplay.textContent = option.textContent;
+
+        // Update selected classes
+        options.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+
+        // Close popover
+        container.classList.remove('open');
+      });
+    });
+  });
+
+  // Global click listener to close open selects
+  document.addEventListener('click', () => {
+    selectContainers.forEach(container => {
+      container.classList.remove('open');
+    });
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Resizable
+ *
+ * Handles the drag-to-resize functionality for resizable panels.
+ * -----------------------------------------------------------------
+ */
+const initResizable = () => {
+  const resizableContainers = document.querySelectorAll('[data-resizable]');
+
+  resizableContainers.forEach(container => {
+    const handle = container.querySelector('.resizable-handle');
+    let isResizing = false;
+
+    handle.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      handle.classList.add('resizing');
+      const startX = e.clientX;
+      const startWidth = container.offsetWidth;
+
+      const doDrag = (e) => {
+        if (!isResizing) return;
+        const newWidth = startWidth + (e.clientX - startX);
+        container.style.width = `${newWidth}px`;
+      };
+
+      const stopDrag = () => {
+        isResizing = false;
+        handle.classList.remove('resizing');
+        document.removeEventListener('mousemove', doDrag);
+        document.removeEventListener('mouseup', stopDrag);
+      };
+
+      document.addEventListener('mousemove', doDrag);
+      document.addEventListener('mouseup', stopDrag);
+    });
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Tabs
+ *
+ * Handles the logic for switching between tab panels.
+ * -----------------------------------------------------------------
+ */
+const initTabs = () => {
+  const tabContainers = document.querySelectorAll('[data-tabs]');
+
+  tabContainers.forEach(container => {
+    const triggers = container.querySelectorAll('.tab-trigger');
+    const panels = container.querySelectorAll('.tab-content');
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        // Deactivate all triggers
+        triggers.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
+
+        // Activate the clicked trigger
+        trigger.classList.add('active');
+        trigger.setAttribute('aria-selected', 'true');
+        trigger.setAttribute('tabindex', '0');
+
+        // Hide all panels
+        panels.forEach(panel => {
+          panel.classList.add('hidden');
+        });
+
+        // Show the associated panel
+        const panelId = trigger.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        if (panel) {
+          panel.classList.remove('hidden');
+        }
+      });
+    });
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Toggle & Toggle Group
+ *
+ * Handles the pressed state for toggle buttons.
+ * -----------------------------------------------------------------
+ */
+const initToggles = () => {
+  const toggles = document.querySelectorAll('[data-toggle]');
+
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const isPressed = toggle.getAttribute('aria-pressed') === 'true';
+      toggle.setAttribute('aria-pressed', !isPressed);
+    });
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Drawer / Sheet
+ *
+ * Handles the opening and closing of drawer components.
+ * -----------------------------------------------------------------
+ */
+const initDrawers = () => {
+  const openTriggers = document.querySelectorAll('[data-drawer-target]');
+  const drawers = document.querySelectorAll('[data-drawer]');
+
+  openTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const drawerId = trigger.getAttribute('data-drawer-target');
+      const drawer = document.querySelector(drawerId);
+      if (drawer) {
+        drawer.classList.add('open');
+      }
+    });
+  });
+
+  drawers.forEach(drawer => {
+    const closeTriggers = drawer.querySelectorAll('[data-drawer-close]');
+    closeTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        drawer.classList.remove('open');
+      });
+    });
+  });
+
+  // Close with Escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      drawers.forEach(drawer => {
+        if (drawer.classList.contains('open')) {
+          drawer.classList.remove('open');
+        }
+      });
+    }
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Dropdown Menu
+ *
+ * Handles the functionality for dropdown menus.
+ * -----------------------------------------------------------------
+ */
+const initDropdowns = () => {
+  const dropdowns = document.querySelectorAll('[data-dropdown]');
+
+  dropdowns.forEach(dropdown => {
+    const trigger = dropdown.querySelector('.dropdown-trigger');
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close other open dropdowns first
+      dropdowns.forEach(d => {
+        if (d !== dropdown) {
+          d.classList.remove('open');
+        }
+      });
+      dropdown.classList.toggle('open');
+    });
+  });
+
+  // Global click listener to close open dropdowns
+  document.addEventListener('click', () => {
+    dropdowns.forEach(dropdown => {
+      dropdown.classList.remove('open');
+    });
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Popover
+ *
+ * Handles the functionality for popover components.
+ * -----------------------------------------------------------------
+ */
+const initPopovers = () => {
+  const popovers = document.querySelectorAll('[data-popover]');
+
+  popovers.forEach(popover => {
+    const trigger = popover.querySelector('.popover-trigger');
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close other open popovers first
+      popovers.forEach(p => {
+        if (p !== popover) {
+          p.classList.remove('open');
+        }
+      });
+      popover.classList.toggle('open');
+    });
+  });
+
+  // Global click listener to close open popovers
+  document.addEventListener('click', (e) => {
+    popovers.forEach(popover => {
+      // Do not close if the click is inside the popover content
+      if (!popover.contains(e.target)) {
+        popover.classList.remove('open');
+      }
+    });
+  });
+};
+
+/**
+ * -----------------------------------------------------------------
+ * Collapsible
+ *
+ * Handles the expand and collapse functionality for collapsible sections.
+ * -----------------------------------------------------------------
+ */
+const initCollapsibles = () => {
+  const collapsibles = document.querySelectorAll('[data-collapsible]');
+
+  collapsibles.forEach(collapsible => {
+    const trigger = collapsible.querySelector('.collapsible-trigger');
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        collapsible.classList.toggle('open');
+      });
+    }
+  });
+};
 
 // Run initialization once the DOM is fully loaded.
 if (document.readyState === 'loading') {

@@ -1,0 +1,23 @@
+<!-- =================================================================
+   TABS COMPONENT
+   - A set of layered sections of content, known as tab panels,
+     that are displayed one at a time.
+   - Requires JavaScript to handle the switching between tab panels.
+   ================================================================= -->
+
+<div class="tabs" data-tabs>
+  <div class="tabs-list" role="tablist" aria-label="Account settings">
+    <button class="tab-trigger active" role="tab" aria-selected="true" aria-controls="tab-panel-account">
+      Account
+    </button>
+    <button class="tab-trigger" role="tab" aria-selected="false" aria-controls="tab-panel-password" tabindex="-1">
+      Password
+    </button>
+  </div>
+  <div id="tab-panel-account" class="tab-content" role="tabpanel" tabindex="0">
+    <p>This is the content for the Account tab.</p>
+  </div>
+  <div id="tab-panel-password" class="tab-content hidden" role="tabpanel" tabindex="0">
+    <p>This is the content for the Password tab.</p>
+  </div>
+</div>
