@@ -1,307 +1,266 @@
-/* =================================================================
-   BASE.CSS
-   - Core styles, variables, and utility classes.
-   ================================================================= */
-
-/* -----------------------------------------------------------------
-   1. CSS Variables (Design Tokens)
-   ----------------------------------------------------------------- */
-
-:root {
-  /* Colors */
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
-
-  /* Border Radius */
-  --radius: 0.5rem;
-
-  /* Spacing */
-  --space-1: 0.25rem; /* 4px */
-  --space-2: 0.5rem;  /* 8px */
-  --space-3: 0.75rem; /* 12px */
-  --space-4: 1rem;    /* 16px */
-  --space-5: 1.25rem; /* 20px */
-  --space-6: 1.5rem;  /* 24px */
-  --space-8: 2rem;    /* 32px */
-  --space-10: 2.5rem; /* 40px */
-  --space-12: 3rem;   /* 48px */
-  --space-16: 4rem;   /* 64px */
-
-  /* Font Sizes */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-
-  /* Font Weights */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-bold: 700;
-}
-
-.dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
-}
-
-/* -----------------------------------------------------------------
-   2. Base & Reset Styles
-   ----------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    font-family: "Geist", sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Open Sans", "Helvetica Neue";
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --radius: 0.625rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --radius: 0.625rem;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+
+    /* Derived radius values */
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --radius: 0.625rem;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+}
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) var(--muted);
 }
 
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    transition: background-color 0.2s, color 0.2s;
 }
 
-/* -----------------------------------------------------------------
-   3. Utility Classes
-   ----------------------------------------------------------------- */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
 
-/* Spacing */
-.p-1 { padding: var(--space-1); }
-.p-2 { padding: var(--space-2); }
-.p-4 { padding: var(--space-4); }
-.p-6 { padding: var(--space-6); }
-.py-2 { padding-top: var(--space-2); padding-bottom: var(--space-2); }
-.px-4 { padding-left: var(--space-4); padding-right: var(--space-4); }
+::-webkit-scrollbar-track {
+    background-color: var(--muted);
+}
 
-.m-1 { margin: var(--space-1); }
-.m-2 { margin: var(--space-2); }
-.m-4 { margin: var(--space-4); }
-.m-auto { margin: auto; }
-.my-4 { margin-top: var(--space-4); margin-bottom: var(--space-4); }
+::-webkit-scrollbar-thumb {
+    background-color: var(--muted-foreground);
+    border-radius: var(--radius-sm);
+}
 
-/* Flexbox */
-.flex { display: flex; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.gap-2 { gap: var(--space-2); }
-.gap-4 { gap: var(--space-4); }
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--foreground);
+}
 
-/* Typography */
-.text-sm { font-size: var(--font-size-sm); }
-.text-base { font-size: var(--font-size-base); }
-.text-lg { font-size: var(--font-size-lg); }
-.font-medium { font-weight: var(--font-weight-medium); }
-.text-muted-foreground { color: hsl(var(--muted-foreground)); }
-.text-center { text-align: center; }
-
-/* Sizing */
-.w-full { width: 100%; }
-
-/* Borders */
-.rounded-md { border-radius: var(--radius); }
-.border { border: 1px solid hsl(var(--border)); }
-
-/* Misc */
-.hidden { display: none; }
+*:focus-visible {
+    outline: 3px solid oklch(from var(--ring) l c h / 0.4);
+    outline-offset: 0px;
+}
 
 /* =================================================================
-   4. Component Styles
+   Component Styles
    ================================================================= */
 
 /* -----------------------------------------------------------------
    Accordion
    ----------------------------------------------------------------- */
-
 .accordion-item {
-  border-bottom: 1px solid hsl(var(--border));
+  border-bottom: 1px solid var(--border);
 }
-
 .accordion-item:last-of-type {
   border-bottom: none;
 }
-
 .accordion-trigger {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: var(--space-4) 0;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+  padding: 1rem 0;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  list-style: none; /* Removes the default marker from <summary> */
-  outline: none;
+  list-style: none;
 }
-
 .accordion-trigger::-webkit-details-marker {
-  display: none; /* Hides the default triangle in Safari */
+  display: none;
 }
-
 .accordion-trigger:hover {
   text-decoration: underline;
 }
-
 .accordion-icon {
   width: 1rem;
   height: 1rem;
   transition: transform 0.2s ease-in-out;
 }
-
 .accordion-content {
   overflow: hidden;
   transition: max-height 0.3s ease-out;
-  padding-bottom: var(--space-4);
+  padding-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
 }
-
-/* Open/Close animation */
 details[open] > .accordion-trigger > .accordion-icon {
   transform: rotate(180deg);
 }
-
 details:not([open]) > .accordion-content {
   max-height: 0;
   padding-bottom: 0;
 }
-
 details[open] > .accordion-content {
-  max-height: 500px; /* A reasonable max-height for the animation */
+  max-height: 500px;
 }
 
 /* -----------------------------------------------------------------
    Button
    ----------------------------------------------------------------- */
-
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  border-radius: var(--radius);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-  padding: var(--space-2) var(--space-4);
-  outline: none;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  padding: 0.5rem 1rem;
+  height: 2.5rem;
 }
-
-.btn:focus-visible {
-  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
-}
-
-/* Primary Button */
 .btn-primary {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-  border-color: hsl(var(--primary));
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }
-
 .btn-primary:hover {
-  background-color: hsl(var(--primary) / 0.9);
+  background-color: oklch(from var(--primary) l c h / 0.9);
 }
-
-/* Secondary Button */
 .btn-secondary {
-  background-color: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
-  border-color: hsl(var(--border));
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--border);
 }
-
 .btn-secondary:hover {
-  background-color: hsl(var(--secondary) / 0.9);
+  background-color: oklch(from var(--secondary) l c h / 0.9);
 }
-
-/* Destructive Button */
 .btn-destructive {
-  background-color: hsl(var(--destructive));
-  color: hsl(var(--destructive-foreground));
-  border-color: hsl(var(--destructive));
+  background-color: var(--destructive);
+  color: var(--primary-foreground); /* Assuming destructive buttons have light text */
+  border-color: var(--destructive);
 }
-
 .btn-destructive:hover {
-  background-color: hsl(var(--destructive) / 0.9);
+  background-color: oklch(from var(--destructive) l c h / 0.9);
 }
-
-/* Ghost Button */
 .btn-ghost {
   background-color: transparent;
-  color: hsl(var(--primary));
+  color: var(--primary);
   border-color: transparent;
 }
-
 .btn-ghost:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
-
-/* Link Button */
 .btn-link {
   background-color: transparent;
-  color: hsl(var(--primary));
+  color: var(--primary);
   border-color: transparent;
   text-decoration: underline;
   padding: 0;
 }
-
 .btn-link:hover {
   text-decoration: none;
 }
@@ -309,7 +268,6 @@ details[open] > .accordion-content {
 /* -----------------------------------------------------------------
    Dialog
    ----------------------------------------------------------------- */
-
 .dialog {
   position: fixed;
   top: 50%;
@@ -319,75 +277,65 @@ details[open] > .accordion-content {
   max-width: 500px;
   margin: 0;
   padding: 0;
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  background: hsl(var(--background));
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: var(--shadow-lg);
   z-index: 50;
   opacity: 0;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
-
 .dialog[open] {
   opacity: 1;
 }
-
 .dialog::backdrop {
-  background-color: hsl(var(--background) / 0.8);
+  background-color: oklch(from var(--background) l c h / 0.8);
   backdrop-filter: blur(4px);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
-
 .dialog[open]::backdrop {
   opacity: 1;
 }
-
 .dialog-content {
   position: relative;
-  padding: var(--space-6);
+  padding: 1.5rem;
 }
-
 .dialog-header {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-medium);
-  margin-bottom: var(--space-2);
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
-
 .dialog-body {
-  font-size: var(--font-size-sm);
-  color: hsl(var(--muted-foreground));
-  margin-bottom: var(--space-4);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-bottom: 1rem;
 }
-
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-2);
+  gap: 0.5rem;
 }
-
 .dialog-close-btn {
   position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
+  top: 1rem;
+  right: 1rem;
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-  color: hsl(var(--muted-foreground));
+  color: var(--muted-foreground);
   border-radius: 99px;
-  width: var(--space-6);
-  height: var(--space-6);
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .dialog-close-btn:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
-
 .dialog-close-btn svg {
   width: 1rem;
   height: 1rem;
@@ -396,33 +344,27 @@ details[open] > .accordion-content {
 /* -----------------------------------------------------------------
    Tooltip
    ----------------------------------------------------------------- */
-
 .tooltip {
   position: relative;
   display: inline-block;
 }
-
 .tooltip-content {
   position: absolute;
-  bottom: 100%; /* Position above the trigger */
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: var(--space-2); /* Space between trigger and tooltip */
-  padding: var(--space-2) var(--space-3);
-  background-color: hsl(var(--foreground));
-  color: hsl(var(--background));
-  border-radius: var(--radius);
-  font-size: var(--font-size-sm);
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
   white-space: nowrap;
   z-index: 10;
-
-  /* Hidden by default */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease-in-out;
 }
-
-/* Arrow */
 .tooltip-content::after {
   content: "";
   position: absolute;
@@ -431,10 +373,8 @@ details[open] > .accordion-content {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: hsl(var(--foreground)) transparent transparent transparent;
+  border-color: var(--foreground) transparent transparent transparent;
 }
-
-/* Visibility */
 .tooltip.visible .tooltip-content {
   opacity: 1;
   pointer-events: auto;
@@ -443,63 +383,54 @@ details[open] > .accordion-content {
 /* -----------------------------------------------------------------
    Toast
    ----------------------------------------------------------------- */
-
 #toast-container {
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: var(--space-4);
+  padding: 1rem;
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 1rem;
 }
-
 .toast {
   width: 350px;
-  background-color: hsl(var(--background));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: var(--space-4);
+  padding: 1rem;
   animation: toast-slide-in 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
 }
-
 .toast.removing {
   animation: toast-slide-out 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
 }
-
 .toast-content {
   flex-grow: 1;
 }
-
 .toast-title {
-  font-weight: var(--font-weight-medium);
-  margin-bottom: var(--space-1);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
 }
-
 .toast-description {
-  font-size: var(--font-size-sm);
-  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
 }
-
 .toast-close-btn {
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  margin-left: var(--space-4);
-  color: hsl(var(--muted-foreground));
+  margin-left: 1rem;
+  color: var(--muted-foreground);
   flex-shrink: 0;
 }
-
 .toast-close-btn:hover {
-  color: hsl(var(--foreground));
+  color: var(--foreground);
 }
-
 @keyframes toast-slide-in {
   from {
     transform: translateX(100%);
@@ -510,7 +441,6 @@ details[open] > .accordion-content {
     opacity: 1;
   }
 }
-
 @keyframes toast-slide-out {
   from {
     transform: translateX(0);
