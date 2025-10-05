@@ -29,7 +29,7 @@
         border-radius: var(--radius-xl);
         margin-top: 1rem;
     }
-    .component-preview > div:not(:last-child) {
+    .component-preview > div {
         margin-bottom: 1.5rem;
     }
   </style>
@@ -43,60 +43,38 @@
        =============================================================== -->
   <div class="component-section">
     <h2>Display</h2>
-    <div class="component-preview">
-      <!-- Alert -->
+    <div class="component-preview" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 2rem;">
       <div>
         <label class="label">Alert</label>
-        <div class="flex flex-col gap-2">
-            <div class="alert">
-              <h4 class="alert-title">Alert Title</h4>
-              <div class="alert-description">This is a standard alert message.</div>
-            </div>
-            <div class="alert alert-destructive">
-              <h4 class="alert-title">Error</h4>
-              <div class="alert-description">This is a destructive alert.</div>
-            </div>
-        </div>
+        <div class="alert" style="width: 350px;"><h4 class="alert-title">Alert Title</h4><div class="alert-description">This is a standard alert message.</div></div>
       </div>
-      <!-- Avatar -->
       <div>
         <label class="label">Avatar</label>
-        <div class="flex items-center gap-4">
-          <div class="avatar">
-            <img class="avatar-image" src="https://github.com/shadcn.png" alt="User Avatar" />
-          </div>
-          <div class="avatar">
-            <div class="avatar-fallback">CN</div>
-          </div>
-        </div>
+        <div class="flex items-center gap-4"><div class="avatar"><img class="avatar-image" src="https://github.com/shadcn.png" alt="User Avatar" /></div><div class="avatar"><div class="avatar-fallback">CN</div></div></div>
       </div>
-      <!-- Badge -->
       <div>
         <label class="label">Badge</label>
-        <div class="flex items-center gap-2">
-          <span class="badge">Default</span>
-          <span class="badge badge-primary">Primary</span>
-          <span class="badge badge-secondary">Secondary</span>
-          <span class="badge badge-destructive">Destructive</span>
-        </div>
+        <div class="flex items-center gap-2"><span class="badge">Default</span><span class="badge badge-primary">Primary</span><span class="badge badge-secondary">Secondary</span><span class="badge badge-destructive">Destructive</span></div>
       </div>
-      <!-- Hover Card -->
       <div>
         <label class="label">Hover Card</label>
-        <div class="hover-card" data-hover-card>
-          <button class="btn btn-secondary hover-card-trigger">Hover Me</button>
-          <div class="hover-card-content">
-            <div class="flex items-center gap-4">
-              <div class="avatar">
-                <div class="avatar-fallback">VC</div>
-              </div>
-              <div>
-                <h4 class="font-semibold">Vercel</h4>
-                <p class="text-sm text-muted-foreground">The platform for frontend developers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="hover-card" data-hover-card><button class="btn btn-secondary hover-card-trigger">Hover Me</button><div class="hover-card-content"><div class="flex items-center gap-4"><div class="avatar"><div class="avatar-fallback">VC</div></div><div><h4 class="font-semibold">Vercel</h4><p class="text-sm text-muted-foreground">The platform for frontend developers.</p></div></div></div></div>
+      </div>
+      <div>
+        <label class="label">Kbd</label>
+        <kbd class="kbd">⌘K</kbd>
+      </div>
+      <div>
+        <label class="label">Spinner</label>
+        <div class="spinner"></div>
+      </div>
+      <div>
+        <label class="label">Progress</label>
+        <progress class="progress" value="60" max="100" style="width: 200px;"></progress>
+      </div>
+      <div>
+        <label class="label">Skeleton</label>
+        <div class="flex items-center gap-4"><div class="skeleton" style="height: 3rem; width: 3rem; border-radius: 99px;"></div><div style="display: flex; flex-direction: column; gap: 0.5rem;"><div class="skeleton" style="height: 1rem; width: 150px;"></div><div class="skeleton" style="height: 1rem; width: 100px;"></div></div></div>
       </div>
     </div>
   </div>
@@ -106,46 +84,26 @@
        =============================================================== -->
   <div class="component-section">
     <h2>Buttons & Controls</h2>
-    <div class="component-preview">
-      <!-- Buttons -->
+    <div class="component-preview" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;">
       <div>
         <label class="label">Button</label>
-        <div class="flex items-center gap-4">
-          <button class="btn btn-primary">Primary</button>
-          <button class="btn btn-secondary">Secondary</button>
-          <button class="btn btn-destructive">Destructive</button>
-          <button class="btn btn-ghost">Ghost</button>
-          <button class="btn btn-link">Link</button>
-        </div>
+        <div class="flex items-center gap-2"><button class="btn btn-primary">Primary</button><button class="btn btn-secondary">Secondary</button><button class="btn btn-destructive">Destructive</button><button class="btn btn-ghost">Ghost</button><a href="#" class="btn btn-link">Link</a></div>
       </div>
-      <!-- Switch -->
       <div>
         <label class="label">Switch</label>
-        <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="switch-off" class="switch-input" />
-            <label for="switch-off" class="switch-track"></label>
-            <label for="switch-off" class="label-inline pl-0">Off</label>
-          </div>
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="switch-on" class="switch-input" checked />
-            <label for="switch-on" class="switch-track"></label>
-            <label for="switch-on" class="label-inline pl-0">On</label>
-          </div>
-        </div>
+        <div class="flex items-center gap-2"><input type="checkbox" id="switch-on" class="switch-input" checked /><label for="switch-on" class="switch-track"></label></div>
       </div>
-      <!-- Toggle & Toggle Group -->
       <div>
         <label class="label">Toggle & Group</label>
-        <div class="flex items-center gap-4">
-            <button class="toggle" aria-pressed="false" data-toggle>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.5 10.478V3.5a.5.5 0 0 0-1 0v6.978l-2.146-2.147a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.478Z"/></svg>
-            </button>
-            <div class="toggle-group" role="group">
-                <button class="toggle" aria-pressed="true" data-toggle><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
-                <button class="toggle" aria-pressed="false" data-toggle><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
-            </div>
-        </div>
+        <div class="flex items-center gap-2"><button class="toggle" aria-pressed="false" data-toggle>B</button><div class="toggle-group" role="group"><button class="toggle" aria-pressed="true" data-toggle>L</button><button class="toggle" aria-pressed="false" data-toggle>C</button><button class="toggle" aria-pressed="false" data-toggle>R</button></div></div>
+      </div>
+      <div>
+        <label class="label">Button Group</label>
+        <div class="btn-group"><button class="btn btn-secondary">Left</button><button class="btn btn-secondary">Middle</button><button class="btn btn-secondary">Right</button></div>
+      </div>
+      <div>
+        <label class="label">Slider</label>
+        <input type="range" min="0" max="100" value="50" class="slider" style="width: 200px;" />
       </div>
     </div>
   </div>
@@ -155,68 +113,42 @@
        =============================================================== -->
   <div class="component-section">
     <h2>Form Inputs</h2>
-    <div class="component-preview">
-      <!-- Input -->
+    <div class="component-preview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
       <div>
-        <label class="label" for="email-input">Input</label>
-        <input class="input" type="email" id="email-input" placeholder="you@example.com" />
+        <label class="label">Input</label>
+        <input class="input" type="email" placeholder="you@example.com" />
       </div>
-      <!-- Textarea -->
       <div>
-        <label for="message" class="label">Textarea</label>
-        <textarea id="message" class="input" rows="4" placeholder="Type your message here."></textarea>
+        <label class="label">Textarea</label>
+        <textarea class="input" rows="3" placeholder="Type your message here."></textarea>
       </div>
-      <!-- Checkbox -->
       <div>
         <label class="label">Checkbox</label>
-        <div class="flex items-center gap-2">
-          <input type="checkbox" id="checkbox-standard" class="checkbox-input" />
-          <label for="checkbox-standard" class="label-inline">Accept terms</label>
-        </div>
+        <div class="flex items-center gap-2"><input type="checkbox" id="checkbox-standard" class="checkbox-input" /><label for="checkbox-standard" class="label-inline">Accept terms</label></div>
       </div>
-      <!-- Radio Group -->
       <div>
         <label class="label">Radio Group</label>
-        <div role="radiogroup" class="flex items-center gap-4">
-          <div class="flex items-center gap-2">
-            <input type="radio" id="radio-a" name="radio-group-demo" class="radio-input" />
-            <label for="radio-a" class="label-inline">Option A</label>
-          </div>
-          <div class="flex items-center gap-2">
-            <input type="radio" id="radio-b" name="radio-group-demo" class="radio-input" checked />
-            <label for="radio-b" class="label-inline">Option B</label>
-          </div>
-        </div>
+        <div role="radiogroup" class="flex items-center gap-4"><div class="flex items-center gap-2"><input type="radio" id="radio-a" name="radio-group-demo" class="radio-input" /><label for="radio-a" class="label-inline">Option A</label></div><div class="flex items-center gap-2"><input type="radio" id="radio-b" name="radio-group-demo" class="radio-input" checked /><label for="radio-b" class="label-inline">Option B</label></div></div>
       </div>
-      <!-- Select -->
       <div>
         <label class="label">Select</label>
-        <div class="select" data-select>
-          <select class="hidden-select" name="fruit">
-            <option value="apple">Apple</option>
-            <option value="banana">Banana</option>
-            <option value="blueberry" selected>Blueberry</option>
-          </select>
-          <button class="select-trigger btn btn-secondary">
-            <span class="select-value">Select a fruit...</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-chevron"><path d="m6 9 6 6 6-6" /></svg>
-          </button>
-          <div class="select-popover">
-            <div class="select-content">
-              <div class="select-option" data-value="apple">Apple</div>
-              <div class="select-option" data-value="banana">Banana</div>
-              <div class="select-option" data-value="blueberry">Blueberry</div>
-            </div>
-          </div>
-        </div>
+        <div class="select" data-select><select class="hidden-select" name="fruit"><option value="apple">Apple</option><option value="banana">Banana</option><option value="blueberry" selected>Blueberry</option></select><button class="select-trigger btn btn-secondary"><span class="select-value">Select a fruit...</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-chevron"><path d="m6 9 6 6 6-6"/></svg></button><div class="select-popover"><div class="select-content"><div class="select-option" data-value="apple">Apple</div><div class="select-option" data-value="banana">Banana</div><div class="select-option" data-value="blueberry">Blueberry</div></div></div></div>
       </div>
-       <!-- Input Group -->
-       <div>
+      <div>
         <label class="label">Input Group</label>
-        <div class="input-group">
-          <input type="text" class="input" placeholder="Search..." />
-          <button class="btn btn-primary">Search</button>
-        </div>
+        <div class="input-group"><input type="text" class="input" placeholder="Search..." /><button class="btn btn-primary">Search</button></div>
+      </div>
+      <div>
+        <label class="label">Field</label>
+        <div class="field"><label class="label" for="field-input-error">Username</label><div class="control"><input class="input is-destructive" type="text" id="field-input-error" value="jules" /></div><p class="field-error">This username is already taken.</p></div>
+      </div>
+      <div>
+        <label class="label">Input OTP</label>
+        <div class="input-otp" data-input-otp><input type="text" maxlength="1" class="input-otp-field" /><input type="text" maxlength="1" class="input-otp-field" /><input type="text" maxlength="1" class="input-otp-field" /><div class="input-otp-separator">-</div><input type="text" maxlength="1" class="input-otp-field" /><input type="text" maxlength="1" class="input-otp-field" /><input type="text" maxlength="1" class="input-otp-field" /></div>
+      </div>
+      <div>
+        <label class="label">Combobox</label>
+        <div class="combobox" data-combobox><div class="input-group"><input type="text" class="input combobox-input" placeholder="Search framework..." /><button class="btn btn-secondary combobox-trigger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-chevron"><path d="m6 9 6 6 6-6"/></svg></button></div><div class="combobox-popover"><div class="combobox-content"><div class="combobox-item" data-value="Next.js">Next.js</div><div class="combobox-item" data-value="SvelteKit">SvelteKit</div><div class="combobox-item" data-value="Nuxt.js">Nuxt.js</div><div class="combobox-item" data-value="Remix">Remix</div><div class="combobox-item" data-value="Astro">Astro</div></div></div></div>
       </div>
     </div>
   </div>
@@ -226,68 +158,17 @@
        =============================================================== -->
   <div class="component-section">
     <h2>Overlays & Feedback</h2>
-    <div class="component-preview flex items-center gap-4">
-      <!-- Dialog -->
-      <div>
-        <label class="label">Dialog</label>
-        <button class="btn btn-primary" data-dialog-target="#dialog-example">Open Dialog</button>
-      </div>
-      <!-- Alert Dialog -->
-      <div>
-        <label class="label">Alert Dialog</label>
-        <button class="btn btn-destructive" data-dialog-target="#alert-dialog-example">Delete</button>
-      </div>
-      <!-- Tooltip -->
-      <div>
-        <label class="label">Tooltip</label>
-        <div class="tooltip" data-tooltip>
-          <button class="btn btn-secondary tooltip-trigger">Hover me</button>
-          <div class="tooltip-content">This is a tooltip!</div>
-        </div>
-      </div>
-      <!-- Toast -->
-       <div>
-        <label class="label">Toast</label>
-        <button class="btn btn-primary" onclick="showToast('Your message has been sent.', 'Success')">Show Toast</button>
-      </div>
-      <!-- Drawer -->
-      <div>
-        <label class="label">Drawer</label>
-        <button class="btn btn-primary" data-drawer-target="#drawer-example">Open Drawer</button>
-      </div>
-      <!-- Dropdown Menu -->
-      <div>
-        <label class="label">Dropdown Menu</label>
-        <div class="dropdown" data-dropdown>
-          <button class="btn btn-secondary dropdown-trigger">Open Menu</button>
-          <div class="dropdown-popover">
-            <div class="dropdown-content">
-              <a href="#" class="dropdown-item">My Account</a>
-              <a href="#" class="dropdown-item">Settings</a>
-              <div class="dropdown-separator"></div>
-              <a href="#" class="dropdown-item">Team</a>
-              <a href="#" class="dropdown-item">New Team</a>
-              <div class="dropdown-separator"></div>
-              <a href="#" class="dropdown-item text-destructive">Log out</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Popover -->
-      <div>
-        <label class="label">Popover</label>
-        <div class="popover" data-popover>
-          <button class="btn btn-secondary popover-trigger">Open Popover</button>
-          <div class="popover-content">
-            <div class="popover-header">
-              <h4 class="popover-title">Popover Title</h4>
-            </div>
-            <div class="popover-body">
-              <p>This is the popover content. It can contain any HTML.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="component-preview" style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem;">
+      <div><label class="label">Dialog</label><button class="btn btn-primary" data-dialog-target="#dialog-example">Open Dialog</button></div>
+      <div><label class="label">Alert Dialog</label><button class="btn btn-destructive" data-dialog-target="#alert-dialog-example">Delete</button></div>
+      <div><label class="label">Tooltip</label><div class="tooltip" data-tooltip><button class="btn btn-secondary tooltip-trigger">Hover me</button><div class="tooltip-content">This is a tooltip!</div></div></div>
+      <div><label class="label">Sonner</label><div class="flex items-center gap-2"><button class="btn btn-primary" onclick="showSonner('Your message has been sent.', { title: 'Success' })">Default</button><button class="btn btn-secondary" onclick="showSonner('Event has been created.', { title: 'Event Created', position: 'top-right' })">Top Right</button></div></div>
+      <div><label class="label">Drawer</label><button class="btn btn-primary" data-drawer-target="#drawer-example">Open Drawer</button></div>
+      <div><label class="label">Dropdown Menu</label><div class="dropdown" data-dropdown><button class="btn btn-secondary dropdown-trigger">Open Menu</button><div class="dropdown-popover"><div class="dropdown-content"><a href="#" class="dropdown-item">My Account</a><a href="#" class="dropdown-item">Settings</a><div class="dropdown-separator"></div><a href="#" class="dropdown-item">Team</a><a href="#" class="dropdown-item">New Team</a><div class="dropdown-separator"></div><a href="#" class="dropdown-item text-destructive">Log out</a></div></div></div></div>
+      <div><label class="label">Popover</label><div class="popover" data-popover><button class="btn btn-secondary popover-trigger">Open Popover</button><div class="popover-content"><div class="popover-header"><h4 class="popover-title">Popover Title</h4></div><div class="popover-body"><p>This is the popover content. It can contain any HTML.</p></div></div></div></div>
+      <div><label class="label">Context Menu</label><div class="context-menu-trigger" data-context-menu-trigger="context-menu-example" style="border: 1px dashed; padding: 1rem; border-radius: var(--radius-md);">Right-click here</div></div>
+      <div><label class="label">Command</label><button class="btn btn-primary" data-dialog-target="#command-dialog">Open Command</button></div>
+      <div><label class="label">Date Picker</label><div class="date-picker" data-datepicker><div class="input-group"><input type="text" class="input date-picker-input" placeholder="Pick a date" /><button class="btn btn-secondary date-picker-trigger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></button></div><div class="date-picker-popover"><div class="date-picker-header"><button class="date-picker-prev-btn">&lt;</button><div class="date-picker-month-year"></div><button class="date-picker-next-btn">&gt;</button></div><div class="date-picker-grid"><div class="date-picker-day-header">Su</div><div class="date-picker-day-header">Mo</div><div class="date-picker-day-header">Tu</div><div class="date-picker-day-header">We</div><div class="date-picker-day-header">Th</div><div class="date-picker-day-header">Fr</div><div class="date-picker-day-header">Sa</div></div><div class="date-picker-days"></div></div></div></div>
     </div>
   </div>
 
@@ -296,108 +177,22 @@
        =============================================================== -->
   <div class="component-section">
     <h2>Layout & Structure</h2>
-    <div class="component-preview flex flex-col gap-4">
-      <!-- Card -->
-      <div>
-        <label class="label">Card</label>
-        <div class="card" style="max-width: 400px;">
-          <div class="card-header"><h3 class="card-title">Card Title</h3></div>
-          <div class="card-content"><p>This is the card content.</p></div>
-          <div class="card-footer"><button class="btn btn-primary">Action</button></div>
-        </div>
-      </div>
-      <!-- Accordion -->
-      <div>
-        <label class="label">Accordion</label>
-        <div class="accordion" style="max-width: 400px;">
-          <details class="accordion-item"><summary class="accordion-trigger"><span>Section 1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon"><path d="m6 9 6 6 6-6" /></svg></summary><div class="accordion-content"><p>Content for section 1.</p></div></details>
-          <details class="accordion-item" open><summary class="accordion-trigger"><span>Section 2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon"><path d="m6 9 6 6 6-6" /></svg></summary><div class="accordion-content"><p>Content for section 2.</p></div></details>
-        </div>
-      </div>
-      <!-- Separator -->
-      <div>
-        <label class="label">Separator</label>
-        <div>
-          <p>Content above</p>
-          <div class="separator"></div>
-          <p>Content below</p>
-        </div>
-      </div>
-      <!-- Table -->
-      <div>
-        <label class="label">Table</label>
-        <table class="table">
-          <thead><tr><th>Name</th><th>Email</th></tr></thead>
-          <tbody>
-            <tr><td>John Doe</td><td>john.doe@example.com</td></tr>
-            <tr><td>Jane Smith</td><td>jane.smith@example.com</td></tr>
-          </tbody>
-        </table>
-      </div>
-       <!-- Resizable -->
-       <div>
-        <label class="label">Resizable Panel</label>
-        <div class="resizable" data-resizable style="width: 400px; height: 150px;">
-          <div class="resizable-content"><p>Drag the handle.</p></div>
-          <div class="resizable-handle"></div>
-        </div>
-      </div>
-      <!-- Scroll Area -->
-      <div>
-        <label class="label">Scroll Area</label>
-        <div class="scroll-area" style="height: 150px; width: 300px; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem;">
-          <p>Lots of content to make this scrollable...</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-      </div>
-       <!-- Aspect Ratio -->
-       <div>
-        <label class="label">Aspect Ratio (16:9)</label>
-        <div style="width: 400px;">
-          <div class="aspect-ratio-16-9">
-            <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80" alt="An abstract image." style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);" />
-          </div>
-        </div>
-      </div>
-      <!-- Navigation Menu -->
-      <div>
-        <label class="label">Navigation Menu</label>
-        <nav class="nav-menu" data-nav-menu><ul class="nav-menu-list"><li class="nav-menu-item"><a href="#" class="nav-menu-link">Home</a></li><li class="nav-menu-item" data-nav-submenu><a href="#" class="nav-menu-link">Products</a><div class="nav-submenu"><ul class="nav-submenu-list"><li><a href="#">Product A</a></li><li><a href="#">Product B</a></li></ul></div></li><li class="nav-menu-item"><a href="#" class="nav-menu-link">Contact</a></li></ul></nav>
-      </div>
-      <!-- Pagination -->
-      <div>
-        <label class="label">Pagination</label>
-        <nav aria-label="pagination"><ul class="pagination"><li class="pagination-item"><a class="pagination-link" href="#">Previous</a></li><li class="pagination-item"><a class="pagination-link" href="#">1</a></li><li class="pagination-item active"><a class="pagination-link" href="#" aria-current="page">2</a></li><li class="pagination-item disabled"><span class="pagination-link">...</span></li><li class="pagination-item"><a class="pagination-link" href="#">Next</a></li></ul></nav>
-      </div>
-      <!-- Tabs -->
-      <div>
-        <label class="label">Tabs</label>
-        <div class="tabs" data-tabs>
-          <div class="tabs-list" role="tablist"><button class="tab-trigger active" role="tab" aria-selected="true" aria-controls="panel-1">Account</button><button class="tab-trigger" role="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">Password</button></div>
-          <div id="panel-1" class="tab-content" role="tabpanel" tabindex="0"><p>Account content.</p></div>
-          <div id="panel-2" class="tab-content hidden" role="tabpanel" tabindex="0"><p>Password content.</p></div>
-        </div>
-      </div>
-      <!-- Collapsible -->
-      <div>
-        <label class="label">Collapsible</label>
-        <div class="collapsible open" data-collapsible style="width: 400px;">
-          <div class="flex items-center justify-between p-4 border rounded-md">
-            <h4 class="text-sm font-semibold">@peduarte starred 3 repositories</h4>
-            <button class="btn btn-ghost collapsible-trigger h-auto p-1">
-              <span class="collapsible-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
-              <span class="sr-only">Toggle</span>
-            </button>
-          </div>
-          <div class="collapsible-content">
-            <div class="mt-2 rounded-md border p-4">@radix-ui/primitives</div>
-            <div class="mt-2 rounded-md border p-4">@radix-ui/colors</div>
-            <div class="mt-2 rounded-md border p-4">@stitches/react</div>
-          </div>
-        </div>
-      </div>
+    <div class="component-preview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+      <div><label class="label">Card</label><div class="card"><div class="card-header"><h3 class="card-title">Card Title</h3></div><div class="card-content"><p>This is the card content.</p></div><div class="card-footer"><button class="btn btn-primary">Action</button></div></div></div>
+      <div><label class="label">Accordion</label><div class="accordion"><details class="accordion-item"><summary class="accordion-trigger"><span>Section 1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon"><path d="m6 9 6 6 6-6"/></svg></summary><div class="accordion-content"><p>Content for section 1.</p></div></details><details class="accordion-item" open><summary class="accordion-trigger"><span>Section 2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accordion-icon"><path d="m6 9 6 6 6-6"/></svg></summary><div class="accordion-content"><p>Content for section 2.</p></div></details></div></div>
+      <div><label class="label">Separator</label><div><p>Content above</p><div class="separator" style="margin: 1rem 0;"></div><p>Content below</p></div></div>
+      <div><label class="label">Table</label><table class="table"><thead><tr><th>Name</th><th>Email</th></tr></thead><tbody><tr><td>John Doe</td><td>john.doe@example.com</td></tr><tr><td>Jane Smith</td><td>jane.smith@example.com</td></tr></tbody></table></div>
+      <div><label class="label">Resizable Panel</label><div class="resizable" data-resizable style="height: 150px;"><div class="resizable-content"><p>Drag the handle.</p></div><div class="resizable-handle"></div></div></div>
+      <div><label class="label">Scroll Area</label><div class="scroll-area" style="height: 150px; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem;"><p>Lots of content to make this scrollable...</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div></div>
+      <div><label class="label">Aspect Ratio (16:9)</label><div class="aspect-ratio-16-9"><img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80" alt="An abstract image." style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);" /></div></div>
+      <div><label class="label">Navigation Menu</label><nav class="nav-menu" data-nav-menu><ul class="nav-menu-list"><li class="nav-menu-item"><a href="#" class="nav-menu-link">Home</a></li><li class="nav-menu-item" data-nav-submenu><a href="#" class="nav-menu-link">Products</a><div class="nav-submenu"><ul class="nav-submenu-list"><li><a href="#">Product A</a></li><li><a href="#">Product B</a></li></ul></div></li><li class="nav-menu-item"><a href="#" class="nav-menu-link">Contact</a></li></ul></nav></div>
+      <div><label class="label">Pagination</label><nav aria-label="pagination"><ul class="pagination"><li class="pagination-item"><a class="pagination-link" href="#">Previous</a></li><li class="pagination-item"><a class="pagination-link" href="#">1</a></li><li class="pagination-item active"><a class="pagination-link" href="#" aria-current="page">2</a></li><li class="pagination-item disabled"><span class="pagination-link">...</span></li><li class="pagination-item"><a class="pagination-link" href="#">Next</a></li></ul></nav></div>
+      <div><label class="label">Tabs</label><div class="tabs" data-tabs><div class="tabs-list" role="tablist"><button class="tab-trigger active" role="tab" aria-selected="true" aria-controls="panel-1">Account</button><button class="tab-trigger" role="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">Password</button></div><div id="panel-1" class="tab-content" role="tabpanel" tabindex="0"><p>Account content.</p></div><div id="panel-2" class="tab-content hidden" role="tabpanel" tabindex="0"><p>Password content.</p></div></div></div>
+      <div><label class="label">Collapsible</label><div class="collapsible open" data-collapsible><div class="flex items-center justify-between p-4 border rounded-md"><h4 class="text-sm font-semibold">@peduarte starred 3 repositories</h4><button class="btn btn-ghost collapsible-trigger h-auto p-1"><span class="collapsible-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span><span class="sr-only">Toggle</span></button></div><div class="collapsible-content"><div class="mt-2 rounded-md border p-4">@radix-ui/primitives</div><div class="mt-2 rounded-md border p-4">@radix-ui/colors</div><div class="mt-2 rounded-md border p-4">@stitches/react</div></div></div></div>
+      <div><label class="label">Menubar</label><div class="menubar" data-menubar><div class="menubar-item" data-menubar-item><button class="menubar-trigger">File</button><div class="menubar-popover"><div class="dropdown-content"><a href="#" class="dropdown-item">New Tab</a><a href="#" class="dropdown-item">New Window</a></div></div></div><div class="menubar-item" data-menubar-item><button class="menubar-trigger">Edit</button><div class="menubar-popover"><div class="dropdown-content"><a href="#" class="dropdown-item">Cut</a><a href="#" class="dropdown-item">Copy</a><a href="#" class="dropdown-item">Paste</a></div></div></div></div></div>
+      <div><label class="label">Carousel</label><div class="carousel" data-carousel><div class="carousel-track-container"><div class="carousel-track"><div class="carousel-slide"><img src="https://images.unsplash.com/photo-1509721434272-b79147e0e708?w=600" alt="Slide 1"></div><div class="carousel-slide"><img src="https://images.unsplash.com/photo-1506710507565-203b9f24669b?w=600" alt="Slide 2"></div><div class="carousel-slide"><img src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?w=600" alt="Slide 3"></div></div></div><button class="carousel-prev-btn">&lt;</button><button class="carousel-next-btn">&gt;</button><div class="carousel-pagination"><button class="carousel-pagination-dot active"></button><button class="carousel-pagination-dot"></button><button class="carousel-pagination-dot"></button></div></div></div>
+      <div><label class="label">Sidebar</label><div class="sidebar" data-sidebar style="height: 300px; position: relative;"><div class="sidebar-header"><h3 class="sidebar-title">My App</h3><button class="btn btn-ghost sidebar-toggle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="3" y1="9" y2="9"/><line x1="9" x2="3" y1="15" y2="15"/><line x1="9" x2="9" y1="3" y2="21"/></svg></button></div><div class="sidebar-content"><a href="#" class="sidebar-item"><span>Dashboard</span></a><a href="#" class="sidebar-item"><span>Settings</span></a></div></div></div>
+      <div><label class="label">Empty State</label><div class="empty-state"><div class="empty-state-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg></div><h3 class="empty-state-title">No results found</h3><p class="empty-state-description">Your search did not return any results.</p><div class="empty-state-action"><button class="btn btn-primary">Clear Search</button></div></div></div>
     </div>
   </div>
 
@@ -433,7 +228,45 @@
     </div>
   </div>
 
-  <!-- Toast container -->
-  <div id="toast-container"></div>
+  <!-- Context Menu Popover (hidden by default) -->
+  <div id="context-menu-example" class="context-menu-popover">
+    <div class="dropdown-content">
+      <a href="#" class="dropdown-item">Back</a>
+      <a href="#" class="dropdown-item" disabled>Forward</a>
+      <a href="#" class="dropdown-item">Reload</a>
+      <div class="dropdown-separator"></div>
+      <a href="#" class="dropdown-item">Save As...</a>
+      <a href="#" class="dropdown-item">Print...</a>
+      <div class="dropdown-separator"></div>
+      <a href="#" class="dropdown-item">Inspect</a>
+    </div>
+  </div>
+
+  <!-- Command Dialog (hidden by default) -->
+  <dialog id="command-dialog" class="dialog command" data-command>
+    <div class="command-content">
+      <div class="command-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="command-search-icon"><path d="m15.5 15.5-3.5-3.5-3.5 3.5-3.5-3.5 3.5-3.5 3.5 3.5 3.5-3.5z"/><path d="m12 22 10-10-10-10-10 10z"/></svg>
+        <input type="text" class="input command-input" placeholder="Type a command or search..." />
+      </div>
+      <div class="command-list">
+        <div class="command-empty">No results found.</div>
+        <div class="command-group" data-group-name="Suggestions">
+          <div class="command-group-heading">Suggestions</div>
+          <div class="command-item"><span>Calendar</span></div>
+          <div class="command-item"><span>Search Emoji</span></div>
+          <div class="command-item"><span>Calculator</span></div>
+        </div>
+        <div class="command-separator"></div>
+        <div class="command-group" data-group-name="Settings">
+          <div class="command-group-heading">Settings</div>
+          <div class="command-item"><span>Profile</span></div>
+          <div class="command-item"><span>Billing</span></div>
+          <div class="command-item"><span>Settings</span></div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
 </body>
 </html>

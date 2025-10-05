@@ -30,80 +30,56 @@ A vanilla HTML, CSS, and JavaScript component library inspired by the design of 
 
 2.  **Copy the component HTML** from the `components/` directory into your project. The `index.html` file in the root serves as a "kitchen sink" showcasing all available components.
 
-3.  **Ensure you have a toast container** if you plan to use the toast component. Place this div just before the closing `</body>` tag.
-    ```html
-    <div id="toast-container"></div>
-    ```
-
 ---
 
-## Available Components (Starter Set)
+## Component Documentation
 
-### Button
-
-A CSS-only component with multiple variants.
-
-**Usage:**
-```html
-<button class="btn btn-primary">Primary</button>
-<button class="btn btn-secondary">Secondary</button>
-<button class="btn btn-destructive">Destructive</button>
-```
+Below is a summary of some of the key components available in the library. For a full list and live examples, please see the `index.html` file.
 
 ### Accordion
-
 A vertically stacked set of interactive headings. The JavaScript ensures only one item is open at a time.
+**Usage:** `<div class="accordion">...</div>`
 
-**Usage:**
-```html
-<div class="accordion">
-  <details class="accordion-item">
-    <summary class="accordion-trigger">...</summary>
-    <div class="accordion-content">...</div>
-  </details>
-  <details class="accordion-item">
-    <summary class="accordion-trigger">...</summary>
-    <div class="accordion-content">...</div>
-  </details>
-</div>
-```
+### Alert & Alert Dialog
+-   **Alert:** A component for displaying important messages. Variants include `.alert-destructive`.
+-   **Alert Dialog:** A modal dialog that interrupts the user with a critical message, such as confirming a destructive action. Triggered using `data-dialog-target`.
 
-### Dialog (Modal)
+### Button & Button Group
+-   **Button:** A CSS-only component with multiple variants (`.btn-primary`, `.btn-secondary`, `.btn-destructive`, `.btn-ghost`, `.btn-link`).
+-   **Button Group:** Visually groups a series of buttons together.
 
+### Card
+A versatile container for content with distinct header, content, and footer sections.
+**Usage:** `<div class="card">...</div>`
+
+### Carousel
+An interactive slideshow for cycling through images or content, with previous/next controls and pagination.
+**Usage:** `<div class="carousel" data-carousel>...</div>`
+
+### Combobox
+An input field that combines a text input with a filterable list of options.
+**Usage:** `<div class="combobox" data-combobox>...</div>`
+
+### Command
+A searchable command palette, typically displayed in a dialog, for finding and executing actions.
+**Usage:** `<dialog class="dialog command" data-command>...</div>`
+
+### Date Picker
+A component that allows users to select a date from a calendar interface.
+**Usage:** `<div class="date-picker" data-datepicker>...</div>`
+
+### Dialog
 A modal window that overlays the page. It's accessible and can be closed with the Escape key or a close button.
+**Usage:** Trigger with `<button data-dialog-target="#my-dialog">` and define with `<dialog id="my-dialog" class="dialog">`.
 
-**Usage:**
-```html
-<!-- Trigger -->
-<button class="btn" data-dialog-target="#my-dialog">Open Dialog</button>
+### Dropdown Menu
+A menu that appears when a trigger element is clicked, displaying a list of actions or options.
+**Usage:** `<div class="dropdown" data-dropdown>...</div>`
 
-<!-- Dialog -->
-<dialog id="my-dialog" class="dialog">
-  ...
-  <button data-dialog-close>Close</button>
-  ...
-</dialog>
-```
+### Sonner (Toast)
+A notification that appears temporarily. Trigger it with the global `showSonner()` function.
+**Usage:** `showSonner('Message', { title: 'Title', position: 'top-right' })`
 
-### Tooltip
-
-A small popup that appears on hover or focus.
-
-**Usage:**
-```html
-<div class="tooltip" data-tooltip>
-  <button class="btn tooltip-trigger">Hover Me</button>
-  <div class="tooltip-content">Tooltip text!</div>
-</div>
-```
-
-### Toast
-
-A notification that appears temporarily. Trigger it with the global `showToast()` function.
-
-**Usage:**
-```html
-<button class="btn" onclick="showToast('Your message here', 'Optional Title')">
-  Show Toast
-</button>
-```
+### Toggle & Toggle Group
+-   **Toggle:** A two-state button that can be pressed or unpressed.
+-   **Toggle Group:** A group of toggles where only one can be active at a time.
