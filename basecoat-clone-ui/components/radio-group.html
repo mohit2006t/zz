@@ -1,0 +1,25 @@
+<!-- =================================================================
+   RADIO GROUP COMPONENT
+   - A set of checkable buttons—known as radio buttons—of which
+     only one can be selected at a time.
+   - This component uses a native <input type="radio"> that is
+     visually hidden and replaced with a custom-styled element.
+   - This component is CSS-only.
+   ================================================================= -->
+
+<div role="radiogroup" class="flex flex-col gap-2">
+  <div class="flex items-center gap-2">
+    <input type="radio" id="radio-standard" name="radio-group" class="radio-input" />
+    <label for="radio-standard" class="label-inline">Default</label>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <input type="radio" id="radio-checked" name="radio-group" class="radio-input" checked />
+    <label for="radio-checked" class="label-inline">Checked</label>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <input type="radio" id="radio-disabled" name="radio-group" class="radio-input" disabled />
+    <label for="radio-disabled" class="label-inline text-muted-foreground">Disabled</label>
+  </div>
+</div>

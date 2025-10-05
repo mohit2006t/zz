@@ -1,0 +1,24 @@
+<!-- =================================================================
+   TOGGLE GROUP COMPONENT
+   - A set of two-state buttons that can be toggled on or off.
+   - This component is CSS-only for the visual grouping and requires
+     JavaScript to manage the pressed states of the buttons.
+   ================================================================= -->
+
+<div class="toggle-group" role="group">
+  <button class="toggle" aria-pressed="true" data-toggle>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+    </svg>
+  </button>
+  <button class="toggle" aria-pressed="false" data-toggle>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    </svg>
+  </button>
+  <button class="toggle" aria-pressed="false" data-toggle>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M10.472 5.528a.5.5 0 0 1 .707.707L8.707 8l2.472 2.472a.5.5 0 1 1-.707.707L8 8.707l-2.472 2.472a.5.5 0 1 1-.707-.707L7.293 8 4.821 5.528a.5.5 0 0 1 .707-.707L8 7.293l2.472-2.472z"/>
+    </svg>
+  </button>
+</div>

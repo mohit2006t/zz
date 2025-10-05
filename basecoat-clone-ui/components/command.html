@@ -1,0 +1,26 @@
+<button class="btn btn-primary" data-dialog-target="#command-dialog">Open Command</button>
+
+<dialog id="command-dialog" class="dialog command" data-command>
+  <div class="command-content">
+    <div class="command-input-wrapper">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="command-search-icon"><path d="m15.5 15.5-3.5-3.5-3.5 3.5-3.5-3.5 3.5-3.5 3.5 3.5 3.5-3.5z"/><path d="m12 22 10-10-10-10-10 10z"/></svg>
+      <input type="text" class="input command-input" placeholder="Type a command or search..." />
+    </div>
+    <div class="command-list">
+      <div class="command-empty">No results found.</div>
+      <div class="command-group" data-group-name="Suggestions">
+        <div class="command-group-heading">Suggestions</div>
+        <div class="command-item"><span>Calendar</span></div>
+        <div class="command-item"><span>Search Emoji</span></div>
+        <div class="command-item"><span>Calculator</span></div>
+      </div>
+      <div class="command-separator"></div>
+      <div class="command-group" data-group-name="Settings">
+        <div class="command-group-heading">Settings</div>
+        <div class="command-item"><span>Profile</span></div>
+        <div class="command-item"><span>Billing</span></div>
+        <div class="command-item"><span>Settings</span></div>
+      </div>
+    </div>
+  </div>
+</dialog>

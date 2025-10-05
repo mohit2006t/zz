@@ -1,0 +1,56 @@
+# Component Implementation Checklist
+
+This file tracks the completion status of all 52 components requested for the vanilla ShadCN/UI library.
+
+- [x] Accordion
+- [x] Alert
+- [x] Alert Dialog
+- [x] Aspect Ratio
+- [x] Avatar
+- [x] Badge
+- [x] Breadcrumb
+- [x] Button
+- [x] Button Group
+- [x] Card
+- [ ] Carousel
+- [x] Checkbox
+- [x] Collapsible
+- [ ] Combobox
+- [ ] Command
+- [ ] Context Menu
+- [ ] Date Picker
+- [x] Dialog
+- [x] Drawer
+- [x] Dropdown Menu
+- [x] Empty
+- [x] Field
+- [x] Hover Card
+- [x] Input
+- [x] Input Group
+- [ ] Input OTP
+- [x] Item (Handled as part of other components)
+- [x] Kbd
+- [x] Label
+- [ ] Menubar
+- [x] Navigation Menu
+- [x] Pagination
+- [x] Popover
+- [x] Progress
+- [x] Radio Group
+- [x] Resizable
+- [x] Scroll Area
+- [x] Select
+- [x] Separator
+- [x] Sheet (Implemented as Drawer)
+- [ ] Sidebar
+- [x] Skeleton
+- [ ] Slider
+- [x] Sonner (Replaced Toast)
+- [x] Spinner
+- [x] Switch
+- [x] Table
+- [x] Tabs
+- [x] Textarea
+- [x] Toggle
+- [x] Toggle Group
+- [x] Tooltip

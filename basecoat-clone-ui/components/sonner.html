@@ -1,0 +1,39 @@
+<!-- =================================================================
+   SONNER COMPONENT
+   - A succinct message that appears temporarily to provide updates.
+   - Sonners are dynamically generated via JavaScript and injected
+     into a container that is dynamically added to the page.
+   - The `showSonner()` function is used to trigger them.
+   ================================================================= -->
+
+<!-- Trigger Button -->
+<button class="btn btn-primary" onclick="showSonner('This is a sonner message!')">
+  Show Sonner
+</button>
+
+<!--
+  This is a static example of the sonner structure.
+  The actual sonners will be created dynamically by JavaScript.
+-->
+<div class="sonner" role="status">
+  <div class="sonner-content">
+    <p class="sonner-title">Event Scheduled</p>
+    <p class="sonner-description">A new event has been added to your calendar.</p>
+  </div>
+  <button class="sonner-close-btn" aria-label="Close">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  </button>
+</div>

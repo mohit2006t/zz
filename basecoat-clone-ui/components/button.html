@@ -1,0 +1,44 @@
+<!-- =================================================================
+   BUTTON COMPONENT
+   - A clickable element used to trigger an action.
+   - Styles are applied via classes. The base class is `.btn`.
+   - Modifiers control the visual appearance (e.g., `.btn-primary`,
+     `.btn-secondary`, `.btn-destructive`).
+   - This component is CSS-only.
+   ================================================================= -->
+
+<div class="flex items-center gap-4">
+  <!-- Primary Button -->
+  <button class="btn btn-primary">Primary</button>
+
+  <!-- Secondary Button -->
+  <button class="btn btn-secondary">Secondary</button>
+
+  <!-- Destructive Button -->
+  <button class="btn btn-destructive">Destructive</button>
+
+  <!-- Ghost Button -->
+  <button class="btn btn-ghost">Ghost</button>
+
+  <!-- Link Button -->
+  <button class="btn btn-link">Link</button>
+
+  <!-- Button with an icon -->
+  <button class="btn btn-primary flex items-center gap-2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
+    <span>Icon</span>
+  </button>
+</div>

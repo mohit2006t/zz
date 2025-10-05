@@ -1,0 +1,27 @@
+<!-- =================================================================
+   ALERT DIALOG COMPONENT
+   - A modal dialog that interrupts the user's workflow to
+     communicate an important message and require a response.
+   - Built on the native <dialog> element.
+   - Requires JavaScript to manage its state.
+   ================================================================= -->
+
+<!-- Trigger Button -->
+<button class="btn btn-destructive" data-dialog-target="#alert-dialog-example">
+  Delete Account
+</button>
+
+<!-- Alert Dialog Element -->
+<dialog id="alert-dialog-example" class="dialog">
+  <div class="dialog-content">
+    <h2 class="dialog-header">Are you absolutely sure?</h2>
+    <p class="dialog-body">
+      This action cannot be undone. This will permanently delete your
+      account and remove your data from our servers.
+    </p>
+    <div class="dialog-footer">
+      <button class="btn btn-secondary" data-dialog-close>Cancel</button>
+      <button class="btn btn-destructive" data-dialog-close>Continue</button>
+    </div>
+  </div>
+</dialog>

@@ -1,0 +1,21 @@
+<!-- =================================================================
+   TOGGLE COMPONENT
+   - A two-state button that can be either on or off.
+   - Requires JavaScript to manage the aria-pressed state.
+   ================================================================= -->
+
+<div class="flex items-center gap-4">
+  <!-- Default Toggle -->
+  <button class="toggle" aria-pressed="false" data-toggle>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8.5 10.478V3.5a.5.5 0 0 0-1 0v6.978l-2.146-2.147a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.478Z"/>
+    </svg>
+  </button>
+
+  <!-- Pressed Toggle -->
+  <button class="toggle" aria-pressed="true" data-toggle>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8.5 10.478V3.5a.5.5 0 0 0-1 0v6.978l-2.146-2.147a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.478Z"/>
+    </svg>
+  </button>
+</div>

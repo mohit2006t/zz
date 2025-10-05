@@ -1,0 +1,24 @@
+<!-- =================================================================
+   SWITCH COMPONENT
+   - A control that allows the user to toggle between two states,
+     typically on or off.
+   - This component uses a native <input type="checkbox"> that is
+     visually hidden and replaced with a custom-styled track and thumb.
+   - This component is CSS-only.
+   ================================================================= -->
+
+<div class="flex items-center gap-4">
+  <!-- Default (off) Switch -->
+  <div class="flex items-center gap-2">
+    <input type="checkbox" id="switch-off" class="switch-input" />
+    <label for="switch-off" class="switch-track"></label>
+    <label for="switch-off" class="label-inline pl-0">Airplane Mode</label>
+  </div>
+
+  <!-- Checked (on) Switch -->
+  <div class="flex items-center gap-2">
+    <input type="checkbox" id="switch-on" class="switch-input" checked />
+    <label for="switch-on" class="switch-track"></label>
+    <label for="switch-on" class="label-inline pl-0">Wi-Fi</label>
+  </div>
+</div>
